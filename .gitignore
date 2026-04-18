@@ -1,0 +1,57 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# BookSim generated configs (192MB, regenerable)
+booksim_configs/
+
+# BookSim simulator (external tool, clone separately)
+booksim2/
+
+# Paper old figures (keep only current 4)
+paper/figures/fig_amp_distribution.*
+paper/figures/fig_budget_mitigation.*
+paper/figures/fig_budget_sweep.*
+paper/figures/fig_cost_throughput.*
+paper/figures/fig_diff_bandwidth.*
+paper/figures/fig_diminishing.*
+paper/figures/fig_express_mechanism.*
+paper/figures/fig_latency_curve.*
+paper/figures/fig_mitigation_comparison.*
+paper/figures/fig_phantom_explain.*
+paper/figures/fig_phantom_load.*
+paper/figures/fig_phantom_scaling.*
+paper/figures/fig_routing_comparison.*
+paper/figures/fig_workload_patterns.*
+paper/figures/fig_workload_sensitivity.*
+paper/figures/fig_cost_performance.*
+paper/main.log
+paper/main.pdf
+
+# Old results (keep only cost_perf_6panel_*)
+results/additional/
+results/booksim*/
+results/characterization/
+results/cost_perf/
+results/cost_perf_4panel*/
+results/cost_perf_K/
+results/express_links/
+results/iteration*/
+results/noi_*/
+results/sim_*
+results/simulation_*
+results/*.png
+
+# Experiment logs (regenerable)
+*.log
+*.pid
+.*.pid
+
+# OS
+.DS_Store
+*.swp
+*~
+
+# Temp
+.tmp/

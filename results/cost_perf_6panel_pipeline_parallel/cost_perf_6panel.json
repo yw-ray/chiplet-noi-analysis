@@ -1,0 +1,2264 @@
+{
+  "K8_N4": {
+    "K": 8,
+    "N": 4,
+    "grid": "2x4",
+    "n_adj": 10,
+    "total_nodes": 128,
+    "base_rate": 0.0025,
+    "rates": [
+      0.0025,
+      0.005,
+      0.0075,
+      0.01
+    ],
+    "workload": "pipeline_parallel",
+    "experiments": [
+      {
+        "budget": 10,
+        "budget_per_pair": 1.0,
+        "strategy": "adj_uniform",
+        "total_links": 10,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.0025,
+            "latency": 39.9302,
+            "throughput": 0.00251875
+          },
+          {
+            "rate": 0.005,
+            "latency": 325.885,
+            "throughput": 0.00473281
+          },
+          {
+            "rate": 0.0075,
+            "latency": 369.128,
+            "throughput": 0.00544297
+          },
+          {
+            "rate": 0.01,
+            "latency": 921.44,
+            "throughput": 0.00357344
+          }
+        ],
+        "run_time": 15.494174003601074
+      },
+      {
+        "budget": 10,
+        "budget_per_pair": 1.0,
+        "strategy": "express_greedy",
+        "total_links": 10,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.0025,
+            "latency": 39.9302,
+            "throughput": 0.00251875
+          },
+          {
+            "rate": 0.005,
+            "latency": 325.885,
+            "throughput": 0.00473281
+          },
+          {
+            "rate": 0.0075,
+            "latency": 369.128,
+            "throughput": 0.00544297
+          },
+          {
+            "rate": 0.01,
+            "latency": 921.44,
+            "throughput": 0.00357344
+          }
+        ],
+        "run_time": 15.284680366516113
+      },
+      {
+        "budget": 20,
+        "budget_per_pair": 2.0,
+        "strategy": "adj_uniform",
+        "total_links": 20,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.0025,
+            "latency": 35.3522,
+            "throughput": 0.00251823
+          },
+          {
+            "rate": 0.005,
+            "latency": 37.5915,
+            "throughput": 0.00503359
+          },
+          {
+            "rate": 0.0075,
+            "latency": 41.9256,
+            "throughput": 0.00748802
+          },
+          {
+            "rate": 0.01,
+            "latency": 63.7137,
+            "throughput": 0.010002
+          }
+        ],
+        "run_time": 32.53415656089783
+      },
+      {
+        "budget": 20,
+        "budget_per_pair": 2.0,
+        "strategy": "express_greedy",
+        "total_links": 20,
+        "n_express": 1,
+        "rates": [
+          {
+            "rate": 0.0025,
+            "latency": 33.3108,
+            "throughput": 0.00251823
+          },
+          {
+            "rate": 0.005,
+            "latency": 35.1757,
+            "throughput": 0.00503385
+          },
+          {
+            "rate": 0.0075,
+            "latency": 38.577,
+            "throughput": 0.00748854
+          },
+          {
+            "rate": 0.01,
+            "latency": 235.084,
+            "throughput": 0.00995971
+          }
+        ],
+        "run_time": 37.81591773033142
+      },
+      {
+        "budget": 30,
+        "budget_per_pair": 3.0,
+        "strategy": "adj_uniform",
+        "total_links": 30,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.0025,
+            "latency": 33.6205,
+            "throughput": 0.00251823
+          },
+          {
+            "rate": 0.005,
+            "latency": 34.9921,
+            "throughput": 0.00503359
+          },
+          {
+            "rate": 0.0075,
+            "latency": 36.8246,
+            "throughput": 0.00748776
+          },
+          {
+            "rate": 0.01,
+            "latency": 39.4503,
+            "throughput": 0.00999844
+          }
+        ],
+        "run_time": 26.845575094223022
+      },
+      {
+        "budget": 30,
+        "budget_per_pair": 3.0,
+        "strategy": "express_greedy",
+        "total_links": 29,
+        "n_express": 1,
+        "rates": [
+          {
+            "rate": 0.0025,
+            "latency": 31.9948,
+            "throughput": 0.00251823
+          },
+          {
+            "rate": 0.005,
+            "latency": 33.4511,
+            "throughput": 0.00503307
+          },
+          {
+            "rate": 0.0075,
+            "latency": 35.6127,
+            "throughput": 0.00748802
+          },
+          {
+            "rate": 0.01,
+            "latency": 188.319,
+            "throughput": 0.00993962
+          }
+        ],
+        "run_time": 42.716936349868774
+      },
+      {
+        "budget": 40,
+        "budget_per_pair": 4.0,
+        "strategy": "adj_uniform",
+        "total_links": 40,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.0025,
+            "latency": 33.1835,
+            "throughput": 0.00251823
+          },
+          {
+            "rate": 0.005,
+            "latency": 34.3946,
+            "throughput": 0.00503307
+          },
+          {
+            "rate": 0.0075,
+            "latency": 35.7782,
+            "throughput": 0.0074875
+          },
+          {
+            "rate": 0.01,
+            "latency": 37.8146,
+            "throughput": 0.00999896
+          }
+        ],
+        "run_time": 27.454435348510742
+      },
+      {
+        "budget": 40,
+        "budget_per_pair": 4.0,
+        "strategy": "express_greedy",
+        "total_links": 29,
+        "n_express": 1,
+        "rates": [
+          {
+            "rate": 0.0025,
+            "latency": 31.9948,
+            "throughput": 0.00251823
+          },
+          {
+            "rate": 0.005,
+            "latency": 33.4511,
+            "throughput": 0.00503307
+          },
+          {
+            "rate": 0.0075,
+            "latency": 35.6127,
+            "throughput": 0.00748802
+          },
+          {
+            "rate": 0.01,
+            "latency": 188.319,
+            "throughput": 0.00993962
+          }
+        ],
+        "run_time": 43.18883562088013
+      }
+    ]
+  },
+  "K8_N8": {
+    "K": 8,
+    "N": 8,
+    "grid": "2x4",
+    "n_adj": 10,
+    "total_nodes": 512,
+    "base_rate": 0.000625,
+    "rates": [
+      0.000625,
+      0.00125,
+      0.001875,
+      0.0025
+    ],
+    "workload": "pipeline_parallel",
+    "experiments": [
+      {
+        "budget": 10,
+        "budget_per_pair": 1.0,
+        "strategy": "adj_uniform",
+        "total_links": 10,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.000625,
+            "latency": 65.8689,
+            "throughput": 0.00062194
+          },
+          {
+            "rate": 0.00125,
+            "latency": 752.695,
+            "throughput": 0.000983984
+          },
+          {
+            "rate": 0.001875,
+            "latency": 465.774,
+            "throughput": 0.00149707
+          },
+          {
+            "rate": 0.0025,
+            "latency": 775.517,
+            "throughput": 0.00104238
+          }
+        ],
+        "run_time": 45.97923731803894
+      },
+      {
+        "budget": 10,
+        "budget_per_pair": 1.0,
+        "strategy": "express_greedy",
+        "total_links": 10,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.000625,
+            "latency": 65.8689,
+            "throughput": 0.00062194
+          },
+          {
+            "rate": 0.00125,
+            "latency": 752.695,
+            "throughput": 0.000983984
+          },
+          {
+            "rate": 0.001875,
+            "latency": 465.774,
+            "throughput": 0.00149707
+          },
+          {
+            "rate": 0.0025,
+            "latency": 775.517,
+            "throughput": 0.00104238
+          }
+        ],
+        "run_time": 46.63070344924927
+      },
+      {
+        "budget": 20,
+        "budget_per_pair": 2.0,
+        "strategy": "adj_uniform",
+        "total_links": 20,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.000625,
+            "latency": 60.342,
+            "throughput": 0.000622201
+          },
+          {
+            "rate": 0.00125,
+            "latency": 63.4826,
+            "throughput": 0.0012485
+          },
+          {
+            "rate": 0.001875,
+            "latency": 71.4248,
+            "throughput": 0.00186992
+          },
+          {
+            "rate": 0.0025,
+            "latency": 227.836,
+            "throughput": 0.00236816
+          }
+        ],
+        "run_time": 84.41331243515015
+      },
+      {
+        "budget": 20,
+        "budget_per_pair": 2.0,
+        "strategy": "express_greedy",
+        "total_links": 20,
+        "n_express": 1,
+        "rates": [
+          {
+            "rate": 0.000625,
+            "latency": 56.298,
+            "throughput": 0.00062207
+          },
+          {
+            "rate": 0.00125,
+            "latency": 58.7945,
+            "throughput": 0.00124876
+          },
+          {
+            "rate": 0.001875,
+            "latency": 328.205,
+            "throughput": 0.00183926
+          },
+          {
+            "rate": 0.0025,
+            "latency": 227.415,
+            "throughput": 0.0023168
+          }
+        ],
+        "run_time": 63.36872053146362
+      },
+      {
+        "budget": 30,
+        "budget_per_pair": 3.0,
+        "strategy": "adj_uniform",
+        "total_links": 30,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.000625,
+            "latency": 57.1892,
+            "throughput": 0.000622135
+          },
+          {
+            "rate": 0.00125,
+            "latency": 58.9133,
+            "throughput": 0.0012487
+          },
+          {
+            "rate": 0.001875,
+            "latency": 62.299,
+            "throughput": 0.00187012
+          },
+          {
+            "rate": 0.0025,
+            "latency": 144.605,
+            "throughput": 0.00249262
+          }
+        ],
+        "run_time": 120.45566082000732
+      },
+      {
+        "budget": 30,
+        "budget_per_pair": 3.0,
+        "strategy": "express_greedy",
+        "total_links": 30,
+        "n_express": 1,
+        "rates": [
+          {
+            "rate": 0.000625,
+            "latency": 52.3921,
+            "throughput": 0.000622201
+          },
+          {
+            "rate": 0.00125,
+            "latency": 53.7881,
+            "throughput": 0.00124876
+          },
+          {
+            "rate": 0.001875,
+            "latency": 63.9239,
+            "throughput": 0.00187061
+          },
+          {
+            "rate": 0.0025,
+            "latency": 160.443,
+            "throughput": 0.00238242
+          }
+        ],
+        "run_time": 79.00094437599182
+      },
+      {
+        "budget": 40,
+        "budget_per_pair": 4.0,
+        "strategy": "adj_uniform",
+        "total_links": 40,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.000625,
+            "latency": 55.0694,
+            "throughput": 0.000622266
+          },
+          {
+            "rate": 0.00125,
+            "latency": 56.1548,
+            "throughput": 0.00124876
+          },
+          {
+            "rate": 0.001875,
+            "latency": 57.9485,
+            "throughput": 0.00187064
+          },
+          {
+            "rate": 0.0025,
+            "latency": 62.9184,
+            "throughput": 0.00249674
+          }
+        ],
+        "run_time": 106.02756428718567
+      },
+      {
+        "budget": 40,
+        "budget_per_pair": 4.0,
+        "strategy": "express_greedy",
+        "total_links": 40,
+        "n_express": 1,
+        "rates": [
+          {
+            "rate": 0.000625,
+            "latency": 50.5697,
+            "throughput": 0.000622266
+          },
+          {
+            "rate": 0.00125,
+            "latency": 51.3917,
+            "throughput": 0.00124876
+          },
+          {
+            "rate": 0.001875,
+            "latency": 53.6286,
+            "throughput": 0.00187064
+          },
+          {
+            "rate": 0.0025,
+            "latency": 137.605,
+            "throughput": 0.00249395
+          }
+        ],
+        "run_time": 90.65751028060913
+      },
+      {
+        "budget": 50,
+        "budget_per_pair": 5.0,
+        "strategy": "adj_uniform",
+        "total_links": 50,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.000625,
+            "latency": 53.7677,
+            "throughput": 0.000622331
+          },
+          {
+            "rate": 0.00125,
+            "latency": 54.5301,
+            "throughput": 0.00124876
+          },
+          {
+            "rate": 0.001875,
+            "latency": 55.5351,
+            "throughput": 0.0018707
+          },
+          {
+            "rate": 0.0025,
+            "latency": 57.0297,
+            "throughput": 0.00249661
+          }
+        ],
+        "run_time": 106.6597101688385
+      },
+      {
+        "budget": 50,
+        "budget_per_pair": 5.0,
+        "strategy": "express_greedy",
+        "total_links": 50,
+        "n_express": 1,
+        "rates": [
+          {
+            "rate": 0.000625,
+            "latency": 50.0721,
+            "throughput": 0.000622266
+          },
+          {
+            "rate": 0.00125,
+            "latency": 50.809,
+            "throughput": 0.00124876
+          },
+          {
+            "rate": 0.001875,
+            "latency": 52.7515,
+            "throughput": 0.00187077
+          },
+          {
+            "rate": 0.0025,
+            "latency": 132.791,
+            "throughput": 0.00249395
+          }
+        ],
+        "run_time": 91.23455095291138
+      },
+      {
+        "budget": 60,
+        "budget_per_pair": 6.0,
+        "strategy": "adj_uniform",
+        "total_links": 60,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.000625,
+            "latency": 53.0306,
+            "throughput": 0.000622331
+          },
+          {
+            "rate": 0.00125,
+            "latency": 53.612,
+            "throughput": 0.00124883
+          },
+          {
+            "rate": 0.001875,
+            "latency": 54.3467,
+            "throughput": 0.00187083
+          },
+          {
+            "rate": 0.0025,
+            "latency": 55.1491,
+            "throughput": 0.00249687
+          }
+        ],
+        "run_time": 106.09411072731018
+      },
+      {
+        "budget": 60,
+        "budget_per_pair": 6.0,
+        "strategy": "express_greedy",
+        "total_links": 53,
+        "n_express": 1,
+        "rates": [
+          {
+            "rate": 0.000625,
+            "latency": 50.0236,
+            "throughput": 0.000622266
+          },
+          {
+            "rate": 0.00125,
+            "latency": 50.7056,
+            "throughput": 0.00124876
+          },
+          {
+            "rate": 0.001875,
+            "latency": 52.5848,
+            "throughput": 0.00187077
+          },
+          {
+            "rate": 0.0025,
+            "latency": 135.428,
+            "throughput": 0.00249414
+          }
+        ],
+        "run_time": 90.51042437553406
+      },
+      {
+        "budget": 70,
+        "budget_per_pair": 7.0,
+        "strategy": "adj_uniform",
+        "total_links": 70,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.000625,
+            "latency": 52.6869,
+            "throughput": 0.000622331
+          },
+          {
+            "rate": 0.00125,
+            "latency": 53.1816,
+            "throughput": 0.00124883
+          },
+          {
+            "rate": 0.001875,
+            "latency": 53.7931,
+            "throughput": 0.00187083
+          },
+          {
+            "rate": 0.0025,
+            "latency": 54.4116,
+            "throughput": 0.00249687
+          }
+        ],
+        "run_time": 106.57794713973999
+      },
+      {
+        "budget": 70,
+        "budget_per_pair": 7.0,
+        "strategy": "express_greedy",
+        "total_links": 53,
+        "n_express": 1,
+        "rates": [
+          {
+            "rate": 0.000625,
+            "latency": 50.0236,
+            "throughput": 0.000622266
+          },
+          {
+            "rate": 0.00125,
+            "latency": 50.7056,
+            "throughput": 0.00124876
+          },
+          {
+            "rate": 0.001875,
+            "latency": 52.5848,
+            "throughput": 0.00187077
+          },
+          {
+            "rate": 0.0025,
+            "latency": 135.428,
+            "throughput": 0.00249414
+          }
+        ],
+        "run_time": 90.70391392707825
+      },
+      {
+        "budget": 80,
+        "budget_per_pair": 8.0,
+        "strategy": "adj_uniform",
+        "total_links": 80,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.000625,
+            "latency": 52.6018,
+            "throughput": 0.000622331
+          },
+          {
+            "rate": 0.00125,
+            "latency": 53.0535,
+            "throughput": 0.00124883
+          },
+          {
+            "rate": 0.001875,
+            "latency": 53.6398,
+            "throughput": 0.00187083
+          },
+          {
+            "rate": 0.0025,
+            "latency": 54.2261,
+            "throughput": 0.00249687
+          }
+        ],
+        "run_time": 106.71638512611389
+      },
+      {
+        "budget": 80,
+        "budget_per_pair": 8.0,
+        "strategy": "express_greedy",
+        "total_links": 53,
+        "n_express": 1,
+        "rates": [
+          {
+            "rate": 0.000625,
+            "latency": 50.0236,
+            "throughput": 0.000622266
+          },
+          {
+            "rate": 0.00125,
+            "latency": 50.7056,
+            "throughput": 0.00124876
+          },
+          {
+            "rate": 0.001875,
+            "latency": 52.5848,
+            "throughput": 0.00187077
+          },
+          {
+            "rate": 0.0025,
+            "latency": 135.428,
+            "throughput": 0.00249414
+          }
+        ],
+        "run_time": 93.41546702384949
+      }
+    ]
+  },
+  "K16_N4": {
+    "K": 16,
+    "N": 4,
+    "grid": "4x4",
+    "n_adj": 24,
+    "total_nodes": 256,
+    "base_rate": 0.00125,
+    "rates": [
+      0.00125,
+      0.0025,
+      0.00375,
+      0.005
+    ],
+    "workload": "pipeline_parallel",
+    "experiments": [
+      {
+        "budget": 24,
+        "budget_per_pair": 1.0,
+        "strategy": "adj_uniform",
+        "total_links": 24,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.00125,
+            "latency": 39.7399,
+            "throughput": 0.00123854
+          },
+          {
+            "rate": 0.0025,
+            "latency": 41.5333,
+            "throughput": 0.0024987
+          },
+          {
+            "rate": 0.00375,
+            "latency": 45.3174,
+            "throughput": 0.00374323
+          },
+          {
+            "rate": 0.005,
+            "latency": 181.34,
+            "throughput": 0.00490984
+          }
+        ],
+        "run_time": 53.49768042564392
+      },
+      {
+        "budget": 24,
+        "budget_per_pair": 1.0,
+        "strategy": "express_greedy",
+        "total_links": 24,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.00125,
+            "latency": 39.7399,
+            "throughput": 0.00123854
+          },
+          {
+            "rate": 0.0025,
+            "latency": 41.5333,
+            "throughput": 0.0024987
+          },
+          {
+            "rate": 0.00375,
+            "latency": 45.3174,
+            "throughput": 0.00374323
+          },
+          {
+            "rate": 0.005,
+            "latency": 181.34,
+            "throughput": 0.00490984
+          }
+        ],
+        "run_time": 53.34337592124939
+      },
+      {
+        "budget": 48,
+        "budget_per_pair": 2.0,
+        "strategy": "adj_uniform",
+        "total_links": 48,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.00125,
+            "latency": 36.6574,
+            "throughput": 0.0012388
+          },
+          {
+            "rate": 0.0025,
+            "latency": 37.3155,
+            "throughput": 0.0024987
+          },
+          {
+            "rate": 0.00375,
+            "latency": 38.4125,
+            "throughput": 0.0037431
+          },
+          {
+            "rate": 0.005,
+            "latency": 39.6916,
+            "throughput": 0.00497396
+          }
+        ],
+        "run_time": 45.71685481071472
+      },
+      {
+        "budget": 48,
+        "budget_per_pair": 2.0,
+        "strategy": "express_greedy",
+        "total_links": 48,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.00125,
+            "latency": 35.454,
+            "throughput": 0.0012388
+          },
+          {
+            "rate": 0.0025,
+            "latency": 35.8505,
+            "throughput": 0.0024987
+          },
+          {
+            "rate": 0.00375,
+            "latency": 36.7104,
+            "throughput": 0.00374271
+          },
+          {
+            "rate": 0.005,
+            "latency": 37.5063,
+            "throughput": 0.00497461
+          }
+        ],
+        "run_time": 45.10589623451233
+      },
+      {
+        "budget": 72,
+        "budget_per_pair": 3.0,
+        "strategy": "adj_uniform",
+        "total_links": 72,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.00125,
+            "latency": 35.4101,
+            "throughput": 0.0012388
+          },
+          {
+            "rate": 0.0025,
+            "latency": 35.7494,
+            "throughput": 0.0024987
+          },
+          {
+            "rate": 0.00375,
+            "latency": 36.5073,
+            "throughput": 0.00374271
+          },
+          {
+            "rate": 0.005,
+            "latency": 37.1168,
+            "throughput": 0.00497448
+          }
+        ],
+        "run_time": 46.19800090789795
+      },
+      {
+        "budget": 72,
+        "budget_per_pair": 3.0,
+        "strategy": "express_greedy",
+        "total_links": 60,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.00125,
+            "latency": 35.1108,
+            "throughput": 0.0012388
+          },
+          {
+            "rate": 0.0025,
+            "latency": 35.409,
+            "throughput": 0.0024987
+          },
+          {
+            "rate": 0.00375,
+            "latency": 36.166,
+            "throughput": 0.00374258
+          },
+          {
+            "rate": 0.005,
+            "latency": 36.7864,
+            "throughput": 0.00497448
+          }
+        ],
+        "run_time": 45.186501264572144
+      },
+      {
+        "budget": 96,
+        "budget_per_pair": 4.0,
+        "strategy": "adj_uniform",
+        "total_links": 96,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.00125,
+            "latency": 35.0735,
+            "throughput": 0.0012388
+          },
+          {
+            "rate": 0.0025,
+            "latency": 35.3331,
+            "throughput": 0.0024987
+          },
+          {
+            "rate": 0.00375,
+            "latency": 35.9952,
+            "throughput": 0.00374258
+          },
+          {
+            "rate": 0.005,
+            "latency": 36.4667,
+            "throughput": 0.00497448
+          }
+        ],
+        "run_time": 47.18473029136658
+      },
+      {
+        "budget": 96,
+        "budget_per_pair": 4.0,
+        "strategy": "express_greedy",
+        "total_links": 60,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.00125,
+            "latency": 35.1108,
+            "throughput": 0.0012388
+          },
+          {
+            "rate": 0.0025,
+            "latency": 35.409,
+            "throughput": 0.0024987
+          },
+          {
+            "rate": 0.00375,
+            "latency": 36.166,
+            "throughput": 0.00374258
+          },
+          {
+            "rate": 0.005,
+            "latency": 36.7864,
+            "throughput": 0.00497448
+          }
+        ],
+        "run_time": 46.386303186416626
+      }
+    ]
+  },
+  "K16_N8": {
+    "K": 16,
+    "N": 8,
+    "grid": "4x4",
+    "n_adj": 24,
+    "total_nodes": 1024,
+    "base_rate": 0.0003125,
+    "rates": [
+      0.0003125,
+      0.000625,
+      0.0009375,
+      0.00125
+    ],
+    "workload": "pipeline_parallel",
+    "experiments": [
+      {
+        "budget": 24,
+        "budget_per_pair": 1.0,
+        "strategy": "adj_uniform",
+        "total_links": 24,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.0003125,
+            "latency": 67.6427,
+            "throughput": 0.000311849
+          },
+          {
+            "rate": 0.000625,
+            "latency": 68.8583,
+            "throughput": 0.000626204
+          },
+          {
+            "rate": 0.0009375,
+            "latency": 73.4098,
+            "throughput": 0.000937663
+          },
+          {
+            "rate": 0.00125,
+            "latency": 359.38,
+            "throughput": 0.00114541
+          }
+        ],
+        "run_time": 180.5616431236267
+      },
+      {
+        "budget": 24,
+        "budget_per_pair": 1.0,
+        "strategy": "express_greedy",
+        "total_links": 24,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.0003125,
+            "latency": 67.6427,
+            "throughput": 0.000311849
+          },
+          {
+            "rate": 0.000625,
+            "latency": 68.8583,
+            "throughput": 0.000626204
+          },
+          {
+            "rate": 0.0009375,
+            "latency": 73.4098,
+            "throughput": 0.000937663
+          },
+          {
+            "rate": 0.00125,
+            "latency": 359.38,
+            "throughput": 0.00114541
+          }
+        ],
+        "run_time": 179.68939399719238
+      },
+      {
+        "budget": 48,
+        "budget_per_pair": 2.0,
+        "strategy": "adj_uniform",
+        "total_links": 48,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.0003125,
+            "latency": 63.805,
+            "throughput": 0.000311751
+          },
+          {
+            "rate": 0.000625,
+            "latency": 63.8346,
+            "throughput": 0.000626335
+          },
+          {
+            "rate": 0.0009375,
+            "latency": 65.0826,
+            "throughput": 0.000937923
+          },
+          {
+            "rate": 0.00125,
+            "latency": 66.8862,
+            "throughput": 0.00124867
+          }
+        ],
+        "run_time": 209.00295734405518
+      },
+      {
+        "budget": 48,
+        "budget_per_pair": 2.0,
+        "strategy": "express_greedy",
+        "total_links": 48,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.0003125,
+            "latency": 61.515,
+            "throughput": 0.000311686
+          },
+          {
+            "rate": 0.000625,
+            "latency": 61.2863,
+            "throughput": 0.000626302
+          },
+          {
+            "rate": 0.0009375,
+            "latency": 62.1533,
+            "throughput": 0.000937988
+          },
+          {
+            "rate": 0.00125,
+            "latency": 63.3706,
+            "throughput": 0.0012486
+          }
+        ],
+        "run_time": 210.29449820518494
+      },
+      {
+        "budget": 72,
+        "budget_per_pair": 3.0,
+        "strategy": "adj_uniform",
+        "total_links": 72,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.0003125,
+            "latency": 61.2302,
+            "throughput": 0.000311654
+          },
+          {
+            "rate": 0.000625,
+            "latency": 60.9738,
+            "throughput": 0.00062627
+          },
+          {
+            "rate": 0.0009375,
+            "latency": 61.7785,
+            "throughput": 0.000937956
+          },
+          {
+            "rate": 0.00125,
+            "latency": 62.8449,
+            "throughput": 0.00124867
+          }
+        ],
+        "run_time": 207.0912823677063
+      },
+      {
+        "budget": 72,
+        "budget_per_pair": 3.0,
+        "strategy": "express_greedy",
+        "total_links": 72,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.0003125,
+            "latency": 58.4408,
+            "throughput": 0.000311621
+          },
+          {
+            "rate": 0.000625,
+            "latency": 58.0671,
+            "throughput": 0.00062627
+          },
+          {
+            "rate": 0.0009375,
+            "latency": 58.6672,
+            "throughput": 0.000937891
+          },
+          {
+            "rate": 0.00125,
+            "latency": 59.342,
+            "throughput": 0.00124863
+          }
+        ],
+        "run_time": 205.7373869419098
+      },
+      {
+        "budget": 96,
+        "budget_per_pair": 4.0,
+        "strategy": "adj_uniform",
+        "total_links": 96,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.0003125,
+            "latency": 59.4497,
+            "throughput": 0.000311654
+          },
+          {
+            "rate": 0.000625,
+            "latency": 59.0554,
+            "throughput": 0.000626237
+          },
+          {
+            "rate": 0.0009375,
+            "latency": 59.6701,
+            "throughput": 0.000937956
+          },
+          {
+            "rate": 0.00125,
+            "latency": 60.3314,
+            "throughput": 0.0012485
+          }
+        ],
+        "run_time": 210.19678783416748
+      },
+      {
+        "budget": 96,
+        "budget_per_pair": 4.0,
+        "strategy": "express_greedy",
+        "total_links": 96,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.0003125,
+            "latency": 57.4175,
+            "throughput": 0.000311654
+          },
+          {
+            "rate": 0.000625,
+            "latency": 56.9853,
+            "throughput": 0.000626302
+          },
+          {
+            "rate": 0.0009375,
+            "latency": 57.543,
+            "throughput": 0.000937923
+          },
+          {
+            "rate": 0.00125,
+            "latency": 58.0579,
+            "throughput": 0.00124857
+          }
+        ],
+        "run_time": 206.7264199256897
+      },
+      {
+        "budget": 120,
+        "budget_per_pair": 5.0,
+        "strategy": "adj_uniform",
+        "total_links": 120,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.0003125,
+            "latency": 58.3017,
+            "throughput": 0.000311621
+          },
+          {
+            "rate": 0.000625,
+            "latency": 57.8639,
+            "throughput": 0.00062627
+          },
+          {
+            "rate": 0.0009375,
+            "latency": 58.3626,
+            "throughput": 0.000937923
+          },
+          {
+            "rate": 0.00125,
+            "latency": 58.7736,
+            "throughput": 0.00124844
+          }
+        ],
+        "run_time": 208.60750198364258
+      },
+      {
+        "budget": 120,
+        "budget_per_pair": 5.0,
+        "strategy": "express_greedy",
+        "total_links": 108,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.0003125,
+            "latency": 57.3294,
+            "throughput": 0.000311654
+          },
+          {
+            "rate": 0.000625,
+            "latency": 56.8908,
+            "throughput": 0.000626302
+          },
+          {
+            "rate": 0.0009375,
+            "latency": 57.41,
+            "throughput": 0.000937923
+          },
+          {
+            "rate": 0.00125,
+            "latency": 57.8984,
+            "throughput": 0.00124857
+          }
+        ],
+        "run_time": 209.82100534439087
+      },
+      {
+        "budget": 144,
+        "budget_per_pair": 6.0,
+        "strategy": "adj_uniform",
+        "total_links": 144,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.0003125,
+            "latency": 57.656,
+            "throughput": 0.000311654
+          },
+          {
+            "rate": 0.000625,
+            "latency": 57.1814,
+            "throughput": 0.00062627
+          },
+          {
+            "rate": 0.0009375,
+            "latency": 57.6201,
+            "throughput": 0.000937858
+          },
+          {
+            "rate": 0.00125,
+            "latency": 57.8981,
+            "throughput": 0.00124834
+          }
+        ],
+        "run_time": 208.5615119934082
+      },
+      {
+        "budget": 144,
+        "budget_per_pair": 6.0,
+        "strategy": "express_greedy",
+        "total_links": 108,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.0003125,
+            "latency": 57.3294,
+            "throughput": 0.000311654
+          },
+          {
+            "rate": 0.000625,
+            "latency": 56.8908,
+            "throughput": 0.000626302
+          },
+          {
+            "rate": 0.0009375,
+            "latency": 57.41,
+            "throughput": 0.000937923
+          },
+          {
+            "rate": 0.00125,
+            "latency": 57.8984,
+            "throughput": 0.00124857
+          }
+        ],
+        "run_time": 205.94364190101624
+      },
+      {
+        "budget": 168,
+        "budget_per_pair": 7.0,
+        "strategy": "adj_uniform",
+        "total_links": 168,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.0003125,
+            "latency": 57.3651,
+            "throughput": 0.000311654
+          },
+          {
+            "rate": 0.000625,
+            "latency": 56.8537,
+            "throughput": 0.000626302
+          },
+          {
+            "rate": 0.0009375,
+            "latency": 57.2619,
+            "throughput": 0.000937923
+          },
+          {
+            "rate": 0.00125,
+            "latency": 57.4861,
+            "throughput": 0.00124834
+          }
+        ],
+        "run_time": 213.4995687007904
+      },
+      {
+        "budget": 168,
+        "budget_per_pair": 7.0,
+        "strategy": "express_greedy",
+        "total_links": 108,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.0003125,
+            "latency": 57.3294,
+            "throughput": 0.000311654
+          },
+          {
+            "rate": 0.000625,
+            "latency": 56.8908,
+            "throughput": 0.000626302
+          },
+          {
+            "rate": 0.0009375,
+            "latency": 57.41,
+            "throughput": 0.000937923
+          },
+          {
+            "rate": 0.00125,
+            "latency": 57.8984,
+            "throughput": 0.00124857
+          }
+        ],
+        "run_time": 206.68262791633606
+      },
+      {
+        "budget": 192,
+        "budget_per_pair": 8.0,
+        "strategy": "adj_uniform",
+        "total_links": 192,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.0003125,
+            "latency": 57.2794,
+            "throughput": 0.000311654
+          },
+          {
+            "rate": 0.000625,
+            "latency": 56.7705,
+            "throughput": 0.000626302
+          },
+          {
+            "rate": 0.0009375,
+            "latency": 57.1553,
+            "throughput": 0.000937923
+          },
+          {
+            "rate": 0.00125,
+            "latency": 57.377,
+            "throughput": 0.00124834
+          }
+        ],
+        "run_time": 207.45804738998413
+      },
+      {
+        "budget": 192,
+        "budget_per_pair": 8.0,
+        "strategy": "express_greedy",
+        "total_links": 108,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.0003125,
+            "latency": 57.3294,
+            "throughput": 0.000311654
+          },
+          {
+            "rate": 0.000625,
+            "latency": 56.8908,
+            "throughput": 0.000626302
+          },
+          {
+            "rate": 0.0009375,
+            "latency": 57.41,
+            "throughput": 0.000937923
+          },
+          {
+            "rate": 0.00125,
+            "latency": 57.8984,
+            "throughput": 0.00124857
+          }
+        ],
+        "run_time": 201.94305729866028
+      }
+    ]
+  },
+  "K32_N4": {
+    "K": 32,
+    "N": 4,
+    "grid": "4x8",
+    "n_adj": 52,
+    "total_nodes": 512,
+    "base_rate": 0.000625,
+    "rates": [
+      0.000625,
+      0.00125,
+      0.001875,
+      0.0025
+    ],
+    "workload": "pipeline_parallel",
+    "experiments": [
+      {
+        "budget": 52,
+        "budget_per_pair": 1.0,
+        "strategy": "adj_uniform",
+        "total_links": 52,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.000625,
+            "latency": 41.2329,
+            "throughput": 0.000622982
+          },
+          {
+            "rate": 0.00125,
+            "latency": 41.6711,
+            "throughput": 0.00124961
+          },
+          {
+            "rate": 0.001875,
+            "latency": 42.492,
+            "throughput": 0.00187148
+          },
+          {
+            "rate": 0.0025,
+            "latency": 43.6506,
+            "throughput": 0.0024974
+          }
+        ],
+        "run_time": 80.72888612747192
+      },
+      {
+        "budget": 52,
+        "budget_per_pair": 1.0,
+        "strategy": "express_greedy",
+        "total_links": 52,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.000625,
+            "latency": 41.2329,
+            "throughput": 0.000622982
+          },
+          {
+            "rate": 0.00125,
+            "latency": 41.6711,
+            "throughput": 0.00124961
+          },
+          {
+            "rate": 0.001875,
+            "latency": 42.492,
+            "throughput": 0.00187148
+          },
+          {
+            "rate": 0.0025,
+            "latency": 43.6506,
+            "throughput": 0.0024974
+          }
+        ],
+        "run_time": 80.43883085250854
+      },
+      {
+        "budget": 104,
+        "budget_per_pair": 2.0,
+        "strategy": "adj_uniform",
+        "total_links": 104,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.000625,
+            "latency": 38.1755,
+            "throughput": 0.000622982
+          },
+          {
+            "rate": 0.00125,
+            "latency": 38.3011,
+            "throughput": 0.00124948
+          },
+          {
+            "rate": 0.001875,
+            "latency": 38.5555,
+            "throughput": 0.00187161
+          },
+          {
+            "rate": 0.0025,
+            "latency": 38.9741,
+            "throughput": 0.00249759
+          }
+        ],
+        "run_time": 81.94759273529053
+      },
+      {
+        "budget": 104,
+        "budget_per_pair": 2.0,
+        "strategy": "express_greedy",
+        "total_links": 104,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.000625,
+            "latency": 37.0697,
+            "throughput": 0.000622982
+          },
+          {
+            "rate": 0.00125,
+            "latency": 37.1476,
+            "throughput": 0.00124948
+          },
+          {
+            "rate": 0.001875,
+            "latency": 37.3397,
+            "throughput": 0.00187155
+          },
+          {
+            "rate": 0.0025,
+            "latency": 37.6566,
+            "throughput": 0.00249772
+          }
+        ],
+        "run_time": 81.0559778213501
+      },
+      {
+        "budget": 156,
+        "budget_per_pair": 3.0,
+        "strategy": "adj_uniform",
+        "total_links": 156,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.000625,
+            "latency": 36.8379,
+            "throughput": 0.000622982
+          },
+          {
+            "rate": 0.00125,
+            "latency": 36.8765,
+            "throughput": 0.00124954
+          },
+          {
+            "rate": 0.001875,
+            "latency": 37.0511,
+            "throughput": 0.00187161
+          },
+          {
+            "rate": 0.0025,
+            "latency": 37.3204,
+            "throughput": 0.00249779
+          }
+        ],
+        "run_time": 83.47370982170105
+      },
+      {
+        "budget": 156,
+        "budget_per_pair": 3.0,
+        "strategy": "express_greedy",
+        "total_links": 136,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.000625,
+            "latency": 36.4888,
+            "throughput": 0.000622982
+          },
+          {
+            "rate": 0.00125,
+            "latency": 36.5153,
+            "throughput": 0.00124948
+          },
+          {
+            "rate": 0.001875,
+            "latency": 36.6658,
+            "throughput": 0.00187174
+          },
+          {
+            "rate": 0.0025,
+            "latency": 36.9362,
+            "throughput": 0.00249779
+          }
+        ],
+        "run_time": 81.71490859985352
+      },
+      {
+        "budget": 208,
+        "budget_per_pair": 4.0,
+        "strategy": "adj_uniform",
+        "total_links": 208,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.000625,
+            "latency": 36.4825,
+            "throughput": 0.000622982
+          },
+          {
+            "rate": 0.00125,
+            "latency": 36.5035,
+            "throughput": 0.00124948
+          },
+          {
+            "rate": 0.001875,
+            "latency": 36.6395,
+            "throughput": 0.00187174
+          },
+          {
+            "rate": 0.0025,
+            "latency": 36.8815,
+            "throughput": 0.00249779
+          }
+        ],
+        "run_time": 85.0556046962738
+      },
+      {
+        "budget": 208,
+        "budget_per_pair": 4.0,
+        "strategy": "express_greedy",
+        "total_links": 136,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.000625,
+            "latency": 36.4888,
+            "throughput": 0.000622982
+          },
+          {
+            "rate": 0.00125,
+            "latency": 36.5153,
+            "throughput": 0.00124948
+          },
+          {
+            "rate": 0.001875,
+            "latency": 36.6658,
+            "throughput": 0.00187174
+          },
+          {
+            "rate": 0.0025,
+            "latency": 36.9362,
+            "throughput": 0.00249779
+          }
+        ],
+        "run_time": 81.49737191200256
+      }
+    ]
+  },
+  "K32_N8": {
+    "K": 32,
+    "N": 8,
+    "grid": "4x8",
+    "n_adj": 52,
+    "total_nodes": 2048,
+    "base_rate": 0.00015625,
+    "rates": [
+      0.00015625,
+      0.0003125,
+      0.00046875,
+      0.000625
+    ],
+    "workload": "pipeline_parallel",
+    "experiments": [
+      {
+        "budget": 52,
+        "budget_per_pair": 1.0,
+        "strategy": "adj_uniform",
+        "total_links": 52,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.00015625,
+            "latency": 70.885,
+            "throughput": 0.000152262
+          },
+          {
+            "rate": 0.0003125,
+            "latency": 71.2549,
+            "throughput": 0.000308691
+          },
+          {
+            "rate": 0.00046875,
+            "latency": 71.9386,
+            "throughput": 0.000467236
+          },
+          {
+            "rate": 0.000625,
+            "latency": 73.3072,
+            "throughput": 0.000625439
+          }
+        ],
+        "run_time": 484.57005047798157
+      },
+      {
+        "budget": 52,
+        "budget_per_pair": 1.0,
+        "strategy": "express_greedy",
+        "total_links": 52,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.00015625,
+            "latency": 70.885,
+            "throughput": 0.000152262
+          },
+          {
+            "rate": 0.0003125,
+            "latency": 71.2549,
+            "throughput": 0.000308691
+          },
+          {
+            "rate": 0.00046875,
+            "latency": 71.9386,
+            "throughput": 0.000467236
+          },
+          {
+            "rate": 0.000625,
+            "latency": 73.3072,
+            "throughput": 0.000625439
+          }
+        ],
+        "run_time": 489.28982281684875
+      },
+      {
+        "budget": 104,
+        "budget_per_pair": 2.0,
+        "strategy": "adj_uniform",
+        "total_links": 104,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.00015625,
+            "latency": 66.8293,
+            "throughput": 0.000152262
+          },
+          {
+            "rate": 0.0003125,
+            "latency": 66.9155,
+            "throughput": 0.000308675
+          },
+          {
+            "rate": 0.00046875,
+            "latency": 67.1148,
+            "throughput": 0.000467285
+          },
+          {
+            "rate": 0.000625,
+            "latency": 67.6487,
+            "throughput": 0.000625488
+          }
+        ],
+        "run_time": 483.014511346817
+      },
+      {
+        "budget": 104,
+        "budget_per_pair": 2.0,
+        "strategy": "express_greedy",
+        "total_links": 104,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.00015625,
+            "latency": 64.8108,
+            "throughput": 0.000152279
+          },
+          {
+            "rate": 0.0003125,
+            "latency": 64.7924,
+            "throughput": 0.000308708
+          },
+          {
+            "rate": 0.00046875,
+            "latency": 64.8639,
+            "throughput": 0.000467285
+          },
+          {
+            "rate": 0.000625,
+            "latency": 65.2656,
+            "throughput": 0.000625439
+          }
+        ],
+        "run_time": 491.2630913257599
+      },
+      {
+        "budget": 156,
+        "budget_per_pair": 3.0,
+        "strategy": "adj_uniform",
+        "total_links": 156,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.00015625,
+            "latency": 64.0195,
+            "throughput": 0.000152279
+          },
+          {
+            "rate": 0.0003125,
+            "latency": 63.9879,
+            "throughput": 0.000308708
+          },
+          {
+            "rate": 0.00046875,
+            "latency": 64.0517,
+            "throughput": 0.000467269
+          },
+          {
+            "rate": 0.000625,
+            "latency": 64.4464,
+            "throughput": 0.000625439
+          }
+        ],
+        "run_time": 492.5611231327057
+      },
+      {
+        "budget": 156,
+        "budget_per_pair": 3.0,
+        "strategy": "express_greedy",
+        "total_links": 156,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.00015625,
+            "latency": 61.4347,
+            "throughput": 0.000152295
+          },
+          {
+            "rate": 0.0003125,
+            "latency": 61.3123,
+            "throughput": 0.000308724
+          },
+          {
+            "rate": 0.00046875,
+            "latency": 61.3191,
+            "throughput": 0.00046735
+          },
+          {
+            "rate": 0.000625,
+            "latency": 61.6262,
+            "throughput": 0.00062557
+          }
+        ],
+        "run_time": 490.9997010231018
+      },
+      {
+        "budget": 208,
+        "budget_per_pair": 4.0,
+        "strategy": "adj_uniform",
+        "total_links": 208,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.00015625,
+            "latency": 62.1027,
+            "throughput": 0.000152295
+          },
+          {
+            "rate": 0.0003125,
+            "latency": 62.0303,
+            "throughput": 0.000308708
+          },
+          {
+            "rate": 0.00046875,
+            "latency": 62.024,
+            "throughput": 0.000467301
+          },
+          {
+            "rate": 0.000625,
+            "latency": 62.3603,
+            "throughput": 0.000625505
+          }
+        ],
+        "run_time": 499.63812351226807
+      },
+      {
+        "budget": 208,
+        "budget_per_pair": 4.0,
+        "strategy": "express_greedy",
+        "total_links": 208,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.00015625,
+            "latency": 60.0714,
+            "throughput": 0.000152295
+          },
+          {
+            "rate": 0.0003125,
+            "latency": 59.9593,
+            "throughput": 0.000308805
+          },
+          {
+            "rate": 0.00046875,
+            "latency": 59.9418,
+            "throughput": 0.00046735
+          },
+          {
+            "rate": 0.000625,
+            "latency": 60.2556,
+            "throughput": 0.000625521
+          }
+        ],
+        "run_time": 487.8928611278534
+      },
+      {
+        "budget": 260,
+        "budget_per_pair": 5.0,
+        "strategy": "adj_uniform",
+        "total_links": 260,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.00015625,
+            "latency": 60.9134,
+            "throughput": 0.000152295
+          },
+          {
+            "rate": 0.0003125,
+            "latency": 60.7757,
+            "throughput": 0.00030874
+          },
+          {
+            "rate": 0.00046875,
+            "latency": 60.7513,
+            "throughput": 0.00046735
+          },
+          {
+            "rate": 0.000625,
+            "latency": 61.0652,
+            "throughput": 0.000625537
+          }
+        ],
+        "run_time": 486.6035223007202
+      },
+      {
+        "budget": 260,
+        "budget_per_pair": 5.0,
+        "strategy": "express_greedy",
+        "total_links": 248,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.00015625,
+            "latency": 59.8231,
+            "throughput": 0.000152295
+          },
+          {
+            "rate": 0.0003125,
+            "latency": 59.71,
+            "throughput": 0.000308805
+          },
+          {
+            "rate": 0.00046875,
+            "latency": 59.681,
+            "throughput": 0.00046735
+          },
+          {
+            "rate": 0.000625,
+            "latency": 59.9937,
+            "throughput": 0.000625537
+          }
+        ],
+        "run_time": 483.60373067855835
+      },
+      {
+        "budget": 312,
+        "budget_per_pair": 6.0,
+        "strategy": "adj_uniform",
+        "total_links": 312,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.00015625,
+            "latency": 60.2247,
+            "throughput": 0.000152295
+          },
+          {
+            "rate": 0.0003125,
+            "latency": 60.092,
+            "throughput": 0.000308789
+          },
+          {
+            "rate": 0.00046875,
+            "latency": 60.0471,
+            "throughput": 0.00046735
+          },
+          {
+            "rate": 0.000625,
+            "latency": 60.3572,
+            "throughput": 0.000625521
+          }
+        ],
+        "run_time": 491.67036151885986
+      },
+      {
+        "budget": 312,
+        "budget_per_pair": 6.0,
+        "strategy": "express_greedy",
+        "total_links": 248,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.00015625,
+            "latency": 59.8231,
+            "throughput": 0.000152295
+          },
+          {
+            "rate": 0.0003125,
+            "latency": 59.71,
+            "throughput": 0.000308805
+          },
+          {
+            "rate": 0.00046875,
+            "latency": 59.681,
+            "throughput": 0.00046735
+          },
+          {
+            "rate": 0.000625,
+            "latency": 59.9937,
+            "throughput": 0.000625537
+          }
+        ],
+        "run_time": 485.85824608802795
+      },
+      {
+        "budget": 364,
+        "budget_per_pair": 7.0,
+        "strategy": "adj_uniform",
+        "total_links": 364,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.00015625,
+            "latency": 59.9113,
+            "throughput": 0.000152295
+          },
+          {
+            "rate": 0.0003125,
+            "latency": 59.7798,
+            "throughput": 0.000308805
+          },
+          {
+            "rate": 0.00046875,
+            "latency": 59.725,
+            "throughput": 0.00046735
+          },
+          {
+            "rate": 0.000625,
+            "latency": 60.0264,
+            "throughput": 0.000625537
+          }
+        ],
+        "run_time": 505.03650403022766
+      },
+      {
+        "budget": 364,
+        "budget_per_pair": 7.0,
+        "strategy": "express_greedy",
+        "total_links": 248,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.00015625,
+            "latency": 59.8231,
+            "throughput": 0.000152295
+          },
+          {
+            "rate": 0.0003125,
+            "latency": 59.71,
+            "throughput": 0.000308805
+          },
+          {
+            "rate": 0.00046875,
+            "latency": 59.681,
+            "throughput": 0.00046735
+          },
+          {
+            "rate": 0.000625,
+            "latency": 59.9937,
+            "throughput": 0.000625537
+          }
+        ],
+        "run_time": 484.41693091392517
+      },
+      {
+        "budget": 416,
+        "budget_per_pair": 8.0,
+        "strategy": "adj_uniform",
+        "total_links": 416,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.00015625,
+            "latency": 59.8116,
+            "throughput": 0.000152295
+          },
+          {
+            "rate": 0.0003125,
+            "latency": 59.6871,
+            "throughput": 0.000308805
+          },
+          {
+            "rate": 0.00046875,
+            "latency": 59.6339,
+            "throughput": 0.00046735
+          },
+          {
+            "rate": 0.000625,
+            "latency": 59.9339,
+            "throughput": 0.000625537
+          }
+        ],
+        "run_time": 504.8251347541809
+      },
+      {
+        "budget": 416,
+        "budget_per_pair": 8.0,
+        "strategy": "express_greedy",
+        "total_links": 248,
+        "n_express": 0,
+        "rates": [
+          {
+            "rate": 0.00015625,
+            "latency": 59.8231,
+            "throughput": 0.000152295
+          },
+          {
+            "rate": 0.0003125,
+            "latency": 59.71,
+            "throughput": 0.000308805
+          },
+          {
+            "rate": 0.00046875,
+            "latency": 59.681,
+            "throughput": 0.00046735
+          },
+          {
+            "rate": 0.000625,
+            "latency": 59.9937,
+            "throughput": 0.000625537
+          }
+        ],
+        "run_time": 485.62135910987854
+      }
+    ]
+  }
+}

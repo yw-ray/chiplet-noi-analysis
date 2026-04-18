@@ -1,0 +1,37 @@
+{
+  "random": {
+    "throughput_tps": 0.19203006266890082,
+    "comm_ratio": 0.9451335133030622,
+    "nonadj_ratio": 0.8018072014928663,
+    "congestion_factor": 0.026907551973091075,
+    "avg_hops": 2.479166797542365
+  },
+  "spectral": {
+    "throughput_tps": 0.8586296208329034,
+    "comm_ratio": 0.3569699983536289,
+    "nonadj_ratio": 0.5822553451254148,
+    "congestion_factor": 0.12582552750302198,
+    "avg_hops": 1.7356273879933042
+  },
+  "sa_mincut": {
+    "throughput_tps": 0.8586296208329034,
+    "comm_ratio": 0.3569699983536289,
+    "nonadj_ratio": 0.5822553451254148,
+    "congestion_factor": 0.12582552750302198,
+    "avg_hops": 1.7356273879933042
+  },
+  "sa_throughput": {
+    "throughput_tps": 1.6358043993394409,
+    "comm_ratio": 0.8845467375202559,
+    "nonadj_ratio": 0.9973889929124267,
+    "congestion_factor": 0.20940336224050857,
+    "avg_hops": 2.7774298371596537
+  },
+  "sa_tp_random": {
+    "throughput_tps": 1.4951667659338246,
+    "comm_ratio": 0.8694455498399379,
+    "nonadj_ratio": 0.9341469036267968,
+    "congestion_factor": 0.21683084003466616,
+    "avg_hops": 2.725863044250908
+  }
+}
