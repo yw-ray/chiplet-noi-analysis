@@ -50,18 +50,24 @@ Express link의 cost-performance benefit은 워크로드의 **non-locality fract
 ### Figures
 1. Intro motivation (phantom load + diminishing returns)
 2. Phantom 4×4 example
-3. **K32_N8 budget sweep** (4 workload curves)
+3. **Cost-saving 4-panel** (adj vs express latency curves, 4 workloads, K32_N8) — "adj ceiling" 표시
 4. **NL% vs saving scatter** (16 points, 4 configs)
+
+### Budget sweep range
+- **N=4 panels**: 1x~4x (전부 표시)
+- **N=8 panels**: 1x~**7x** (8x 제외 — border router 전부 사용은 비현실적 + MoE 8x greedy instability)
+- 논문에서 보여주는 best saving은 7x까지의 값
 
 ## Current Results (incremental greedy)
 
 | Workload | NL% | K16_N4 | K16_N8 | K32_N4 | K32_N8 |
 |---|---|---|---|---|---|
-| Tree AR | 42% | +9% | +12% | +11% | +17% |
-| Hybrid TP+PP | 77% | +14% | +22% | +25% | +37% |
-| MoE (skewed) | 91% | +86% | +82% | +82% | +82% |
-| Uniform | 89% | +22% | +33% | +30% | +44% |
+| Tree AR | 42% | +9% | +12% | +11% | +15% |
+| Hybrid TP+PP | 77% | +14% | +22% | +25% | +36% |
+| MoE (skewed) | 91% | +86% | +82% | +82% | +81% |
+| Uniform | 89% | +22% | +33% | +30% | +43% |
 
+Best saving은 7x budget 기준 (8x 제외).
 Spearman ρ=0.90 (all 16 points, p<0.000002)
 
 ## Known Issues
