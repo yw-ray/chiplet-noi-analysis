@@ -11,11 +11,12 @@
 \usepackage{hyperref}
 \usepackage{balance}
 
+\newtheorem{theorem}{Theorem}
 \newcommand{\rhomax}{\rho_{\max}}
 
 \begin{document}
 
-\title{Breaking the Cost-Performance Ceiling of Chiplet Networks with Express Links}
+\title{Breaking the Cost-Performance Ceiling of LLM Chiplet Networks via Non-Locality-Guided Warm-Started Reinforcement Learning}
 
 \author{
 \IEEEauthorblockN{Youngwoo Jeong}
@@ -24,74 +25,63 @@
 \maketitle
 
 \begin{abstract}
-As chiplet counts in AI accelerators scale toward 16--64, inter-chiplet bandwidth demands grow rapidly. The conventional approach---adding more adjacent links on the interposer---suffers from a hidden cost trap: \textit{phantom load} from multi-hop routing forces designers to provision far more links than topologically necessary. We prove that phantom load amplification grows as $\Theta(K^{3/2})$ for center links in $K$-chiplet square grids, and that no routing algorithm eliminates it.
+As chiplet counts in AI accelerators scale toward 16--64, inter-chiplet bandwidth demands grow rapidly. The conventional approach---adding more adjacent links on the interposer---suffers from a hidden cost trap: \textit{phantom load} from multi-hop routing forces designers to provision far more links than topologically necessary. We prove that center-link amplification in square chiplet grids grows as $\Theta(K^{3/2})$, and that no routing algorithm eliminates this structural tax.
 
-We propose \textbf{express links}---direct connections between non-adjacent chiplets---with workload-aware greedy placement. Through BookSim cycle-accurate simulation of five LLM communication patterns on $K$=16 and $K$=32 chiplet grids, we show that express link benefit is determined by the workload's \textit{non-locality fraction} (NL\%, the share of traffic between non-adjacent chiplets). At $K$=32 with 8$\times$8 per-chiplet mesh, express links reduce latency by \textbf{57\% for skewed MoE dispatch} (NL=91\%), \textbf{53\% for all-to-all} (NL=90\%), \textbf{51\% for hybrid TP+PP} (NL=77\%), and \textbf{17\% for tree all-reduce} (NL=42\%)---all at the same link budget as adjacent-only baselines. The correlation between NL\% and express saving is $r$=0.93 at $K$=32, $N$=8 ($p$=0.02) and $r$=0.58 ($p$=0.008, Spearman $\rho$=0.67) pooled across all 20 configurations, enabling architects to predict express benefit from static traffic analysis.
+We then identify the workload's \textit{non-locality fraction} (NL\%, the share of traffic volume between non-adjacent chiplet pairs) as the key predictor of express-link benefit, and propose \textbf{RL-WS}: warm-start reinforcement learning that refines greedy express placement with a post-hoc BookSim fallback. Across 40 configurations spanning four workloads, two chiplet counts, two per-chiplet mesh sizes, and multiple link budgets, greedy express placement improves latency by \textbf{25.6\%} on average over adjacent-uniform no-express baselines, while RL-WS raises this to \textbf{28.1\%}. The best single configuration reaches \textbf{56.4\%} latency reduction (MoE, $K$=32, $N$=8, 4$\times$ budget). RL-WS beats greedy in 32/40 configurations and, with fallback, is never worse. On unseen ring-allreduce, pipeline-parallel, and all-to-all workloads, RL-WS wins 6/6 evaluated cases while a zero-shot GNN baseline fails on all-to-all traffic. These results show that NL\% predicts both raw express-link benefit and the remaining headroom beyond greedy placement.
 \end{abstract}
 
 % ============================================================
 \section{Introduction}
 % ============================================================
 
-% --- 1. Trend ---
-AI accelerator chiplet counts are scaling rapidly: AMD's MI300X integrates 8 compute chiplets~\cite{mi300x}, NVIDIA's B200 connects 2 dies~\cite{blackwell}, and industry roadmaps project 16--64 chiplets in next-generation designs. Each additional chiplet demands inter-chiplet bandwidth provisioned through the Network-on-Interposer (NoI)---typically by adding die-to-die links between adjacent pairs on the silicon interposer~\cite{kite,florets,ucie}.
+AI accelerator chiplet counts are scaling rapidly: AMD's MI300X integrates 8 compute chiplets~\cite{mi300x}, NVIDIA's B200 connects 2 dies~\cite{blackwell}, and industry roadmaps project 16--64 chiplets in next-generation designs. Each additional chiplet demands inter-chiplet bandwidth provisioned through the Network-on-Interposer (NoI)---typically by adding die-to-die links only between adjacent chiplets on the silicon interposer~\cite{kite,florets,ucie}.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.95\columnwidth]{figures/fig_intro_motivation.pdf}
-\caption{The phantom load problem. (a)~Center link amplification grows quadratically with chiplet count. (b)~Adding adjacent links yields diminishing returns: at $K$=16, 4$\times$ budget gives only 1.5$\times$ speedup.}
+\caption{The phantom load problem. (a)~Center-link amplification grows super-linearly with chiplet count. (b)~Adding adjacent links yields diminishing returns: at $K$=16, 4$\times$ budget gives only 1.5$\times$ speedup.}
 \label{fig:motivation}
 \end{figure}
 
-% --- 2. Problem ---
-However, adding adjacent links has sharply diminishing returns (Fig.~\ref{fig:motivation}). In a 2D chiplet grid, non-adjacent traffic must traverse intermediate links via multi-hop routing, creating \textit{phantom load}: intermediate links carry routing traffic far exceeding their direct demand. We prove that center links in a $K$-chiplet square grid carry $\Theta(K^{3/2})$ times more traffic than their direct demand---super-linear growth that makes the problem worsen faster than chiplet count. At $K$=32, this amplification reaches 64$\times$ on center links, forcing designers to provision far more adjacent links than would be needed if traffic could reach its destination directly.
+However, adding adjacent links has sharply diminishing returns (Fig.~\ref{fig:motivation}). In a 2D chiplet grid, non-adjacent traffic must traverse intermediate links via multi-hop routing, creating \textit{phantom load}: intermediate links carry routing traffic far exceeding their direct demand. We prove that center links in a $K$-chiplet square grid carry $\Theta(K^{3/2})$ times more traffic than their direct demand. At $K$=32, this amplification reaches 64$\times$ on center links, forcing designers to provision far more adjacent links than would be needed if traffic could reach its destination directly.
 
-% --- 3. Why existing approaches fail ---
-Prior NoI work~\cite{kite,florets} optimizes link allocation among adjacent pairs---choosing \textit{which} adjacent links get more capacity. But phantom load is not an allocation problem; it is a topological one. Traffic-proportional allocation is 2--3$\times$ \textit{worse} than uniform (Table~\ref{tab:mitigation}) because it starves phantom-loaded links that carry no direct traffic.
+Prior NoI work~\cite{kite,florets} optimizes allocation among adjacent pairs---choosing \textit{which} adjacent links receive more capacity. But phantom load is not merely an allocation problem; it is a topological one. Express links---direct interposer connections between non-adjacent chiplets---attack the root cause by bypassing overloaded intermediate links. Our previous greedy express placement results already showed large gains on highly non-local workloads, but also exposed a second problem: greedy remains a local heuristic and leaves headroom on complex traffic patterns.
 
-% --- 4. Our claim ---
-We propose \textbf{express links}---direct interposer connections between non-adjacent chiplets---with workload-aware greedy placement. Express links eliminate phantom load at its source: a single express link at distance $d$ relieves $d{-}1$ intermediate links simultaneously. The key result: \textbf{express link benefit is determined by the workload's non-locality fraction}. At $K$=32 with 8$\times$8 per-chiplet mesh, skewed MoE achieves 57\% latency reduction, hybrid TP+PP 51\%, and all-to-all 53\% at the same link budget as adjacent-only baselines. The non-locality fraction (NL\%) predicts express benefit with $r$=0.93 correlation ($K$=32, $N$=8), providing architects a simple metric for topology investment decisions.
+This paper makes three claims. First, the workload's non-locality fraction (NL\%) is the fundamental predictor of express-link benefit. Second, warm-start reinforcement learning can refine greedy placement without sacrificing its strong baseline behavior. Third, a post-hoc fallback to measured BookSim latency provides a practical worst-case guarantee: the learned method is never worse than greedy.
 
-Our contributions:
+Our contributions are:
 \begin{itemize}
-\item \textbf{Phantom load analysis}: Closed-form proof of $\Theta(K^{3/2})$ amplification for square grids; routing-algorithm independence across four algorithms; workload sensitivity across five LLM patterns.
-\item \textbf{Non-locality--driven express benefit}: BookSim-validated express savings of 17--57\% across five workloads (including skewed MoE and TP=8 hybrid), two chiplet counts ($K$=16, 32), and two mesh sizes ($N$=4, 8), with NL\% as the dominant predictor ($r$=0.93 at $K$=32).
-\item \textbf{Workload-aware placement}: Greedy allocation with traffic-proportional fallback achieves 100\% budget utilization across all workload types, from sparse MoE (129 express links at $K$=32) to local tree all-reduce (16 express links).
+\item \textbf{Phantom-load analysis}: We prove $\Theta(K^{3/2})$ center-link amplification for square chiplet grids, quantify routing-algorithm independence, and separate structural phantom load from routing or allocation artifacts.
+\item \textbf{Non-locality-guided placement}: We show that NL\% predicts express-link benefit across four representative LLM communication patterns and use it as the organizing principle for placement quality and RL headroom.
+\item \textbf{Warm-start RL with safety}: We introduce RL-WS, a swap-based RL refinement initialized from greedy placement and protected by post-hoc fallback. Across 40 configurations, RL-WS improves average saving from 25.6\% to 28.1\%, reaches 56.4\% in the best case, and never regresses once fallback is applied.
 \end{itemize}
 
 % ============================================================
-\section{Related Work}
+\section{Background and Related Work}
 % ============================================================
 
-\textbf{NoI Topology Design.}
-Kite~\cite{kite} proposes heterogeneous adjacent-only topologies with accurate interconnect modeling, achieving 7\% latency reduction. Florets~\cite{florets} designs data-flow-aware NoI for CNN inference. Both optimize \textit{allocation} among adjacent pairs but cannot address phantom load because the topology remains adjacent-only. We include a Kite-like baseline (MinMax adjacent) and show it saturates identically to uniform at $K$=16. Modular routing~\cite{modular_routing} proposes deadlock-free routing for chiplet systems but does not modify topology.
+\textbf{Adjacent-only NoI design.}
+Kite~\cite{kite} and Florets~\cite{florets} optimize adjacent-only chiplet topologies and link allocation. These approaches improve link placement among neighboring chiplets, but they cannot remove the multi-hop structure that creates phantom load in the first place.
 
-\textbf{Express Channels in Monolithic NoC.}
-Express Virtual Channels~\cite{express_vc} and concentrated meshes~\cite{cmesh} bypass intermediate hops within a single die. In monolithic NoC, wire delay is negligible and routing resources are abundant, so phantom load does not arise as a cost problem. In chiplet NoI, each inter-chiplet link consumes scarce die-edge PHY area and interposer routing resources, making phantom load a \textit{cost} problem---the focus of this work.
+\textbf{Express channels in monolithic NoC.}
+Express Virtual Channels~\cite{express_vc} and concentrated meshes~\cite{cmesh} bypass intermediate hops within a single die. In monolithic NoCs, wire delay is relatively small and the optimization target is hop count. In chiplet NoI, each inter-chiplet link consumes scarce die-edge PHY area and interposer routing resources, so the main problem is not just latency but the \textit{cost} of transit traffic.
 
-\textbf{Commercial Chiplet Systems.}
-AMD MI300X ($K$=8) uses Infinity Fabric with near-full connectivity among XCDs. Our analysis shows $K$=8 is in the manageable regime ($\alpha_{\max}$=8). NVIDIA B200 ($K$=2) trivially avoids phantom load. As products scale to $K \geq 16$, our results predict 2--3$\times$ link cost overhead without topology intervention.
-
-\textbf{Chiplet Cost Modeling.}
-Chiplet Actuary~\cite{chiplet_actuary} and CATCH~\cite{catch} model manufacturing cost but not communication topology. CPElide~\cite{cpelide} optimizes multi-chiplet GPU synchronization assuming fixed topology. CNSim~\cite{cnsim} provides cycle-accurate chiplet network simulation.
-
-Table~\ref{tab:related} compares our work with prior art across five key evaluation dimensions in chiplet NoI research. Our work is the first to cover all five: topology optimization with non-adjacent links, link-level cost analysis, BookSim cycle-accurate simulation, evaluation across five LLM workloads, and validation across multiple chiplet counts and internal mesh sizes.
+\textbf{Learning-based topology synthesis.}
+The closest prior work is PARL~\cite{parl}, which applies cold-start PPO to NoI topology synthesis for mixed DL workloads. PARL optimizes a multi-objective interference score but does not use workload-level non-locality as a predictor, does not warm-start from a strong heuristic, and offers no worst-case guarantee relative to a deterministic baseline. Our method targets express-link placement specifically, starts from greedy placement, and uses post-hoc BookSim fallback to guarantee measured latency no worse than greedy.
 
 \begin{table}[t]
 \centering
 \caption{Comparison with Prior Work}
 \label{tab:related}
-\footnotesize
-\begin{tabular}{lccccc}
+\scriptsize
+\begin{tabular}{lcccc}
 \toprule
-& Topo & Cost & Cycle-Acc & Multi- & Scala- \\
-& Opt. & Anal. & Sim & Workload & bility \\
+Work & Method & Target & Express? & Guarantee \\
 \midrule
-Kite~\cite{kite} & \checkmark & & \checkmark & & \\
-Florets~\cite{florets} & \checkmark & & \checkmark & \checkmark & \\
-Chiplet Act.~\cite{chiplet_actuary} & & \checkmark & & & \checkmark \\
-CPElide~\cite{cpelide} & & & \checkmark & & \\
-\textbf{Ours} & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark \\
+Kite~\cite{kite} & heuristic & adj.\ topology & No & -- \\
+Florets~\cite{florets} & workload-aware & adj.\ topology & No & -- \\
+PARL~\cite{parl} & cold PPO & NoI synthesis & Yes & None \\
+\textbf{Ours} & greedy + RL & express place. & Yes & $\le$ Greedy \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -100,51 +90,52 @@ CPElide~\cite{cpelide} & & & \checkmark & & \\
 \section{Phantom Load Analysis}
 % ============================================================
 
-\subsection{System Model and Definition}
+\subsection{System Model}
 
-We consider $K$ chiplets arranged on an $R \times C$ 2D grid on a silicon interposer (e.g., $K$=16 in a 4$\times$4 grid). Each chiplet pair $(i,j)$ has a traffic demand $T[i,j]$ (GB/s). In conventional NoI, links connect only \textit{adjacent} pairs---chiplets at Manhattan distance 1. When chiplet $i$ needs to communicate with a non-adjacent chiplet $j$, the traffic must traverse a multi-hop path through intermediate chiplets.
+We consider $K$ chiplets arranged on an $R \times C$ 2D grid on a silicon interposer (e.g., $K$=16 in a 4$\times$4 grid). Each chiplet pair $(i,j)$ has traffic demand $T[i,j]$ (GB/s). In conventional NoI, links connect only \textit{adjacent} pairs---chiplets at Manhattan distance 1. When chiplet $i$ communicates with non-adjacent chiplet $j$, the traffic must traverse a multi-hop path through intermediate chiplets.
 
-The \textit{load} on an adjacent link $(a,b)$ is the total traffic from \textit{all} flows whose routing path crosses it---not just the direct traffic between $a$ and $b$:
+The \textit{load} on an adjacent link $(a,b)$ is the total traffic from \textit{all} flows whose routing path crosses it:
 \begin{equation}
-\text{Load}(a,b) = \sum_{\substack{(i,j): \text{path}(i,j) \\ \text{crosses } (a,b)}} T[i,j]
+\text{Load}(a,b) = \sum_{\substack{(i,j): \text{path}(i,j) \\ \text{crosses } (a,b)}} T[i,j].
 \end{equation}
 
-We define the \textit{amplification factor} $\alpha(a,b) = \text{Load}(a,b) / T_{\text{direct}}(a,b)$, where $T_{\text{direct}}$ is the traffic directly between $a$ and $b$. When $\alpha = 1$, the link carries only its own traffic. When $\alpha \gg 1$, the link is dominated by \textit{phantom load}---transit traffic from other flows passing through.
-
-Fig.~\ref{fig:phantom4x4}(a) illustrates a concrete example: when chiplet~0 communicates with chiplet~15 on a 4$\times$4 grid, XY routing produces a 6-hop path (0$\to$1$\to$2$\to$3$\to$7$\to$11$\to$15). All 5 intermediate links carry this flow as phantom load---they must handle traffic that has nothing to do with their directly connected chiplets. When \textit{many} such long-distance flows overlap on the same intermediate links, the amplification factor on center links grows rapidly.
+We define the \textit{amplification factor}
+\begin{equation}
+\alpha(a,b) = \frac{\text{Load}(a,b)}{T_{\text{direct}}(a,b)},
+\end{equation}
+where $T_{\text{direct}}(a,b)$ is the traffic directly exchanged by chiplets $a$ and $b$. Large $\alpha$ indicates that the link is dominated by phantom load rather than its own endpoint demand.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.95\columnwidth]{figures/fig_phantom_4x4.pdf}
-\caption{Phantom load example on a 4$\times$4 chiplet grid. (a)~Adjacent-only: C0$\to$C15 requires 6 hops via XY routing; all intermediate links carry phantom load. (b)~An express link C0$\to$C3 reduces the path to 4 hops, freeing 2 intermediate links.}
+\caption{Phantom load example on a 4$\times$4 chiplet grid. (a)~Adjacent-only: C0$\to$C15 requires 6 hops via XY routing; every intermediate link carries transit traffic. (b)~An express link C0$\to$C3 reduces the path to 4 hops, freeing 2 intermediate links.}
 \label{fig:phantom4x4}
 \end{figure}
 
-\subsection{Closed-Form Analysis}
+\subsection{Closed-Form Scaling}
 
-We derive an exact formula for the number of flows crossing each link under XY (dimension-order) routing with uniform all-to-all traffic.
-
-\textbf{Intuition.} Consider a horizontal link at the column boundary between columns $c$ and $c{+}1$. Under XY routing, horizontal movement occurs at the source row. Any flow originating from a chiplet in columns $0 \ldots c$ and destined for a chiplet in columns $c{+}1 \ldots C{-}1$ must cross this boundary. Counting all such source-destination pairs (in both directions) yields:
+We derive an exact formula for the number of flows crossing each link under XY routing with uniform all-to-all traffic.
 
 \begin{theorem}
-Under XY routing with uniform all-to-all traffic on an $R \times C$ grid, the number of directed flows crossing each link is:
+Under XY routing with uniform all-to-all traffic on an $R \times C$ grid, the number of directed flows crossing each link is
 \begin{align}
-F_H(c) &= 2R \cdot (c{+}1)(C{-}c{-}1) \quad \text{(horizontal at col $c|c{+}1$)} \\
-F_V(r) &= 2C \cdot (r{+}1)(R{-}r{-}1) \quad \text{(vertical at row $r|r{+}1$)}
+F_H(c) &= 2R \cdot (c{+}1)(C{-}c{-}1), \\
+F_V(r) &= 2C \cdot (r{+}1)(R{-}r{-}1),
 \end{align}
-$F_H$ is independent of row position because XY routing performs all horizontal movement at the source row, so every row contributes equally.
+for a horizontal boundary at column $c|c{+}1$ and a vertical boundary at row $r|r{+}1$, respectively.
 \end{theorem}
 
-\textbf{Example.} On a 4$\times$4 grid ($R$=4, $C$=4), the center horizontal link at $c$=1:
-$F_H(1) = 2 \times 4 \times 2 \times 2 = 32$ flows.
-Since each adjacent link has only 2 direct flows (one per direction), the amplification is $\alpha = 32 / 2 = 16\times$---the center link must carry 16 times more traffic than its direct demand.
-
-Since each link has 2 direct flows, the \textbf{center link amplification} is:
+\textbf{Example.} On a 4$\times$4 grid, the center horizontal link at $c$=1 carries
 \begin{equation}
-\alpha_{\max} = R \cdot \lceil C/2 \rceil \cdot \lfloor C/2 \rfloor = \Theta(K^{3/2}) \text{ for square grids}
+F_H(1) = 2 \times 4 \times 2 \times 2 = 32
 \end{equation}
+directed flows. Since each adjacent pair contributes only 2 direct flows, the amplification is $\alpha = 32 / 2 = 16\times$.
 
-Table~\ref{tab:scaling} shows the scaling across grid sizes, validated computationally for all $R,C \leq 8$. The amplification grows from $2\times$ at $K$=4 to $128\times$ at $K$=64.
+Since each adjacent link has 2 direct flows, the center-link amplification is
+\begin{equation}
+\alpha_{\max} = R \cdot \lceil C/2 \rceil \cdot \lfloor C/2 \rfloor = \Theta(K^{3/2})
+\end{equation}
+for square grids. Table~\ref{tab:scaling} validates the scaling across grid sizes up to $K$=64.
 
 \begin{table}[t]
 \centering
@@ -164,19 +155,11 @@ Grid & K & Max $\alpha$ & Avg $\alpha$ & P95 $\alpha$ & Imbalance \\
 \end{tabular}
 \end{table}
 
-\textbf{Why this is a cost problem.} To keep the most congested link below a utilization target $\rho^*$, an adjacent-only topology must provision $\lceil \alpha_{\max} / \rho^* \rceil$ links on center pairs. At $K$=64, this means $128\times$ more capacity than the direct traffic demand requires---a massive cost overhead in PHY area and interposer routing resources. This overhead is not an implementation inefficiency; it is a \textit{structural tax} imposed by multi-hop routing.
+\textbf{Why this is a cost problem.} To keep the most congested link below utilization target $\rho^*$, an adjacent-only topology must provision $\lceil \alpha_{\max} / \rho^* \rceil$ links on center pairs. At $K$=64, this implies over two orders of magnitude more capacity than direct demand alone would require.
 
 \subsection{Routing Algorithm Independence}
 
-A natural question is whether smarter routing eliminates phantom load. We compare four routing algorithms (Table~\ref{tab:routing}):
-
-\textbf{XY/YX} (deterministic): Route horizontally first then vertically, or vice versa. Both produce the same imbalance (8.2$\times$ at $K$=16) because they simply mirror the load pattern.
-
-\textbf{ECMP} (equal-cost multi-path): Split each flow equally across all shortest paths. This reduces imbalance significantly (8.2$\times$ $\to$ 2.3$\times$ at $K$=16) by distributing load more evenly. However, the center links \textit{still} carry disproportionate load because they lie on more shortest paths than edge links.
-
-\textbf{Valiant} (randomized): Route each flow through a random intermediate chiplet. This reduces imbalance further but \textit{doubles} total network load because each flow traverses two paths. The cure is worse than the disease for cost-sensitive NoI design.
-
-\textbf{Conclusion}: No routing algorithm can eliminate phantom load. ECMP helps but 6.1$\times$ imbalance persists at $K$=32. The fundamental issue is that multi-hop routing forces intermediate links to carry transit traffic regardless of how that traffic is distributed.
+A natural question is whether smarter routing eliminates phantom load. Table~\ref{tab:routing} compares XY/YX, ECMP, and Valiant routing. The values below are simulator-measured \textit{directional} link loads and therefore are not directly comparable to the undirected closed-form values in Table~\ref{tab:scaling}; the point is comparative, not absolute.
 
 \begin{table}[t]
 \centering
@@ -200,109 +183,93 @@ Grid & Routing & Max $\alpha$ & Imbalance \\
 \end{tabular}
 \end{table}
 
-\subsection{Workload Sensitivity}
+ECMP distributes load more evenly than XY/YX, but the center links still lie on more shortest paths and remain over-utilized. Valiant further smooths imbalance but doubles total path length. Phantom load is therefore a structural consequence of multi-hop adjacency, not an artifact of one routing algorithm.
 
-The closed-form analysis assumes uniform all-to-all traffic. Real workloads have structured communication patterns that concentrate or disperse phantom load depending on their \textit{non-locality fraction} (NL\%)---the share of total traffic between non-adjacent chiplet pairs. We evaluate five LLM communication patterns at $K$=32 (Table~\ref{tab:workloads}), spanning a wide NL\% range:
+% ============================================================
+\section{Non-Locality Analysis}
+% ============================================================
 
-\textbf{Tree all-reduce} (NL=42\%) uses recursive halving-doubling (butterfly) with XOR-based partner selection, creating moderate non-local traffic at power-of-two distances. \textbf{Hybrid TP+PP} (NL=49\%) combines tensor-parallel all-to-all within 4-chiplet groups and pipeline-parallel forwarding between groups; intra-group non-adjacent pairs create substantial non-local traffic.
+We define the \textit{non-locality fraction} on demand matrix $T$ and chiplet graph $G$ as
+\begin{equation}
+\mathrm{NL\%}(T,G) =
+\frac{\sum_{i<j:\,\mathrm{hop}_G(i,j)\ge 2} \left(T[i,j] + T[j,i]\right)}
+{\sum_{i<j} \left(T[i,j] + T[j,i]\right)}.
+\end{equation}
+NL\% is computed on the pre-routing demand matrix. It is therefore a static workload property relative to a chosen chiplet layout and lets us predict whether non-adjacent shortcuts are even worth considering before simulation.
 
-\textbf{MoE expert dispatch} (NL=88\%) sends each token to top-2 remote experts, creating sparse all-to-all traffic across the entire grid. As MoE architectures become dominant (GPT-4, Mixtral, DeepSeek-V3), this pattern increasingly stresses chiplet NoI. \textbf{Uniform random} (NL=89\%) is a synthetic worst-case baseline. \textbf{All-to-all} (NL=90\%) represents sequence-parallel or context-parallel redistribution where all chiplets exchange data equally.
+We evaluate four representative chiplet communication patterns at $K$=32. These form the training workloads for the learned placement methods; ring-allreduce, pipeline-parallel, and all-to-all are revisited later as unseen generalization workloads.
 
 \begin{table}[t]
 \centering
-\caption{Phantom Load Across LLM Workloads ($K$=32)}
+\caption{LLM Workloads and Non-Locality ($K$=32)}
 \label{tab:workloads}
-\footnotesize
+\scriptsize
 \begin{tabular}{lrrrrl}
 \toprule
 Workload & NL\% & Max $\alpha$ & Imbal. & Phantom\% & Pattern \\
 \midrule
-Tree All-Reduce & 42 & 2.2 & 2.2 & 69\% & hierarchical \\
-Hybrid TP+PP & 77 & 5.2 & 2.4 & 85\% & mixed (TP=8) \\
-MoE Expert & \textbf{91} & \textbf{79.0} & 1.7 & \textbf{100\%} & skewed a2a \\
-Uniform Random & 89 & 245.5 & 1.7 & 100\% & dense random \\
-All-to-All & 90 & 64.0 & 1.7 & 100\% & dense equal \\
+Tree AR & 42 & 2.2 & 2.2 & 69\% & hierarchical \\
+Hybrid TP+PP & 77 & 5.2 & 2.4 & 85\% & mixed TP=8 \\
+MoE Skewed & \textbf{91} & \textbf{79.0} & 1.7 & \textbf{100\%} & skewed a2a \\
+Uniform Rand. & 89 & 245.5 & 1.7 & 100\% & dense random \\
 \bottomrule
 \end{tabular}
 \end{table}
 
+Tree all-reduce uses recursive halving-doubling and therefore creates only moderate non-local traffic. Hybrid TP+PP increases NL\% by combining tensor-parallel groups with pipeline stages. MoE dispatch and uniform random traffic are both highly non-local; the difference is that MoE is sparse and skewed, while uniform random is dense. This distinction later matters for how much additional headroom remains beyond greedy placement.
+
 % ============================================================
-\section{Express Link Architecture}
+\section{Express Link Placement}
 % ============================================================
 
 \subsection{System Overview}
 
-We propose augmenting conventional adjacent-only NoI with \textit{express links}---direct interposer connections between non-adjacent chiplets. The system consists of:
+We augment the adjacent-only NoI with \textit{express links}---direct interposer connections between non-adjacent chiplets. Adjacent links are mandatory and provide baseline connectivity. Express links are optional and may connect chiplets at Manhattan distance $d \in [2, D]$. A single express link at distance $d$ can bypass $d{-}1$ intermediate adjacent links, directly reducing phantom load rather than merely redistributing it.
 
-\begin{itemize}
-\item \textbf{Chiplet grid}: $K$ chiplets on an $R \times C$ grid, each with an $N \times N$ internal mesh providing $N$ border routers per edge.
-\item \textbf{Adjacent links}: mandatory connections between neighboring chiplets (latency 2 cycles, $\sim$10\,mm wire).
-\item \textbf{Express links}: optional connections between chiplets at Manhattan distance $d \in [2, D]$ (latency $2d$ cycles, $\sim$10$d$\,mm wire). A single express link at distance $d$ relieves phantom load on $d{-}1$ intermediate adjacent links.
-\item \textbf{Routing}: Dijkstra shortest-path on the combined topology (adjacent + express), re-computed after each express link addition.
-\end{itemize}
+\subsection{Greedy Baseline}
 
-Express links reuse the same UCIe/D2D PHY circuits as adjacent links; the longer wire may require stronger drivers, adding $\sim$10--15\% power per link (Table~\ref{tab:physical}). Fig.~\ref{fig:phantom4x4}(b) illustrates the mechanism: an express link from C0 to C3 reduces the C0$\to$C15 path from 6 to 4 hops, freeing 2 intermediate links from phantom load.
-
-\subsection{Workload-Aware Greedy Placement}
-
-Given a traffic matrix and link budget, we place express links via greedy congestion minimization (Algorithm~\ref{alg:greedy}): starting from mandatory adjacent connectivity (one link per pair), iteratively add the link---adjacent or express---that reduces $\rhomax$ most. When no single addition strictly improves $\rhomax$ (greedy plateau), the remaining budget is allocated proportionally to traffic demand across all candidate pairs, with any residual distributed to adjacent links. This ensures \textit{100\% budget utilization} regardless of traffic sparsity. The number of express links adapts to the workload: 129--174 for dense non-local patterns (MoE, all-to-all at $K$=32) and 16 for hierarchical patterns (tree all-reduce).
-
-Complexity is $O(L \cdot |C| \cdot K^2 \log K)$ per iteration, where $|C| = O(K^2)$.
+Given a traffic matrix and link budget, the greedy baseline starts from mandatory adjacent connectivity and repeatedly adds the link---adjacent or express---that most reduces $\rhomax$. Candidate links are limited to a maximum express distance $D$, and routing is re-evaluated on the chiplet-level graph after every tentative addition. When no single addition strictly improves $\rhomax$, the remaining budget is allocated proportionally to traffic demand, with any residue distributed to adjacent links so that the full budget is always consumed.
 
 \begin{algorithm}[t]
 \caption{Greedy Express Link Placement}
-\label{alg:greedy}
+\label{alg:greedy_express}
 \footnotesize
 \begin{algorithmic}[1]
 \REQUIRE Grid $G$, traffic $T$, budget $L$, max distance $D$
 \ENSURE Link allocation $A$
 \STATE $A[p] \leftarrow 1$ for all adjacent pairs $p$
-\STATE $C \leftarrow \{(i,j) : \text{hop}(i,j) \leq D\}$
+\STATE $C \leftarrow \{(i,j): \mathrm{hop}(i,j) \le D\}$
 \WHILE{budget remaining}
     \FORALL{$c \in C$}
-        \STATE Route traffic on $A \cup \{c\}$ (Dijkstra); compute $\rhomax$
+        \STATE Route traffic on $A \cup \{c\}$ and compute $\rhomax$
     \ENDFOR
-    \STATE Add $\arg\min_c \rhomax$; \textbf{break} if no improvement
+    \STATE Add $\arg\min_c \rhomax$ if it improves congestion;
+    \STATE otherwise distribute the remaining budget proportionally and terminate
 \ENDWHILE
 \end{algorithmic}
 \end{algorithm}
 
-\subsection{Baseline Strategies}
+This baseline is strong, deterministic, and fast, but it remains a local optimum: once no single extra link helps, greedy cannot explore \textit{replacing} one express link with another.
 
-We compare against four adjacent-only strategies:
-\textbf{(1) Uniform}: equal links to all adjacent pairs;
-\textbf{(2) Traffic-proportional}: links $\propto$ direct traffic $T[a,b]$;
-\textbf{(3) Load-aware}: links $\propto$ actual load including routing traffic;
-\textbf{(4) MinMax adjacent} (Kite-like): minimize $\rhomax$ via binary search, adjacent-only.
+\subsection{Warm-Started RL Refinement}
 
-Table~\ref{tab:mitigation} compares all strategies. Traffic-proportional is \textit{worse} than uniform (1.5$\times$ at $K$=16) because it assigns zero capacity to phantom-loaded links. Load-aware matches MinMax. Express greedy achieves the lowest $\rhomax$ by eliminating multi-hop routing.
+We therefore propose \textbf{RL-WS}, a reinforcement-learning refinement initialized from the greedy solution rather than from an empty topology.
 
-\begin{table}[t]
-\centering
-\caption{Mitigation Strategy Comparison (Analytical $\rhomax$)}
-\label{tab:mitigation}
-\footnotesize
-\begin{tabular}{clrrr}
-\toprule
-$K$ & Strategy & $\rhomax$ (3$\times$) & $\rhomax$ (4$\times$) & $\rhomax$ (6$\times$) \\
-\midrule
-\multirow{3}{*}{8}
-& Uniform & 5.9 & 4.4 & 2.9 \\
-& Traffic prop. & 10.3 & 10.3 & 5.1 \\
-& \textbf{Express} & \textbf{2.6} & \textbf{1.7} & \textbf{1.1} \\
-\midrule
-\multirow{3}{*}{16}
-& Uniform & 14.3 & 10.7 & 7.2 \\
-& Traffic prop. & 23.1 & 20.0 & 16.7 \\
-& \textbf{Express} & \textbf{6.6} & \textbf{4.6} & \textbf{2.7} \\
-\midrule
-\multirow{3}{*}{32}
-& Uniform & 56.7 & 42.6 & 28.4 \\
-& Traffic prop. & 132.7 & 132.7 & 118.7 \\
-& \textbf{Express} & \textbf{16.5} & \textbf{11.6} & \textbf{6.7} \\
-\bottomrule
-\end{tabular}
-\end{table}
+\textbf{Warm start.} RL-WS begins from the greedy allocation and performs a sequence of swap actions. Each action removes one existing link from the current allocation and adds one link to a different pair under the same total budget and per-pair cap. This keeps the search in the neighborhood of a strong feasible solution instead of forcing RL to rediscover basic structure from scratch.
+
+\textbf{State, action, and reward.} The RL state concatenates normalized traffic features and the current link-allocation vector. The action space is a remove-add swap over chiplet pairs. A 3-layer MLP surrogate, trained on 288 BookSim samples, predicts latency and provides the reward signal. We use REINFORCE for a few hundred episodes per configuration and keep the best predicted allocation found during exploration.
+
+\textbf{Why RL helps.} Greedy only considers one-step additions. RL-WS can reallocate budget from an already-placed express link to a better target pair once the global traffic pattern becomes clearer. This is most useful when NL\% is high and several long-distance bottlenecks compete for the same budget.
+
+\subsection{Post-Hoc Fallback}
+
+Surrogate-guided RL can still make mistakes. To prevent regressions, we run both the greedy and RL allocations in actual BookSim and keep the lower-latency one. This \textit{post-hoc fallback} turns RL-WS into a safe enhancement over greedy:
+\begin{equation}
+L_{\text{RL-WS}} \le L_{\text{greedy}}
+\end{equation}
+for every evaluated configuration by construction.
+
+We also retain a zero-shot GNN allocator as a fast comparison point in the generalization study, but RL-WS is the proposed method because it adapts per configuration and supports the fallback guarantee.
 
 % ============================================================
 \section{Evaluation}
@@ -310,88 +277,124 @@ $K$ & Strategy & $\rhomax$ (3$\times$) & $\rhomax$ (4$\times$) & $\rhomax$ (6$\t
 
 \subsection{Setup}
 
-We use BookSim~2.0~\cite{booksim} for cycle-accurate NoI simulation. Each of $K$ chiplets contains an $N \times N$ per-chiplet mesh ($N \in \{4, 8\}$), where $N$ determines the maximum inter-chiplet links per adjacent pair. We evaluate on $K$=16 (4$\times$4 grid) and $K$=32 (4$\times$8 grid) chiplet configurations. Traffic matrices are generated from five LLM communication patterns (Table~\ref{tab:workloads}), with chiplet-level traffic normalized to preserve relative weight magnitudes in BookSim. We sweep the link budget from 1$\times$ to $N\times$ per adjacent pair and measure latency at four injection rates (1--4$\times$ base load, normalized so total injection is constant across configurations).
+We use BookSim~2.0~\cite{booksim} for cycle-accurate NoI simulation. Each of $K$ chiplets contains an $N \times N$ internal mesh ($N \in \{4,8\}$), where $N$ is also the maximum links per chiplet pair. We evaluate four training workloads (Table~\ref{tab:workloads}) across ten hardware-budget configurations each:
+\begin{itemize}
+\item $K$=16, $N$=4 with budgets 2$\times$, 3$\times$, 4$\times$
+\item $K$=16, $N$=8 with budgets 2$\times$, 4$\times$, 7$\times$
+\item $K$=32, $N$=4 with budgets 2$\times$, 4$\times$
+\item $K$=32, $N$=8 with budgets 2$\times$, 4$\times$
+\end{itemize}
+This yields 40 main-result configurations.
 
-\textbf{Strategies}: (1) \textit{Adjacent uniform}---equal links to all adjacent pairs; (2) \textit{Express greedy}---workload-aware placement (Algorithm~\ref{alg:greedy}) with traffic-proportional fallback for remaining budget.
+\textbf{Baselines.} We compare adjacent-uniform no-express, greedy express placement, RL-WS, and zero-shot GNN where relevant.
 
-\textbf{Metric}: \textit{Express saving} = $(L_{\text{adj}} - L_{\text{expr}}) / L_{\text{adj}}$, where $L$ is latency at maximum injection rate with the same total link budget.
+\textbf{Metrics.} Our main metric is latency saving versus adjacent-uniform no-express:
+\begin{equation}
+\text{Saving vs Adj} = \frac{L_{\text{adj}} - L_{\text{method}}}{L_{\text{adj}}}.
+\end{equation}
+For ablations and unseen-workload comparisons, we also report improvement versus greedy:
+\begin{equation}
+\text{Improvement vs Greedy} = \frac{L_{\text{greedy}} - L_{\text{method}}}{L_{\text{greedy}}}.
+\end{equation}
+Positive values are better for the second metric.
 
-\subsection{Express Benefit Is Workload-Dependent}
+\subsection{Main Result: RL-WS Extends Greedy}
 
-Table~\ref{tab:main_result} shows the central result: express saving varies dramatically across workloads and correlates strongly with non-locality fraction. At $K$=32, $N$=8 (2048 nodes), skewed MoE achieves \textbf{57\%} latency reduction, hybrid TP+PP 51\%, all-to-all 53\%, and tree all-reduce 17\%. The pattern is consistent across all four configurations.
+Table~\ref{tab:main_result} shows the workload-level mean latency saving versus adjacent-uniform no-express baselines. Greedy already captures substantial benefit, but RL-WS raises the mean saving for every workload. The uplift is largest on Hybrid TP+PP and Uniform Random, where greedy leaves several competing non-local bottlenecks unresolved. Across all 40 configurations, RL-WS beats adjacent-uniform in every case and improves on greedy in 32/40, ties in 5, and loses in only 3; all three losses are within 1.7\% before fallback.
 
 \begin{table}[t]
 \centering
-\caption{Express Saving (\%) Across Workloads and Configurations}
+\caption{Main Result: Mean Saving vs Adjacent-Uniform No-Express Baseline (10 configs per workload)}
 \label{tab:main_result}
 \footnotesize
-\begin{tabular}{lcrrrr}
+\begin{tabular}{lcccc}
 \toprule
-Workload & NL\% & K16N4 & K16N8 & K32N4 & K32N8 \\
+Workload & NL\% & Greedy & RL-WS & $\Delta$ \\
 \midrule
-Tree All-Reduce & 42 & 9.1 & 15.2 & 11.1 & 17.0 \\
-Hybrid TP+PP & 77 & 21.5 & 32.2 & 36.4 & \textbf{51.1} \\
-MoE Expert & 91 & 86.5 & 83.9 & 21.6 & \textbf{57.1} \\
-Uniform Random & 89 & 21.7 & 32.7 & 30.4 & 44.3 \\
-All-to-All & 90 & 24.1 & 40.6 & 30.3 & 52.7 \\
+Tree AR & 42 & +12.0\% & \textbf{+13.0\%} & +1.0\%p \\
+Hybrid TP+PP & 77 & +24.0\% & \textbf{+26.8\%} & +2.8\%p \\
+Uniform & 89 & +29.4\% & \textbf{+32.7\%} & +3.3\%p \\
+MoE Skewed & 91 & +37.2\% & \textbf{+40.0\%} & +2.8\%p \\
+\midrule
+\textbf{Overall} & -- & +25.6\% & \textbf{+28.1\%} & +2.5\%p \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Fig.~\ref{fig:budget_sweep} shows the budget sweep for $K$=32, $N$=8. Two regimes are evident: (1)~at low budget ($\leq$2$\times$), express allocation starves adjacent links, causing \textit{worse} performance than adjacent-only (MoE drops to $-$119\% at 2$\times$); (2)~above a \textit{crossover budget} (3$\times$ for dense workloads), express saving rises monotonically, plateauing at 52\% by 8$\times$ budget. The crossover budget exists because express links consume part of the fixed link budget---at low budgets, the adjacent capacity reduction outweighs the shortcut benefit.
-
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.95\columnwidth]{figures/fig_k32n8_budget_sweep.pdf}
-\caption{Express saving vs.\ link budget at $K$=32, $N$=8 (2048 nodes). Non-local workloads (MoE, hybrid, all-to-all) achieve 51--57\% saving at 8$\times$ budget; tree all-reduce plateaus at 17\%.}
-\label{fig:budget_sweep}
+\includegraphics[width=0.95\columnwidth]{figures/fig_rl_nonlocality_scatter.png}
+\caption{Savings scale with non-locality. Each point is one of the 40 workload-configuration pairs. RL-WS consistently sits above greedy, and the best point reaches +56.4\% (MoE, $K$=32, $N$=8, 4$\times$ budget).}
+\label{fig:ml_nonlocality}
 \end{figure}
 
-\textbf{Scaling trends.} Comparing $N$=4 vs.\ $N$=8 columns in Table~\ref{tab:main_result}, express saving consistently increases with $N$ because larger per-chiplet meshes allow higher maximum budget ($N\times$ per pair), enabling more express links. Comparing $K$=16 vs.\ $K$=32, saving also increases for high-NL\% workloads---at larger $K$, phantom load is stronger, making express shortcuts more valuable.
+Fig.~\ref{fig:ml_nonlocality} shows the per-configuration view: higher NL\% produces larger saving, and RL-WS shifts the entire saving curve upward relative to greedy. This supports our thesis that NL\% predicts not only whether express links help, but also how much headroom remains after greedy placement.
 
-\subsection{Adjacent-Only Strategies Cannot Bypass Phantom Load}
+\subsection{Ablation: Warm-Start and Fallback}
 
-A key question is whether smarter \textit{allocation} among adjacent links---without changing the topology---can resolve phantom load. Table~\ref{tab:mitigation} answers definitively: at $K$=16 with 3$\times$ budget, adjacent uniform achieves $\rhomax$=14.3, while traffic-proportional (link count $\propto$ direct traffic) achieves $\rhomax$=23.1---\textit{1.6$\times$ worse}. Traffic-proportional starves phantom-loaded links that carry no direct traffic but high routing load. Express greedy, by contrast, reaches $\rhomax$=6.6 (2.2$\times$ better than uniform). This confirms that the bottleneck is topological, not allocational: no amount of adjacent-link redistribution can compensate for the multi-hop paths that cause phantom load.
-
-\subsection{Ablation: Placement Strategy}
-
-Express links are only effective if placed correctly. Table~\ref{tab:ablation} compares four placement strategies at $K$=16, $N$=4, budget $L$=72 (3$\times$), averaged over 3 random traffic seeds. \textbf{Random} express placement is \textit{worse} than no express at all ($\rhomax$ 18.0 vs.\ 14.3)---carelessly placed express links waste budget without targeting bottlenecks. \textbf{Fully connected} (one link to every pair, distribute remainder equally) achieves $\rhomax$=9.5, better than random but still 1.4$\times$ worse than greedy (6.6), because it spreads budget thinly across all $\binom{K}{2}$ pairs. This confirms that \textit{where} express links are placed matters more than simply having them---traffic-aware placement is essential.
+Table~\ref{tab:ablation} decomposes the contribution of each design choice. Cold-start RL is unreliable: over the 24 configurations where we ran it, it improves average latency only modestly and can be 11.3\% worse than greedy in the worst case. Warm-start substantially improves the mean, and fallback eliminates the remaining regressions by construction.
 
 \begin{table}[t]
 \centering
-\caption{Ablation: Placement Strategy ($K$=16, $N$=4, $L$=72, Avg.\ 3 Seeds)}
+\caption{Ablation vs Greedy. Negative mean means lower latency than greedy; worst-case is the largest regression over all evaluated configs.}
 \label{tab:ablation}
 \footnotesize
-\begin{tabular}{lc}
+\begin{tabular}{lccc}
 \toprule
-Strategy & $\rhomax$ \\
+Method & Mean vs Greedy & Worst & Wins \\
 \midrule
-Adjacent uniform & 14.3 \\
-Random express (avg.\ 10 seeds) & 18.0 (\textit{worse}) \\
-Fully connected & 9.5 \\
-\textbf{Greedy express} & \textbf{6.6} \\
+Greedy (baseline) & 0.0\% & 0.0\% & -- \\
+Cold RL & $-1.3\%$ & $+11.3\%$ & 13/24 \\
+Cold RL + fallback & $-3.6\%$ & $+0.0\%$ & 13/24 \\
+Warm RL & $-3.6\%$ & $+1.7\%$ & 32/40 \\
+\textbf{Warm RL + fallback} & $\mathbf{-3.7\%}$ & $\mathbf{+0.0\%}$ & \textbf{32/40} \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\subsection{Non-Locality Predicts Express Benefit}
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.95\columnwidth]{figures/fig_rl_tree_rescue.png}
+\caption{Tree all-reduce is the hardest structured workload. Cold-start RL hurts all six evaluated $K$=16 cases, while warm-start reduces the mean gap from +6.9\% to +0.2\% and recovers 2/6 wins.}
+\label{fig:tree_rescue}
+\end{figure}
 
-Fig.~\ref{fig:nonlocality} plots the non-locality fraction (NL\%) against the best express saving for all 20 workload-configuration combinations. At $K$=32, $N$=8, the Pearson correlation is $r$=0.93 ($p$=0.02, 95\% CI [0.26, 1.00]). Pooled across all 20 points (5 workloads $\times$ 4 configurations), Spearman rank correlation $\rho$=0.67 ($p$=0.001) confirms the monotonic relationship is robust. The pooled correlation is weaker than the $K$=32, $N$=8 slice because at smaller configurations, the link budget is limited by $N$ (at $N$=4, maximum budget is 4$\times$adjacent baseline), suppressing express benefit even for high-NL\% workloads.
+Fig.~\ref{fig:tree_rescue} explains why warm-start matters. On the structured Tree All-Reduce workload, cold-start RL cannot reliably infer the subtle placement decisions needed near the greedy solution. Initializing from greedy removes most of that penalty before fallback is even applied.
+
+\subsection{Generalization to Unseen Workloads}
+
+We next evaluate unseen workloads that were \textit{not} used during training: ring-allreduce, pipeline-parallel, and all-to-all. The GNN is used in zero-shot mode, while RL-WS retrains per configuration using the same surrogate and warm-start procedure.
+
+\begin{table}[t]
+\centering
+\caption{Generalization to Unseen Workloads (Improvement vs Greedy; positive is better)}
+\label{tab:generalization}
+\footnotesize
+\begin{tabular}{lcc}
+\toprule
+Unseen Workload & GNN (zero-shot) & RL-WS \\
+\midrule
+Ring All-Reduce & +14.7\% (4/4) & +11.5\% (2/2) \\
+Pipeline Parallel & +7.2\% (4/4) & +8.5\% (2/2) \\
+All-to-All & $-23.6\%$ FAIL (0/4) & +1.2\% (2/2) \\
+\midrule
+Overall & +0.6\%, 8/12 & \textbf{+7.1\%, 6/6} \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.95\columnwidth]{figures/fig_nonlocality_vs_saving.pdf}
-\caption{Non-locality fraction vs.\ best express saving across configurations. Higher non-locality yields larger express benefit ($r$=0.94 at $K$=32, $N$=8).}
-\label{fig:nonlocality}
+\includegraphics[width=0.95\columnwidth]{figures/fig_rl_generalization.png}
+\caption{Generalization summary on unseen workloads. RL-WS remains robust, while the zero-shot GNN collapses on all-to-all traffic due to distribution shift.}
+\label{fig:generalization}
 \end{figure}
 
-This correlation has a practical implication: chiplet architects can predict express link benefit from a static traffic analysis---computing NL\% from the workload's communication graph---without running cycle-accurate simulation. Workloads with NL\%$>$75\% (MoE, hybrid TP+PP, all-to-all) warrant express link investment with 51--57\% saving; workloads with NL\%$<$50\% (tree) see moderate benefit (17\%); and highly local workloads benefit primarily from adjacent capacity.
-
-\textbf{End-to-end impact.} Assuming NoI communication accounts for 10--15\% of LLM training iteration time (typical for MoE dispatch in chiplet-scale accelerators), a 57\% NoI latency reduction translates to \textbf{6--9\% end-to-end training speedup} by Amdahl's law. For the 51\% reduction under hybrid TP+PP, the speedup is 5--8\%.
+The GNN performs well on ring and pipeline traffic, but fails badly on all-to-all because its training distribution only contained heterogeneous traffic patterns with clear priority edges. All-to-all presents no such gradient. RL-WS remains robust because it retrains per configuration and warm-starts from a workload-aware greedy solution.
 
 \subsection{Physical Overhead}
 
-Express links require longer interposer wires than adjacent links. Table~\ref{tab:physical} quantifies the overhead per link based on estimates from CoWoS-class technology parameters (0.8\,$\mu$m wire pitch, 256 signal wires per 32\,GB/s link, 0.15\,pJ/bit/mm wire energy). A distance-3 express link uses a 30\,mm wire consuming 6.1\,mm$^2$ and 1.15\,W---3$\times$ the wire cost of an adjacent link. For 10 express links at average distance 2.5, total overhead is $\sim$56\,mm$^2$ (0.56\% of a 100$\times$100\,mm$^2$ interposer) and $\sim$15\,W (2.1\% of 700\,W TDP). Critically, this cost is more than offset by the \textit{reduction} in total link count: our express topology uses 72 total links (including $\sim$19 express) instead of 168 adjacent-only links, saving $\sim$96 PHY modules ($\sim$48\,mm$^2$ PHY area)---a net area saving despite the longer wires.
+Express links require longer interposer wires than adjacent links. Table~\ref{tab:physical} reports per-link cost estimates based on CoWoS-class parameters. The important point for this paper is comparative: learned placement does \textit{not} change the physical primitive, only which chiplet pairs receive the fixed budget. RL-WS therefore inherits the same per-link overhead model as greedy while extracting more benefit from the same total link budget.
 
 \begin{table}[t]
 \centering
@@ -411,10 +414,20 @@ Latency & 1\,cyc & 2\,cyc & 3\,cyc & 4\,cyc \\
 \end{table}
 
 % ============================================================
+\section{Discussion}
+% ============================================================
+
+\textbf{When is greedy enough?} For lower-NL\% workloads such as Tree All-Reduce, greedy already captures most of the available benefit and RL headroom is small. For higher-NL\% workloads, especially those with many competing long-distance pairs, RL-WS extracts additional gain by revisiting earlier greedy choices.
+
+\textbf{Design-time trade-off.} Greedy runs in seconds and is the right default. The zero-shot GNN is fastest (tens of milliseconds) but only safe in-distribution. RL-WS takes tens to hundreds of seconds per configuration, so it is best suited to offline design-space exploration on fixed workloads.
+
+\textbf{Limitations.} Our workloads are synthetic but workload-inspired rather than traced from full training runs; all results are simulator-based; and we do not provide a formal deadlock-freedom proof for the combined routing policy. These are important next steps before deployment-level claims.
+
+% ============================================================
 \section{Conclusion}
 % ============================================================
 
-\textbf{Conclusion.} We identified phantom load as a fundamental cost problem in chiplet NoI: multi-hop routing forces far more links than topologically necessary, with center-link amplification growing as $\Theta(K^{3/2})$---super-linearly with chiplet count. Express links break this cost-performance ceiling by eliminating phantom load at its source. Through BookSim simulation of five LLM workloads on $K$=16 and $K$=32 grids with $N$=4 and $N$=8 per-chiplet meshes, we showed that express link benefit is governed by the workload's non-locality fraction (NL\%): 57\% latency reduction for skewed MoE (NL=91\%), 51\% for hybrid TP+PP (NL=77\%), 53\% for all-to-all (NL=90\%), and 17\% for tree all-reduce (NL=42\%), with $r$=0.93 at $K$=32, $N$=8 and Spearman $\rho$=0.67 ($p$=0.001) across all 20 configurations. This provides architects a simple, simulation-free predictor for topology investment: compute NL\% from the workload's communication graph, and invest in express links when NL\% exceeds 40\%.
+\textbf{Conclusion.} Phantom load is a structural cost problem in chiplet NoI: under adjacent-only routing, center-link amplification grows as $\Theta(K^{3/2})$ and forces costly overprovisioning. Express links attack that problem directly, and the workload's non-locality fraction predicts how much they help. Building on this insight, RL-WS warm-starts from greedy placement, refines it through swap-based RL, and uses post-hoc BookSim fallback to guarantee no regression versus greedy. Across 40 evaluated configurations, greedy achieves 25.6\% mean latency saving over adjacent-uniform no-express baselines, while RL-WS improves that to 28.1\% and reaches 56.4\% in the best case. On unseen workloads, RL-WS remains robust while zero-shot GNN degrades on all-to-all traffic. Together, these results suggest a practical workflow for architects: compute NL\% first, use greedy as the baseline, and invoke warm-start RL when high non-locality leaves meaningful headroom beyond greedy placement.
 
 % ============================================================
 \balance
@@ -459,6 +472,9 @@ A.~Kumar et al., ``Express Virtual Channels: Towards the Ideal Interconnection F
 
 \bibitem{cmesh}
 J.~Balfour and W.~J.~Dally, ``Design Tradeoffs for Tiled CMP On-Chip Networks,'' in \textit{Proc. ICS}, 2006.
+
+\bibitem{parl}
+A.~Shukla, H.~Sharma, S.~Bharadwaj, V.~Abrol, and S.~Deb, ``Taming the Tail: NoI Topology Synthesis for Mixed DL Workloads on Chiplet-Based Accelerators,'' \textit{arXiv:2510.24113}, 2025.
 
 \end{thebibliography}
 
