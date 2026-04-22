@@ -206,8 +206,6 @@ def run_panel(R, C, K, N, panel_label, rate_multipliers=(1.0, 2.0, 3.0, 4.0)):
                      'rates': rates, 'workload': WORKLOAD,
                      'experiments': []}
 
-    prev_express_alloc = None  # for incremental greedy (monotonicity)
-
     for budget in budget_list:
         bpp = budget / n_adj
         print(f"\n  --- Budget: {budget} links ({bpp:.0f}x per adj) ---",
@@ -224,9 +222,7 @@ def run_panel(R, C, K, N, panel_label, rate_multipliers=(1.0, 2.0, 3.0, 4.0)):
                 if max_dist < 2:
                     max_dist = 2
                 alloc = alloc_express_greedy(grid, traffic, budget,
-                                             max_dist=max_dist,
-                                             initial_alloc=prev_express_alloc)
-                prev_express_alloc = dict(alloc)
+                                             max_dist=max_dist)
 
             capped = {p: min(n, max_links_per_pair) for p, n in alloc.items()}
             actual = sum(capped.values())

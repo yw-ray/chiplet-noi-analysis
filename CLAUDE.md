@@ -1,14 +1,30 @@
 # Chiplet NoI Express Link Analysis
 
-## Paper Status: Draft (revision in progress)
+## Paper Status: Draft (major revision with new ML contribution)
 
 **Target**: DAC/DATE (architecture track)
-**Title**: "Breaking the Cost-Performance Ceiling of Chiplet Networks with Express Links"
+**Title**: "Breaking the Cost-Performance Ceiling of LLM Chiplet Networks via Non-Locality-Guided Warm-Started Reinforcement Learning"
 **Repo**: https://github.com/yw-ray/chiplet-noi-analysis
+**See also**: `PAPER_PLAN.md` for full section/table/figure plan
 
-## Thesis
+## Thesis (Updated)
 
-Express link의 cost-performance benefit은 워크로드의 **non-locality fraction (NL%)**에 의해 결정된다. NL%가 높은 워크로드(MoE, TP+PP)에서 express link이 latency를 최대 82% 감소시키며, NL%만으로 express benefit을 예측할 수 있다 (Spearman ρ=0.90).
+1. **Non-locality fraction (NL%)** predicts express link benefit (Spearman ρ ≥ 0.9).
+2. **Greedy warm-started RL** with post-hoc BookSim fallback delivers strict Pareto dominance over greedy placement — 40/40 configs beat Adj Uniform, 32/40 beat greedy, never worse than greedy (guaranteed).
+3. NL% predicts both raw express benefit AND the headroom for RL refinement over greedy.
+
+## Headline Numbers
+
+- **Greedy**: +25.6% mean saving vs no-express (40 configs)
+- **RL-WS (ours)**: **+28.1%** mean, max **+56.4%** (MoE K32N8 4x)
+- **Generalization**: RL-WS wins 6/6 on UNSEEN workloads (ring, pipeline, all-to-all)
+- **Guarantee**: 100% ≤ greedy (post-hoc fallback)
+
+## Related Work Key Comparison
+
+- **PARL** (arXiv 2510.24113, Oct 2025) — closest prior work
+- PARL uses cold-start Maskable PPO without worst-case guarantee
+- We use greedy warm-start + post-hoc fallback + NL% predictor (all unique)
 
 ## Key Decisions
 

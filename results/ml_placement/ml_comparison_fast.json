@@ -1,0 +1,1066 @@
+[
+  {
+    "workload": "tree_allreduce",
+    "K": 16,
+    "N": 4,
+    "budget_per_pair": 2,
+    "budget": 48,
+    "adj_uniform": {
+      "latency": 34.5314,
+      "total_links": 48
+    },
+    "express_greedy": {
+      "latency": 31.9146,
+      "n_express": 8,
+      "total_links": 48
+    },
+    "gnn_agent": {
+      "latency": 35.2492,
+      "n_express": 5,
+      "total_links": 48,
+      "inference_time": 0.041565895080566406
+    },
+    "rl_agent": {
+      "latency": 35.4237,
+      "predicted_latency": 27.884902954101562,
+      "n_express": 22,
+      "total_links": 48,
+      "train_time": 19.473305702209473
+    }
+  },
+  {
+    "workload": "tree_allreduce",
+    "K": 16,
+    "N": 4,
+    "budget_per_pair": 3,
+    "budget": 72,
+    "adj_uniform": {
+      "latency": 33.0958,
+      "total_links": 72
+    },
+    "express_greedy": {
+      "latency": 30.3456,
+      "n_express": 9,
+      "total_links": 72
+    },
+    "gnn_agent": {
+      "latency": 33.6507,
+      "n_express": 10,
+      "total_links": 72,
+      "inference_time": 0.04193472862243652
+    },
+    "rl_agent": {
+      "latency": 33.7828,
+      "predicted_latency": 27.381404876708984,
+      "n_express": 39,
+      "total_links": 72,
+      "train_time": 20.655194520950317
+    }
+  },
+  {
+    "workload": "tree_allreduce",
+    "K": 16,
+    "N": 4,
+    "budget_per_pair": 4,
+    "budget": 96,
+    "adj_uniform": {
+      "latency": 32.7007,
+      "total_links": 96
+    },
+    "express_greedy": {
+      "latency": 29.6616,
+      "n_express": 14,
+      "total_links": 80
+    },
+    "gnn_agent": {
+      "latency": 31.4323,
+      "n_express": 13,
+      "total_links": 96,
+      "inference_time": 0.036477088928222656
+    },
+    "rl_agent": {
+      "latency": 31.9788,
+      "predicted_latency": 27.1654109954834,
+      "n_express": 52,
+      "total_links": 96,
+      "train_time": 25.705133199691772
+    }
+  },
+  {
+    "workload": "tree_allreduce",
+    "K": 16,
+    "N": 8,
+    "budget_per_pair": 2,
+    "budget": 48,
+    "adj_uniform": {
+      "latency": 60.4086,
+      "total_links": 48
+    },
+    "express_greedy": {
+      "latency": 53.0896,
+      "n_express": 8,
+      "total_links": 48
+    },
+    "gnn_agent": {
+      "latency": 60.4834,
+      "n_express": 2,
+      "total_links": 48,
+      "inference_time": 0.041924476623535156
+    },
+    "rl_agent": {
+      "latency": 54.0793,
+      "predicted_latency": 32.956790924072266,
+      "n_express": 23,
+      "total_links": 48,
+      "train_time": 27.581674098968506
+    }
+  },
+  {
+    "workload": "tree_allreduce",
+    "K": 16,
+    "N": 8,
+    "budget_per_pair": 4,
+    "budget": 96,
+    "adj_uniform": {
+      "latency": 54.9799,
+      "total_links": 96
+    },
+    "express_greedy": {
+      "latency": 47.4702,
+      "n_express": 14,
+      "total_links": 96
+    },
+    "gnn_agent": {
+      "latency": 55.1848,
+      "n_express": 8,
+      "total_links": 96,
+      "inference_time": 0.032855987548828125
+    },
+    "rl_agent": {
+      "latency": 49.6228,
+      "predicted_latency": 31.260395050048828,
+      "n_express": 51,
+      "total_links": 96,
+      "train_time": 25.558305025100708
+    }
+  },
+  {
+    "workload": "tree_allreduce",
+    "K": 16,
+    "N": 8,
+    "budget_per_pair": 7,
+    "budget": 168,
+    "adj_uniform": {
+      "latency": 52.4678,
+      "total_links": 168
+    },
+    "express_greedy": {
+      "latency": 44.7509,
+      "n_express": 16,
+      "total_links": 146
+    },
+    "gnn_agent": {
+      "latency": 48.0275,
+      "n_express": 13,
+      "total_links": 168,
+      "inference_time": 0.061112403869628906
+    },
+    "rl_agent": {
+      "latency": 47.0551,
+      "predicted_latency": 31.010772705078125,
+      "n_express": 75,
+      "total_links": 168,
+      "train_time": 38.39520287513733
+    }
+  },
+  {
+    "workload": "tree_allreduce",
+    "K": 32,
+    "N": 4,
+    "budget_per_pair": 2,
+    "budget": 104,
+    "adj_uniform": {
+      "latency": 38.7386,
+      "total_links": 104
+    },
+    "express_greedy": {
+      "latency": 34.5352,
+      "n_express": 16,
+      "total_links": 104
+    },
+    "gnn_agent": {
+      "latency": 37.975,
+      "n_express": 10,
+      "total_links": 104,
+      "inference_time": 0.03698277473449707
+    },
+    "rl_agent": null
+  },
+  {
+    "workload": "tree_allreduce",
+    "K": 32,
+    "N": 4,
+    "budget_per_pair": 4,
+    "budget": 208,
+    "adj_uniform": {
+      "latency": 36.8802,
+      "total_links": 208
+    },
+    "express_greedy": {
+      "latency": 33.0445,
+      "n_express": 16,
+      "total_links": 160
+    },
+    "gnn_agent": {
+      "latency": 34.5901,
+      "n_express": 33,
+      "total_links": 208,
+      "inference_time": 0.06261157989501953
+    },
+    "rl_agent": null
+  },
+  {
+    "workload": "tree_allreduce",
+    "K": 32,
+    "N": 8,
+    "budget_per_pair": 2,
+    "budget": 104,
+    "adj_uniform": {
+      "latency": 68.1333,
+      "total_links": 104
+    },
+    "express_greedy": {
+      "latency": 56.7059,
+      "n_express": 16,
+      "total_links": 104
+    },
+    "gnn_agent": {
+      "latency": 65.4379,
+      "n_express": 4,
+      "total_links": 104,
+      "inference_time": 0.058503150939941406
+    },
+    "rl_agent": null
+  },
+  {
+    "workload": "tree_allreduce",
+    "K": 32,
+    "N": 8,
+    "budget_per_pair": 4,
+    "budget": 208,
+    "adj_uniform": {
+      "latency": 62.8914,
+      "total_links": 208
+    },
+    "express_greedy": {
+      "latency": 52.6955,
+      "n_express": 16,
+      "total_links": 208
+    },
+    "gnn_agent": {
+      "latency": 58.1847,
+      "n_express": 16,
+      "total_links": 208,
+      "inference_time": 0.05533766746520996
+    },
+    "rl_agent": null
+  },
+  {
+    "workload": "hybrid_tp_pp",
+    "K": 16,
+    "N": 4,
+    "budget_per_pair": 2,
+    "budget": 48,
+    "adj_uniform": {
+      "latency": 41.7565,
+      "total_links": 48
+    },
+    "express_greedy": {
+      "latency": 39.5648,
+      "n_express": 4,
+      "total_links": 48
+    },
+    "gnn_agent": {
+      "latency": 37.4229,
+      "n_express": 6,
+      "total_links": 48,
+      "inference_time": 0.046579599380493164
+    },
+    "rl_agent": {
+      "latency": 36.8811,
+      "predicted_latency": 28.861438751220703,
+      "n_express": 23,
+      "total_links": 48,
+      "train_time": 18.817763566970825
+    }
+  },
+  {
+    "workload": "hybrid_tp_pp",
+    "K": 16,
+    "N": 4,
+    "budget_per_pair": 3,
+    "budget": 72,
+    "adj_uniform": {
+      "latency": 40.4677,
+      "total_links": 72
+    },
+    "express_greedy": {
+      "latency": 33.5675,
+      "n_express": 28,
+      "total_links": 72
+    },
+    "gnn_agent": {
+      "latency": 34.9545,
+      "n_express": 12,
+      "total_links": 72,
+      "inference_time": 0.05648064613342285
+    },
+    "rl_agent": {
+      "latency": 34.0421,
+      "predicted_latency": 27.85368537902832,
+      "n_express": 42,
+      "total_links": 72,
+      "train_time": 21.387118339538574
+    }
+  },
+  {
+    "workload": "hybrid_tp_pp",
+    "K": 16,
+    "N": 4,
+    "budget_per_pair": 4,
+    "budget": 96,
+    "adj_uniform": {
+      "latency": 40.1156,
+      "total_links": 96
+    },
+    "express_greedy": {
+      "latency": 31.4928,
+      "n_express": 32,
+      "total_links": 96
+    },
+    "gnn_agent": {
+      "latency": 33.4938,
+      "n_express": 18,
+      "total_links": 96,
+      "inference_time": 0.04520988464355469
+    },
+    "rl_agent": {
+      "latency": 33.2939,
+      "predicted_latency": 27.890411376953125,
+      "n_express": 51,
+      "total_links": 96,
+      "train_time": 26.45864510536194
+    }
+  },
+  {
+    "workload": "hybrid_tp_pp",
+    "K": 16,
+    "N": 8,
+    "budget_per_pair": 2,
+    "budget": 48,
+    "adj_uniform": {
+      "latency": 72.7148,
+      "total_links": 48
+    },
+    "express_greedy": {
+      "latency": 66.6015,
+      "n_express": 4,
+      "total_links": 48
+    },
+    "gnn_agent": {
+      "latency": 66.4099,
+      "n_express": 3,
+      "total_links": 48,
+      "inference_time": 0.03942990303039551
+    },
+    "rl_agent": {
+      "latency": 56.091,
+      "predicted_latency": 35.02981948852539,
+      "n_express": 23,
+      "total_links": 48,
+      "train_time": 20.797972440719604
+    }
+  },
+  {
+    "workload": "hybrid_tp_pp",
+    "K": 16,
+    "N": 8,
+    "budget_per_pair": 4,
+    "budget": 96,
+    "adj_uniform": {
+      "latency": 68.4458,
+      "total_links": 96
+    },
+    "express_greedy": {
+      "latency": 49.8596,
+      "n_express": 32,
+      "total_links": 96
+    },
+    "gnn_agent": {
+      "latency": 56.0527,
+      "n_express": 9,
+      "total_links": 96,
+      "inference_time": 0.04228472709655762
+    },
+    "rl_agent": {
+      "latency": 51.0112,
+      "predicted_latency": 32.46097946166992,
+      "n_express": 54,
+      "total_links": 96,
+      "train_time": 57.67631435394287
+    }
+  },
+  {
+    "workload": "hybrid_tp_pp",
+    "K": 16,
+    "N": 8,
+    "budget_per_pair": 7,
+    "budget": 168,
+    "adj_uniform": {
+      "latency": 66.5374,
+      "total_links": 168
+    },
+    "express_greedy": {
+      "latency": 46.3679,
+      "n_express": 32,
+      "total_links": 168
+    },
+    "gnn_agent": {
+      "latency": 49.5525,
+      "n_express": 18,
+      "total_links": 168,
+      "inference_time": 0.03369021415710449
+    },
+    "rl_agent": {
+      "latency": 48.0037,
+      "predicted_latency": 32.46860885620117,
+      "n_express": 78,
+      "total_links": 168,
+      "train_time": 93.76758933067322
+    }
+  },
+  {
+    "workload": "hybrid_tp_pp",
+    "K": 32,
+    "N": 4,
+    "budget_per_pair": 2,
+    "budget": 104,
+    "adj_uniform": {
+      "latency": 57.8226,
+      "total_links": 104
+    },
+    "express_greedy": {
+      "latency": 46.8215,
+      "n_express": 24,
+      "total_links": 104
+    },
+    "gnn_agent": {
+      "latency": 46.0061,
+      "n_express": 13,
+      "total_links": 104,
+      "inference_time": 0.04014110565185547
+    },
+    "rl_agent": null
+  },
+  {
+    "workload": "hybrid_tp_pp",
+    "K": 32,
+    "N": 4,
+    "budget_per_pair": 4,
+    "budget": 208,
+    "adj_uniform": {
+      "latency": 55.9328,
+      "total_links": 208
+    },
+    "express_greedy": {
+      "latency": 35.6905,
+      "n_express": 44,
+      "total_links": 208
+    },
+    "gnn_agent": {
+      "latency": 39.552,
+      "n_express": 39,
+      "total_links": 208,
+      "inference_time": 0.0527348518371582
+    },
+    "rl_agent": null
+  },
+  {
+    "workload": "hybrid_tp_pp",
+    "K": 32,
+    "N": 8,
+    "budget_per_pair": 2,
+    "budget": 104,
+    "adj_uniform": {
+      "latency": 105.641,
+      "total_links": 104
+    },
+    "express_greedy": {
+      "latency": 75.9596,
+      "n_express": 24,
+      "total_links": 104
+    },
+    "gnn_agent": {
+      "latency": 80.8942,
+      "n_express": 7,
+      "total_links": 104,
+      "inference_time": 0.051837921142578125
+    },
+    "rl_agent": null
+  },
+  {
+    "workload": "hybrid_tp_pp",
+    "K": 32,
+    "N": 8,
+    "budget_per_pair": 4,
+    "budget": 208,
+    "adj_uniform": {
+      "latency": 100.541,
+      "total_links": 208
+    },
+    "express_greedy": {
+      "latency": 52.9815,
+      "n_express": 44,
+      "total_links": 208
+    },
+    "gnn_agent": {
+      "latency": 68.9068,
+      "n_express": 20,
+      "total_links": 208,
+      "inference_time": 0.058506011962890625
+    },
+    "rl_agent": null
+  },
+  {
+    "workload": "moe",
+    "K": 16,
+    "N": 4,
+    "budget_per_pair": 2,
+    "budget": 48,
+    "adj_uniform": {
+      "latency": 50.9777,
+      "total_links": 48
+    },
+    "express_greedy": {
+      "latency": 39.437,
+      "n_express": 14,
+      "total_links": 48
+    },
+    "gnn_agent": {
+      "latency": 41.1244,
+      "n_express": 6,
+      "total_links": 48,
+      "inference_time": 0.05563163757324219
+    },
+    "rl_agent": {
+      "latency": 36.9884,
+      "predicted_latency": 33.4780387878418,
+      "n_express": 22,
+      "total_links": 48,
+      "train_time": 14.071078538894653
+    }
+  },
+  {
+    "workload": "moe",
+    "K": 16,
+    "N": 4,
+    "budget_per_pair": 3,
+    "budget": 72,
+    "adj_uniform": {
+      "latency": 49.5139,
+      "total_links": 72
+    },
+    "express_greedy": {
+      "latency": 34.677,
+      "n_express": 24,
+      "total_links": 72
+    },
+    "gnn_agent": {
+      "latency": 36.7947,
+      "n_express": 12,
+      "total_links": 72,
+      "inference_time": 0.032425880432128906
+    },
+    "rl_agent": {
+      "latency": 35.0653,
+      "predicted_latency": 32.200401306152344,
+      "n_express": 38,
+      "total_links": 72,
+      "train_time": 17.15774631500244
+    }
+  },
+  {
+    "workload": "moe",
+    "K": 16,
+    "N": 4,
+    "budget_per_pair": 4,
+    "budget": 96,
+    "adj_uniform": {
+      "latency": 49.6391,
+      "total_links": 96
+    },
+    "express_greedy": {
+      "latency": 33.0665,
+      "n_express": 29,
+      "total_links": 94
+    },
+    "gnn_agent": {
+      "latency": 34.1048,
+      "n_express": 18,
+      "total_links": 96,
+      "inference_time": 0.03240823745727539
+    },
+    "rl_agent": {
+      "latency": 32.7868,
+      "predicted_latency": 31.619308471679688,
+      "n_express": 52,
+      "total_links": 96,
+      "train_time": 23.982200145721436
+    }
+  },
+  {
+    "workload": "moe",
+    "K": 16,
+    "N": 8,
+    "budget_per_pair": 2,
+    "budget": 48,
+    "adj_uniform": {
+      "latency": 90.011,
+      "total_links": 48
+    },
+    "express_greedy": {
+      "latency": 63.1221,
+      "n_express": 14,
+      "total_links": 48
+    },
+    "gnn_agent": {
+      "latency": 73.9549,
+      "n_express": 3,
+      "total_links": 48,
+      "inference_time": 0.03250694274902344
+    },
+    "rl_agent": {
+      "latency": 55.2384,
+      "predicted_latency": 43.27891159057617,
+      "n_express": 23,
+      "total_links": 48,
+      "train_time": 15.104933261871338
+    }
+  },
+  {
+    "workload": "moe",
+    "K": 16,
+    "N": 8,
+    "budget_per_pair": 4,
+    "budget": 96,
+    "adj_uniform": {
+      "latency": 85.263,
+      "total_links": 96
+    },
+    "express_greedy": {
+      "latency": 50.6134,
+      "n_express": 29,
+      "total_links": 96
+    },
+    "gnn_agent": {
+      "latency": 58.7348,
+      "n_express": 9,
+      "total_links": 96,
+      "inference_time": 0.06160330772399902
+    },
+    "rl_agent": {
+      "latency": 50.1245,
+      "predicted_latency": 38.67779541015625,
+      "n_express": 52,
+      "total_links": 96,
+      "train_time": 31.1126229763031
+    }
+  },
+  {
+    "workload": "moe",
+    "K": 16,
+    "N": 8,
+    "budget_per_pair": 7,
+    "budget": 168,
+    "adj_uniform": {
+      "latency": 83.184,
+      "total_links": 168
+    },
+    "express_greedy": {
+      "latency": 47.2481,
+      "n_express": 37,
+      "total_links": 166
+    },
+    "gnn_agent": {
+      "latency": 49.6362,
+      "n_express": 18,
+      "total_links": 168,
+      "inference_time": 0.031967878341674805
+    },
+    "rl_agent": {
+      "latency": 46.4484,
+      "predicted_latency": 38.075321197509766,
+      "n_express": 79,
+      "total_links": 168,
+      "train_time": 31.903733730316162
+    }
+  },
+  {
+    "workload": "moe",
+    "K": 32,
+    "N": 4,
+    "budget_per_pair": 2,
+    "budget": 104,
+    "adj_uniform": {
+      "latency": 72.7372,
+      "total_links": 104
+    },
+    "express_greedy": {
+      "latency": 48.3945,
+      "n_express": 31,
+      "total_links": 103
+    },
+    "gnn_agent": {
+      "latency": 48.8125,
+      "n_express": 13,
+      "total_links": 104,
+      "inference_time": 0.027948379516601562
+    },
+    "rl_agent": null
+  },
+  {
+    "workload": "moe",
+    "K": 32,
+    "N": 4,
+    "budget_per_pair": 4,
+    "budget": 208,
+    "adj_uniform": {
+      "latency": 74.004,
+      "total_links": 208
+    },
+    "express_greedy": {
+      "latency": 41.0555,
+      "n_express": 61,
+      "total_links": 190
+    },
+    "gnn_agent": {
+      "latency": 40.0894,
+      "n_express": 39,
+      "total_links": 208,
+      "inference_time": 0.03516983985900879
+    },
+    "rl_agent": null
+  },
+  {
+    "workload": "moe",
+    "K": 32,
+    "N": 8,
+    "budget_per_pair": 2,
+    "budget": 104,
+    "adj_uniform": {
+      "latency": 130.583,
+      "total_links": 104
+    },
+    "express_greedy": {
+      "latency": 75.7681,
+      "n_express": 31,
+      "total_links": 104
+    },
+    "gnn_agent": {
+      "latency": 83.4922,
+      "n_express": 7,
+      "total_links": 104,
+      "inference_time": 0.03766155242919922
+    },
+    "rl_agent": null
+  },
+  {
+    "workload": "moe",
+    "K": 32,
+    "N": 8,
+    "budget_per_pair": 4,
+    "budget": 208,
+    "adj_uniform": {
+      "latency": 125.994,
+      "total_links": 208
+    },
+    "express_greedy": {
+      "latency": 60.3205,
+      "n_express": 61,
+      "total_links": 205
+    },
+    "gnn_agent": {
+      "latency": 67.7387,
+      "n_express": 20,
+      "total_links": 208,
+      "inference_time": 0.017335891723632812
+    },
+    "rl_agent": null
+  },
+  {
+    "workload": "uniform_random",
+    "K": 16,
+    "N": 4,
+    "budget_per_pair": 2,
+    "budget": 48,
+    "adj_uniform": {
+      "latency": 48.8037,
+      "total_links": 48
+    },
+    "express_greedy": {
+      "latency": 39.5726,
+      "n_express": 13,
+      "total_links": 48
+    },
+    "gnn_agent": {
+      "latency": 43.2798,
+      "n_express": 6,
+      "total_links": 48,
+      "inference_time": 0.03216695785522461
+    },
+    "rl_agent": {
+      "latency": 37.9971,
+      "predicted_latency": 32.53646469116211,
+      "n_express": 21,
+      "total_links": 48,
+      "train_time": 10.287364959716797
+    }
+  },
+  {
+    "workload": "uniform_random",
+    "K": 16,
+    "N": 4,
+    "budget_per_pair": 3,
+    "budget": 72,
+    "adj_uniform": {
+      "latency": 47.616,
+      "total_links": 72
+    },
+    "express_greedy": {
+      "latency": 37.8698,
+      "n_express": 17,
+      "total_links": 72
+    },
+    "gnn_agent": {
+      "latency": 40.5125,
+      "n_express": 12,
+      "total_links": 72,
+      "inference_time": 0.025191068649291992
+    },
+    "rl_agent": {
+      "latency": 36.3132,
+      "predicted_latency": 30.38712501525879,
+      "n_express": 37,
+      "total_links": 72,
+      "train_time": 10.769783020019531
+    }
+  },
+  {
+    "workload": "uniform_random",
+    "K": 16,
+    "N": 4,
+    "budget_per_pair": 4,
+    "budget": 96,
+    "adj_uniform": {
+      "latency": 47.2595,
+      "total_links": 96
+    },
+    "express_greedy": {
+      "latency": 36.68,
+      "n_express": 18,
+      "total_links": 94
+    },
+    "gnn_agent": {
+      "latency": 37.634,
+      "n_express": 18,
+      "total_links": 96,
+      "inference_time": 0.032057762145996094
+    },
+    "rl_agent": {
+      "latency": 34.0803,
+      "predicted_latency": 29.697059631347656,
+      "n_express": 50,
+      "total_links": 96,
+      "train_time": 15.1796133518219
+    }
+  },
+  {
+    "workload": "uniform_random",
+    "K": 16,
+    "N": 8,
+    "budget_per_pair": 2,
+    "budget": 48,
+    "adj_uniform": {
+      "latency": 87.1352,
+      "total_links": 48
+    },
+    "express_greedy": {
+      "latency": 61.7741,
+      "n_express": 13,
+      "total_links": 48
+    },
+    "gnn_agent": {
+      "latency": 77.5997,
+      "n_express": 3,
+      "total_links": 48,
+      "inference_time": 0.027662992477416992
+    },
+    "rl_agent": {
+      "latency": 56.3066,
+      "predicted_latency": 41.16518020629883,
+      "n_express": 23,
+      "total_links": 48,
+      "train_time": 8.676037311553955
+    }
+  },
+  {
+    "workload": "uniform_random",
+    "K": 16,
+    "N": 8,
+    "budget_per_pair": 4,
+    "budget": 96,
+    "adj_uniform": {
+      "latency": 83.1307,
+      "total_links": 96
+    },
+    "express_greedy": {
+      "latency": 57.0816,
+      "n_express": 18,
+      "total_links": 96
+    },
+    "gnn_agent": {
+      "latency": 64.0877,
+      "n_express": 9,
+      "total_links": 96,
+      "inference_time": 0.03268575668334961
+    },
+    "rl_agent": {
+      "latency": 51.4702,
+      "predicted_latency": 37.85788345336914,
+      "n_express": 50,
+      "total_links": 96,
+      "train_time": 13.069496870040894
+    }
+  },
+  {
+    "workload": "uniform_random",
+    "K": 16,
+    "N": 8,
+    "budget_per_pair": 7,
+    "budget": 168,
+    "adj_uniform": {
+      "latency": 81.0997,
+      "total_links": 168
+    },
+    "express_greedy": {
+      "latency": 53.1888,
+      "n_express": 22,
+      "total_links": 164
+    },
+    "gnn_agent": {
+      "latency": 53.2864,
+      "n_express": 18,
+      "total_links": 168,
+      "inference_time": 0.028519392013549805
+    },
+    "rl_agent": {
+      "latency": 48.6454,
+      "predicted_latency": 37.79109191894531,
+      "n_express": 74,
+      "total_links": 168,
+      "train_time": 20.483700037002563
+    }
+  },
+  {
+    "workload": "uniform_random",
+    "K": 32,
+    "N": 4,
+    "budget_per_pair": 2,
+    "budget": 104,
+    "adj_uniform": {
+      "latency": 64.7866,
+      "total_links": 104
+    },
+    "express_greedy": {
+      "latency": 48.8569,
+      "n_express": 18,
+      "total_links": 104
+    },
+    "gnn_agent": {
+      "latency": 55.0696,
+      "n_express": 13,
+      "total_links": 104,
+      "inference_time": 0.031970977783203125
+    },
+    "rl_agent": null
+  },
+  {
+    "workload": "uniform_random",
+    "K": 32,
+    "N": 4,
+    "budget_per_pair": 4,
+    "budget": 208,
+    "adj_uniform": {
+      "latency": 63.3903,
+      "total_links": 208
+    },
+    "express_greedy": {
+      "latency": 42.8728,
+      "n_express": 40,
+      "total_links": 200
+    },
+    "gnn_agent": {
+      "latency": 49.4288,
+      "n_express": 39,
+      "total_links": 208,
+      "inference_time": 0.03302931785583496
+    },
+    "rl_agent": null
+  },
+  {
+    "workload": "uniform_random",
+    "K": 32,
+    "N": 8,
+    "budget_per_pair": 2,
+    "budget": 104,
+    "adj_uniform": {
+      "latency": 118.54,
+      "total_links": 104
+    },
+    "express_greedy": {
+      "latency": 75.4163,
+      "n_express": 18,
+      "total_links": 104
+    },
+    "gnn_agent": {
+      "latency": 97.6492,
+      "n_express": 7,
+      "total_links": 104,
+      "inference_time": 0.03742504119873047
+    },
+    "rl_agent": null
+  },
+  {
+    "workload": "uniform_random",
+    "K": 32,
+    "N": 8,
+    "budget_per_pair": 4,
+    "budget": 208,
+    "adj_uniform": {
+      "latency": 114.856,
+      "total_links": 208
+    },
+    "express_greedy": {
+      "latency": 64.5798,
+      "n_express": 40,
+      "total_links": 208
+    },
+    "gnn_agent": {
+      "latency": 87.2557,
+      "n_express": 20,
+      "total_links": 208,
+      "inference_time": 0.038216352462768555
+    },
+    "rl_agent": null
+  }
+]

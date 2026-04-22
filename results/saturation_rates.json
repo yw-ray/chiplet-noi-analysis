@@ -1,0 +1,703 @@
+{
+  "tree_allreduce": {
+    "K16_N4": {
+      "panel": "K16_N4",
+      "workload": "tree_allreduce",
+      "base_rate": 0.00125,
+      "saturation_mult": 16,
+      "saturation_rate": 0.02,
+      "sweep": [
+        {
+          "mult": 1,
+          "rate": 0.00125,
+          "latency": 32.7007,
+          "throughput": 0.00123828,
+          "utilization": 0.990624,
+          "saturated": false
+        },
+        {
+          "mult": 2,
+          "rate": 0.0025,
+          "latency": 33.0104,
+          "throughput": 0.00249922,
+          "utilization": 0.9996879999999999,
+          "saturated": false
+        },
+        {
+          "mult": 4,
+          "rate": 0.005,
+          "latency": 33.7559,
+          "throughput": 0.00497422,
+          "utilization": 0.994844,
+          "saturated": false
+        },
+        {
+          "mult": 8,
+          "rate": 0.01,
+          "latency": 35.9595,
+          "throughput": 0.00997904,
+          "utilization": 0.997904,
+          "saturated": false
+        },
+        {
+          "mult": 16,
+          "rate": 0.02,
+          "latency": 47.451,
+          "throughput": 0.0199236,
+          "utilization": 0.99618,
+          "saturated": false
+        },
+        {
+          "mult": 32,
+          "rate": 0.04,
+          "latency": 1032.64,
+          "throughput": 0.0143207,
+          "utilization": 0.3580175,
+          "saturated": true
+        }
+      ]
+    },
+    "K16_N8": {
+      "panel": "K16_N8",
+      "workload": "tree_allreduce",
+      "base_rate": 0.0003125,
+      "saturation_mult": 32,
+      "saturation_rate": 0.01,
+      "sweep": [
+        {
+          "mult": 1,
+          "rate": 0.0003125,
+          "latency": 52.37,
+          "throughput": 0.000311426,
+          "utilization": 0.9965632,
+          "saturated": false
+        },
+        {
+          "mult": 2,
+          "rate": 0.000625,
+          "latency": 52.4963,
+          "throughput": 0.000626302,
+          "utilization": 1.0020832,
+          "saturated": false
+        },
+        {
+          "mult": 4,
+          "rate": 0.00125,
+          "latency": 53.0379,
+          "throughput": 0.00124772,
+          "utilization": 0.998176,
+          "saturated": false
+        },
+        {
+          "mult": 8,
+          "rate": 0.0025,
+          "latency": 53.7768,
+          "throughput": 0.00249915,
+          "utilization": 0.99966,
+          "saturated": false
+        },
+        {
+          "mult": 16,
+          "rate": 0.005,
+          "latency": 56.6724,
+          "throughput": 0.00498779,
+          "utilization": 0.997558,
+          "saturated": false
+        },
+        {
+          "mult": 32,
+          "rate": 0.01,
+          "latency": 137.024,
+          "throughput": 0.00960791,
+          "utilization": 0.9607910000000001,
+          "saturated": false
+        },
+        {
+          "mult": 64,
+          "rate": 0.02,
+          "latency": 726.216,
+          "throughput": 0.00677715,
+          "utilization": 0.3388575,
+          "saturated": true
+        }
+      ]
+    },
+    "K32_N4": {
+      "panel": "K32_N4",
+      "workload": "tree_allreduce",
+      "base_rate": 0.000625,
+      "saturation_mult": 16,
+      "saturation_rate": 0.01,
+      "sweep": [
+        {
+          "mult": 1,
+          "rate": 0.000625,
+          "latency": 36.8802,
+          "throughput": 0.000622786,
+          "utilization": 0.9964575999999999,
+          "saturated": false
+        },
+        {
+          "mult": 2,
+          "rate": 0.00125,
+          "latency": 36.9725,
+          "throughput": 0.00124902,
+          "utilization": 0.999216,
+          "saturated": false
+        },
+        {
+          "mult": 4,
+          "rate": 0.0025,
+          "latency": 37.4063,
+          "throughput": 0.00249746,
+          "utilization": 0.998984,
+          "saturated": false
+        },
+        {
+          "mult": 8,
+          "rate": 0.005,
+          "latency": 38.6485,
+          "throughput": 0.00501354,
+          "utilization": 1.0027080000000002,
+          "saturated": false
+        },
+        {
+          "mult": 16,
+          "rate": 0.01,
+          "latency": 42.485,
+          "throughput": 0.0100363,
+          "utilization": 1.00363,
+          "saturated": false
+        },
+        {
+          "mult": 32,
+          "rate": 0.02,
+          "latency": 166.085,
+          "throughput": 0.0154168,
+          "utilization": 0.77084,
+          "saturated": true
+        }
+      ]
+    },
+    "K32_N8": {
+      "panel": "K32_N8",
+      "workload": "tree_allreduce",
+      "base_rate": 0.00015625,
+      "saturation_mult": 2,
+      "saturation_rate": 0.0003125,
+      "sweep": [
+        {
+          "mult": 1,
+          "rate": 0.00015625,
+          "latency": 60.3893,
+          "throughput": 0.000152165,
+          "utilization": 0.973856,
+          "saturated": false
+        },
+        {
+          "mult": 2,
+          "rate": 0.0003125,
+          "latency": 61.2145,
+          "throughput": 0.000308708,
+          "utilization": 0.9878655999999999,
+          "saturated": false
+        },
+        {
+          "mult": 4,
+          "rate": 0.000625,
+          "latency": null,
+          "throughput": null,
+          "saturated": true
+        }
+      ]
+    }
+  },
+  "hybrid_tp_pp": {
+    "K16_N4": {
+      "panel": "K16_N4",
+      "workload": "hybrid_tp_pp",
+      "base_rate": 0.00125,
+      "saturation_mult": 8,
+      "saturation_rate": 0.01,
+      "sweep": [
+        {
+          "mult": 1,
+          "rate": 0.00125,
+          "latency": 40.1156,
+          "throughput": 0.00123815,
+          "utilization": 0.99052,
+          "saturated": false
+        },
+        {
+          "mult": 2,
+          "rate": 0.0025,
+          "latency": 40.4979,
+          "throughput": 0.00249883,
+          "utilization": 0.999532,
+          "saturated": false
+        },
+        {
+          "mult": 4,
+          "rate": 0.005,
+          "latency": 42.2874,
+          "throughput": 0.00497513,
+          "utilization": 0.9950260000000001,
+          "saturated": false
+        },
+        {
+          "mult": 8,
+          "rate": 0.01,
+          "latency": 200.983,
+          "throughput": 0.00982891,
+          "utilization": 0.982891,
+          "saturated": false
+        },
+        {
+          "mult": 16,
+          "rate": 0.02,
+          "latency": 291.656,
+          "throughput": 0.015716,
+          "utilization": 0.7858,
+          "saturated": true
+        }
+      ]
+    },
+    "K16_N8": {
+      "panel": "K16_N8",
+      "workload": "hybrid_tp_pp",
+      "base_rate": 0.0003125,
+      "saturation_mult": 16,
+      "saturation_rate": 0.005,
+      "sweep": [
+        {
+          "mult": 1,
+          "rate": 0.0003125,
+          "latency": 66.4739,
+          "throughput": 0.000311849,
+          "utilization": 0.9979167999999999,
+          "saturated": false
+        },
+        {
+          "mult": 2,
+          "rate": 0.000625,
+          "latency": 67.1811,
+          "throughput": 0.000626172,
+          "utilization": 1.0018752,
+          "saturated": false
+        },
+        {
+          "mult": 4,
+          "rate": 0.00125,
+          "latency": 67.8008,
+          "throughput": 0.00124857,
+          "utilization": 0.9988560000000001,
+          "saturated": false
+        },
+        {
+          "mult": 8,
+          "rate": 0.0025,
+          "latency": 71.0987,
+          "throughput": 0.00249906,
+          "utilization": 0.999624,
+          "saturated": false
+        },
+        {
+          "mult": 16,
+          "rate": 0.005,
+          "latency": 152.566,
+          "throughput": 0.00461846,
+          "utilization": 0.9236919999999998,
+          "saturated": false
+        },
+        {
+          "mult": 32,
+          "rate": 0.01,
+          "latency": 281.376,
+          "throughput": 0.0072085,
+          "utilization": 0.72085,
+          "saturated": true
+        }
+      ]
+    },
+    "K32_N4": {
+      "panel": "K32_N4",
+      "workload": "hybrid_tp_pp",
+      "base_rate": 0.000625,
+      "saturation_mult": 16,
+      "saturation_rate": 0.01,
+      "sweep": [
+        {
+          "mult": 1,
+          "rate": 0.000625,
+          "latency": 55.9328,
+          "throughput": 0.000622591,
+          "utilization": 0.9961456000000001,
+          "saturated": false
+        },
+        {
+          "mult": 2,
+          "rate": 0.00125,
+          "latency": 56.1622,
+          "throughput": 0.00124876,
+          "utilization": 0.999008,
+          "saturated": false
+        },
+        {
+          "mult": 4,
+          "rate": 0.0025,
+          "latency": 56.9769,
+          "throughput": 0.00249642,
+          "utilization": 0.998568,
+          "saturated": false
+        },
+        {
+          "mult": 8,
+          "rate": 0.005,
+          "latency": 61.1227,
+          "throughput": 0.00501283,
+          "utilization": 1.002566,
+          "saturated": false
+        },
+        {
+          "mult": 16,
+          "rate": 0.01,
+          "latency": 218.152,
+          "throughput": 0.00915312,
+          "utilization": 0.915312,
+          "saturated": false
+        },
+        {
+          "mult": 32,
+          "rate": 0.02,
+          "latency": 1011.79,
+          "throughput": 0.00676152,
+          "utilization": 0.338076,
+          "saturated": true
+        }
+      ]
+    },
+    "K32_N8": {
+      "panel": "K32_N8",
+      "workload": "hybrid_tp_pp",
+      "base_rate": 0.00015625,
+      "saturation_mult": 1,
+      "saturation_rate": 0.00015625,
+      "sweep": [
+        {
+          "mult": 1,
+          "rate": 0.00015625,
+          "latency": 98.1867,
+          "throughput": 0.000152165,
+          "utilization": 0.973856,
+          "saturated": false
+        },
+        {
+          "mult": 2,
+          "rate": 0.0003125,
+          "latency": null,
+          "throughput": null,
+          "saturated": true
+        }
+      ]
+    }
+  },
+  "moe": {
+    "K16_N4": {
+      "panel": "K16_N4",
+      "workload": "moe",
+      "base_rate": 0.00125,
+      "saturation_mult": 2,
+      "saturation_rate": 0.0025,
+      "sweep": [
+        {
+          "mult": 1,
+          "rate": 0.00125,
+          "latency": 49.6391,
+          "throughput": 0.00123763,
+          "utilization": 0.990104,
+          "saturated": false
+        },
+        {
+          "mult": 2,
+          "rate": 0.0025,
+          "latency": 251.381,
+          "throughput": 0.00249185,
+          "utilization": 0.99674,
+          "saturated": false
+        },
+        {
+          "mult": 4,
+          "rate": 0.005,
+          "latency": 276.569,
+          "throughput": 0.00378203,
+          "utilization": 0.756406,
+          "saturated": true
+        }
+      ]
+    },
+    "K16_N8": {
+      "panel": "K16_N8",
+      "workload": "moe",
+      "base_rate": 0.0003125,
+      "saturation_mult": 2,
+      "saturation_rate": 0.000625,
+      "sweep": [
+        {
+          "mult": 1,
+          "rate": 0.0003125,
+          "latency": 83.4083,
+          "throughput": 0.000311751,
+          "utilization": 0.9976031999999999,
+          "saturated": false
+        },
+        {
+          "mult": 2,
+          "rate": 0.000625,
+          "latency": 119.587,
+          "throughput": 0.000625502,
+          "utilization": 1.0008032,
+          "saturated": false
+        },
+        {
+          "mult": 4,
+          "rate": 0.00125,
+          "latency": 267.606,
+          "throughput": 0.0010248,
+          "utilization": 0.81984,
+          "saturated": true
+        }
+      ]
+    },
+    "K32_N4": {
+      "panel": "K32_N4",
+      "workload": "moe",
+      "base_rate": 0.000625,
+      "saturation_mult": 1,
+      "saturation_rate": 0.000625,
+      "sweep": [
+        {
+          "mult": 1,
+          "rate": 0.000625,
+          "latency": 74.004,
+          "throughput": 0.000622396,
+          "utilization": 0.9958336,
+          "saturated": false
+        },
+        {
+          "mult": 2,
+          "rate": 0.00125,
+          "latency": 368.592,
+          "throughput": 0.00109316,
+          "utilization": 0.874528,
+          "saturated": true
+        }
+      ]
+    },
+    "K32_N8": {
+      "panel": "K32_N8",
+      "workload": "moe",
+      "base_rate": 0.00015625,
+      "saturation_mult": 2,
+      "saturation_rate": 0.0003125,
+      "sweep": [
+        {
+          "mult": 1,
+          "rate": 0.00015625,
+          "latency": 125.865,
+          "throughput": 0.000152327,
+          "utilization": 0.9748928,
+          "saturated": false
+        },
+        {
+          "mult": 2,
+          "rate": 0.0003125,
+          "latency": 436.185,
+          "throughput": 0.000286133,
+          "utilization": 0.9156255999999999,
+          "saturated": false
+        },
+        {
+          "mult": 4,
+          "rate": 0.000625,
+          "latency": 356.181,
+          "throughput": 0.000467822,
+          "utilization": 0.7485152,
+          "saturated": true
+        }
+      ]
+    }
+  },
+  "uniform_random": {
+    "K16_N4": {
+      "panel": "K16_N4",
+      "workload": "uniform_random",
+      "base_rate": 0.00125,
+      "saturation_mult": 8,
+      "saturation_rate": 0.01,
+      "sweep": [
+        {
+          "mult": 1,
+          "rate": 0.00125,
+          "latency": 47.2595,
+          "throughput": 0.00123776,
+          "utilization": 0.9902080000000001,
+          "saturated": false
+        },
+        {
+          "mult": 2,
+          "rate": 0.0025,
+          "latency": 48.2375,
+          "throughput": 0.00249883,
+          "utilization": 0.999532,
+          "saturated": false
+        },
+        {
+          "mult": 4,
+          "rate": 0.005,
+          "latency": 50.2173,
+          "throughput": 0.004975,
+          "utilization": 0.995,
+          "saturated": false
+        },
+        {
+          "mult": 8,
+          "rate": 0.01,
+          "latency": 150.616,
+          "throughput": 0.00948008,
+          "utilization": 0.948008,
+          "saturated": false
+        },
+        {
+          "mult": 16,
+          "rate": 0.02,
+          "latency": 370.787,
+          "throughput": 0.0145465,
+          "utilization": 0.727325,
+          "saturated": true
+        }
+      ]
+    },
+    "K16_N8": {
+      "panel": "K16_N8",
+      "workload": "uniform_random",
+      "base_rate": 0.0003125,
+      "saturation_mult": 8,
+      "saturation_rate": 0.0025,
+      "sweep": [
+        {
+          "mult": 1,
+          "rate": 0.0003125,
+          "latency": 81.0281,
+          "throughput": 0.000311719,
+          "utilization": 0.9975008000000001,
+          "saturated": false
+        },
+        {
+          "mult": 2,
+          "rate": 0.000625,
+          "latency": 80.4975,
+          "throughput": 0.000626628,
+          "utilization": 1.0026047999999999,
+          "saturated": false
+        },
+        {
+          "mult": 4,
+          "rate": 0.00125,
+          "latency": 81.8393,
+          "throughput": 0.00124808,
+          "utilization": 0.9984639999999999,
+          "saturated": false
+        },
+        {
+          "mult": 8,
+          "rate": 0.0025,
+          "latency": 255.017,
+          "throughput": 0.00245342,
+          "utilization": 0.981368,
+          "saturated": false
+        },
+        {
+          "mult": 16,
+          "rate": 0.005,
+          "latency": 186.681,
+          "throughput": 0.00440127,
+          "utilization": 0.8802539999999999,
+          "saturated": true
+        }
+      ]
+    },
+    "K32_N4": {
+      "panel": "K32_N4",
+      "workload": "uniform_random",
+      "base_rate": 0.000625,
+      "saturation_mult": 8,
+      "saturation_rate": 0.005,
+      "sweep": [
+        {
+          "mult": 1,
+          "rate": 0.000625,
+          "latency": 63.3903,
+          "throughput": 0.000622266,
+          "utilization": 0.9956256,
+          "saturated": false
+        },
+        {
+          "mult": 2,
+          "rate": 0.00125,
+          "latency": 63.9155,
+          "throughput": 0.00124876,
+          "utilization": 0.999008,
+          "saturated": false
+        },
+        {
+          "mult": 4,
+          "rate": 0.0025,
+          "latency": 65.7583,
+          "throughput": 0.00249629,
+          "utilization": 0.998516,
+          "saturated": false
+        },
+        {
+          "mult": 8,
+          "rate": 0.005,
+          "latency": 165.198,
+          "throughput": 0.00483535,
+          "utilization": 0.9670700000000001,
+          "saturated": false
+        },
+        {
+          "mult": 16,
+          "rate": 0.01,
+          "latency": 294.852,
+          "throughput": 0.00732441,
+          "utilization": 0.732441,
+          "saturated": true
+        }
+      ]
+    },
+    "K32_N8": {
+      "panel": "K32_N8",
+      "workload": "uniform_random",
+      "base_rate": 0.00015625,
+      "saturation_mult": 1,
+      "saturation_rate": 0.00015625,
+      "sweep": [
+        {
+          "mult": 1,
+          "rate": 0.00015625,
+          "latency": 113.015,
+          "throughput": 0.000152197,
+          "utilization": 0.9740608,
+          "saturated": false
+        },
+        {
+          "mult": 2,
+          "rate": 0.0003125,
+          "latency": null,
+          "throughput": null,
+          "saturated": true
+        }
+      ]
+    }
+  }
+}

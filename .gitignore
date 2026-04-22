@@ -55,3 +55,8 @@ results/*.png
 
 # Temp
 .tmp/
+
+# Operational / scratch (not research artifacts)
+.claude/scheduled_tasks.lock
+watchdog_*.sh
+results/backup_before_reboot_*/
