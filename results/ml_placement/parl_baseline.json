@@ -1,0 +1,14 @@
+[
+  {
+    "workload": "moe",
+    "K": 32,
+    "N": 8,
+    "budget_per_pair": 4,
+    "seed": 42,
+    "L_adj": 125.994,
+    "L_greedy": 60.3205,
+    "L_parl": 58.2714,
+    "L_parl_fb": 58.2714,
+    "train_time": 14008.854131698608
+  }
+]

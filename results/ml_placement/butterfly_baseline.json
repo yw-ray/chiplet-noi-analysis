@@ -1,0 +1,41 @@
+[
+  {
+    "L_adj": 68.1333,
+    "L_greedy": 56.7059,
+    "L_fbfly": 52.5139,
+    "fbfly_n_adj_links": 52,
+    "fbfly_n_express_links": 52,
+    "fbfly_n_express_pairs": 52,
+    "workload": "tree_allreduce",
+    "K": 32,
+    "N": 8,
+    "budget_per_pair": 2,
+    "run_time": 316.08616065979004
+  },
+  {
+    "L_adj": 100.541,
+    "L_greedy": 52.9815,
+    "L_fbfly": 54.3196,
+    "fbfly_n_adj_links": 104,
+    "fbfly_n_express_links": 104,
+    "fbfly_n_express_pairs": 68,
+    "workload": "hybrid_tp_pp",
+    "K": 32,
+    "N": 8,
+    "budget_per_pair": 4,
+    "run_time": 319.54807782173157
+  },
+  {
+    "L_adj": 125.994,
+    "L_greedy": 60.3205,
+    "L_fbfly": 62.0824,
+    "fbfly_n_adj_links": 104,
+    "fbfly_n_express_links": 104,
+    "fbfly_n_express_pairs": 68,
+    "workload": "moe",
+    "K": 32,
+    "N": 8,
+    "budget_per_pair": 4,
+    "run_time": 339.507287979126
+  }
+]

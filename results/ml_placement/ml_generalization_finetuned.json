@@ -1,0 +1,110 @@
+[
+  {
+    "workload": "ring_allreduce",
+    "K": 16,
+    "N": 4,
+    "budget_per_pair": 4,
+    "L_greedy": 37.0542,
+    "L_gnn_ft": 32.4784,
+    "ft_train_time": 22.225836753845215
+  },
+  {
+    "workload": "ring_allreduce",
+    "K": 16,
+    "N": 8,
+    "budget_per_pair": 4,
+    "L_greedy": 61.1448,
+    "L_gnn_ft": 55.9473,
+    "ft_train_time": 27.09481644630432
+  },
+  {
+    "workload": "ring_allreduce",
+    "K": 32,
+    "N": 4,
+    "budget_per_pair": 4,
+    "L_greedy": 39.6432,
+    "L_gnn_ft": 32.6035,
+    "ft_train_time": 28.80777072906494
+  },
+  {
+    "workload": "ring_allreduce",
+    "K": 32,
+    "N": 8,
+    "budget_per_pair": 4,
+    "L_greedy": 66.7327,
+    "L_gnn_ft": 54.9993,
+    "ft_train_time": 27.127228498458862
+  },
+  {
+    "workload": "pipeline_parallel",
+    "K": 16,
+    "N": 4,
+    "budget_per_pair": 4,
+    "L_greedy": 35.1108,
+    "L_gnn_ft": 33.1749,
+    "ft_train_time": 27.107864141464233
+  },
+  {
+    "workload": "pipeline_parallel",
+    "K": 16,
+    "N": 8,
+    "budget_per_pair": 4,
+    "L_greedy": 57.4175,
+    "L_gnn_ft": 55.8039,
+    "ft_train_time": 29.07496666908264
+  },
+  {
+    "workload": "pipeline_parallel",
+    "K": 32,
+    "N": 4,
+    "budget_per_pair": 4,
+    "L_greedy": 36.4888,
+    "L_gnn_ft": 33.4264,
+    "ft_train_time": 29.292739629745483
+  },
+  {
+    "workload": "pipeline_parallel",
+    "K": 32,
+    "N": 8,
+    "budget_per_pair": 4,
+    "L_greedy": 60.0714,
+    "L_gnn_ft": 55.1832,
+    "ft_train_time": 28.83511471748352
+  },
+  {
+    "workload": "all_to_all",
+    "K": 16,
+    "N": 4,
+    "budget_per_pair": 4,
+    "L_greedy": 35.4661,
+    "L_gnn_ft": 39.2833,
+    "ft_train_time": 29.18407130241394
+  },
+  {
+    "workload": "all_to_all",
+    "K": 16,
+    "N": 8,
+    "budget_per_pair": 4,
+    "L_greedy": 52.3348,
+    "L_gnn_ft": 73.1478,
+    "ft_train_time": 29.750903606414795
+  },
+  {
+    "workload": "all_to_all",
+    "K": 32,
+    "N": 4,
+    "budget_per_pair": 4,
+    "L_greedy": 42.5077,
+    "L_gnn_ft": 46.3976,
+    "ft_train_time": 20.490642070770264
+  },
+  {
+    "workload": "all_to_all",
+    "K": 32,
+    "N": 8,
+    "budget_per_pair": 4,
+    "L_greedy": 58.4939,
+    "L_gnn_ft": 78.5847,
+    "ft_train_time": 29.24910545349121
+  }
+]
