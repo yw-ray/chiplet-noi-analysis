@@ -70,6 +70,29 @@ def load_surrogate():
     return model
 
 
+class RateAwareSurrogate(nn.Module):
+    """MLP that takes (placement_features, log_rate_feature) -> latency."""
+    def __init__(self, input_dim=501, hidden=256):
+        super().__init__()
+        self.net = nn.Sequential(
+            nn.Linear(input_dim, hidden), nn.ReLU(), nn.LayerNorm(hidden),
+            nn.Linear(hidden, hidden), nn.ReLU(), nn.LayerNorm(hidden),
+            nn.Linear(hidden, 64), nn.ReLU(),
+            nn.Linear(64, 1),
+        )
+    def forward(self, x):
+        return self.net(x).squeeze(-1)
+
+
+def load_rate_aware_surrogate():
+    model = RateAwareSurrogate(input_dim=501).to(DEVICE)
+    path = RESULTS_DIR / 'surrogate_rate_aware.pt'
+    model.load_state_dict(torch.load(path, map_location=DEVICE))
+    model.eval()
+    print(f"  Loaded rate-aware surrogate from {path}", flush=True)
+    return model
+
+
 def surrogate_predict(surrogate, traffic_flat, allocation, adj_set, all_pairs,
                      K, N, budget, n_adj):
     """Predict latency for a given allocation."""
@@ -80,6 +103,26 @@ def surrogate_predict(surrogate, traffic_flat, allocation, adj_set, all_pairs,
     bpp = total / max(n_adj, 1)
     features = padded + [bpp / 8.0, n_express / max(total, 1),
                          K / 32.0, N / 8.0]
+    x = torch.tensor([features], dtype=torch.float32, device=DEVICE)
+    with torch.no_grad():
+        return surrogate(x).item()
+
+
+def surrogate_predict_ra(surrogate, traffic_flat, allocation, adj_set, all_pairs,
+                          K, N, budget, n_adj, rate_mult=1.0):
+    """Predict latency at rate = rate_mult * base_rate using rate-aware surrogate.
+
+    rate_mult ∈ [1, 8]; feature is log(rate_mult)/log(8) ∈ [0, 1].
+    """
+    import math
+    padded = list(traffic_flat) + [0.0] * (496 - len(traffic_flat))
+    n_express = sum(1 for i, p in enumerate(all_pairs)
+                    if allocation[i] > 0 and p not in adj_set)
+    total = allocation.sum()
+    bpp = total / max(n_adj, 1)
+    rate_feature = math.log(max(rate_mult, 1e-6)) / math.log(8.0)
+    features = padded + [bpp / 8.0, n_express / max(total, 1),
+                         K / 32.0, N / 8.0, rate_feature]
     x = torch.tensor([features], dtype=torch.float32, device=DEVICE)
     with torch.no_grad():
         return surrogate(x).item()
@@ -248,6 +291,176 @@ def train_warmstart_rl(surrogate, workload_name, K, N, R, C, budget_per_pair,
         if final_vec[i] > 0:
             alloc[p] = int(final_vec[i])
     return alloc, final_pred, baseline_pred
+
+
+def train_warmstart_rl_ra(surrogate_ra, workload_name, K, N, R, C,
+                           budget_per_pair, n_episodes=200, n_swaps=None,
+                           rate_mult=4.0, rate_weights=None,
+                           warm_start_alloc=None, entropy_coef=0.0,
+                           top_k=1):
+    """Rate-aware warm-start RL with enhanced options.
+
+    Reward:
+      If rate_weights is None: reward = -surrogate(placement, rate=rate_mult).
+      Otherwise: reward = -weighted_avg(surrogate(..., r) for r in rate_weights)
+
+    warm_start_alloc: dict {pair: n_links} — if None, uses greedy allocation.
+      Allows starting RL from FBfly or other allocations.
+
+    entropy_coef: float — weight for policy entropy bonus (encourages exploration).
+
+    top_k: int — returns top-k candidates by surrogate score (default 1 = best only).
+      Returns list of (alloc_dict, pred_score, baseline_score) tuples.
+    """
+    grid = ChipletGrid(R, C)
+    traffic = WORKLOADS[workload_name](K, grid)
+    adj_pairs = grid.get_adj_pairs()
+    adj_set = set(adj_pairs)
+    n_adj = len(adj_pairs)
+    budget = int(n_adj * budget_per_pair)
+    all_pairs = [(i, j) for i in range(K) for j in range(i+1, K)]
+    n_pairs = len(all_pairs)
+    pair_to_idx = {p: i for i, p in enumerate(all_pairs)}
+
+    max_dist = min(3, max(R, C) - 1)
+    if max_dist < 2:
+        max_dist = 2
+
+    # Warm-start allocation (defaults to greedy)
+    if warm_start_alloc is None:
+        greedy_alloc = alloc_express_greedy(grid, traffic, budget, max_dist=max_dist)
+        warm_start_alloc = {p: min(n, N) for p, n in greedy_alloc.items()}
+
+    greedy_vec = np.zeros(n_pairs, dtype=np.float32)
+    for p, n in warm_start_alloc.items():
+        greedy_vec[pair_to_idx[p]] = n
+
+    t_max = traffic.max()
+    traffic_norm = traffic / t_max if t_max > 0 else traffic
+    traffic_flat = traffic_norm[np.triu_indices(K, k=1)]
+
+    # Baseline = warm-start's predicted latency. Either single-rate or rate-weighted sum.
+    def _pred_objective(vec):
+        """Compute scalar objective for a placement (lower = better).
+
+        If rate_weights is set, weighted sum over all rates.
+        Otherwise, use rate=rate_mult only.
+        """
+        if rate_weights is None:
+            return surrogate_predict_ra(surrogate_ra, traffic_flat, vec,
+                                         adj_set, all_pairs, K, N, budget, n_adj,
+                                         rate_mult=rate_mult)
+        s = 0.0
+        w_sum = 0.0
+        for r, w in rate_weights.items():
+            p = surrogate_predict_ra(surrogate_ra, traffic_flat, vec,
+                                      adj_set, all_pairs, K, N, budget, n_adj,
+                                      rate_mult=r)
+            s += w * p
+            w_sum += w
+        return s / max(w_sum, 1e-9)
+
+    baseline_pred = _pred_objective(greedy_vec)
+
+    if n_swaps is None:
+        n_swaps = max(5, budget // 7)
+
+    state_dim = n_pairs + n_pairs + 3
+    policy = SwapPolicy(state_dim, n_pairs).to(DEVICE)
+    optimizer = optim.Adam(policy.parameters(), lr=3e-4)
+
+    # Top-K candidate tracking: keep heap of (-pred_score, seed_alloc_tuple)
+    # We use negative score so min-heap gives worst at top (for easy replacement)
+    import heapq
+    candidates_heap = []  # list of (-neg_pred, counter, alloc_vec)
+    counter = 0
+    def _push_candidate(pred, vec):
+        nonlocal counter
+        counter += 1
+        item = (-pred, counter, vec.copy())  # -pred so that worst (largest pred) stays at top of min-heap
+        if len(candidates_heap) < top_k:
+            heapq.heappush(candidates_heap, item)
+        else:
+            # Replace worst (top of heap = most negative -pred = largest pred)
+            if -pred > candidates_heap[0][0]:  # current better than worst kept
+                heapq.heapreplace(candidates_heap, item)
+
+    # Always include warm-start as initial candidate
+    _push_candidate(baseline_pred, greedy_vec)
+
+    best_pred = baseline_pred
+    best_alloc_vec = greedy_vec.copy()
+
+    for ep in range(n_episodes):
+        allocation = greedy_vec.copy()
+        log_probs = []
+        entropies = []
+        for swap_step in range(n_swaps):
+            budget_frac = allocation.sum() / max(budget, 1)
+            state = np.concatenate([
+                traffic_flat, allocation / N,
+                [budget_frac, K / 32.0, N / 8.0],
+            ]).astype(np.float32)
+            state_t = torch.tensor(state, device=DEVICE)
+            alloc_t = torch.tensor(allocation, device=DEVICE)
+            rem_idx, add_idx, logp = policy.select_swap(state_t, alloc_t, N)
+            allocation[rem_idx] -= 1
+            allocation[add_idx] += 1
+            log_probs.append(logp)
+
+        # Reward: reduction in objective (single-rate or rate-weighted)
+        pred_lat = _pred_objective(allocation)
+        reward = baseline_pred - pred_lat
+
+        # Push into top-k buffer
+        _push_candidate(pred_lat, allocation)
+
+        if pred_lat < best_pred:
+            best_pred = pred_lat
+            best_alloc_vec = allocation.copy()
+
+        if log_probs:
+            # Entropy regularization: encourage exploration
+            # Approximate entropy = -sum(log_prob) / n (higher = more diverse)
+            if entropy_coef > 0:
+                approx_entropy = -sum(lp for lp in log_probs).detach()
+                loss = sum(-lp * reward for lp in log_probs) - entropy_coef * approx_entropy
+            else:
+                loss = sum(-lp * reward for lp in log_probs)
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()
+
+        if (ep + 1) % 100 == 0:
+            print(f"      [RA rate={rate_mult}x top{top_k}] Ep {ep+1}: pred_lat={pred_lat:.1f}, "
+                  f"baseline={baseline_pred:.1f}, best={best_pred:.1f}",
+                  flush=True)
+
+    # Extract top-k candidates (sorted best to worst)
+    top_k_list = sorted(candidates_heap, key=lambda x: -x[0])  # sort by pred (ascending)
+    # top_k_list entries are (-pred, counter, vec). Extract (vec, pred).
+    top_k_results = []
+    for neg_pred, _, vec in top_k_list:
+        pred = -neg_pred
+        alloc = {}
+        for i, p in enumerate(all_pairs):
+            if vec[i] > 0:
+                alloc[p] = int(vec[i])
+        top_k_results.append((alloc, pred, baseline_pred))
+
+    if top_k == 1:
+        # Backward-compatible single-return
+        alloc, pred, baseline = top_k_results[0]
+        if pred >= baseline:
+            print(f"      [RA FALLBACK] best_pred={pred:.1f} >= baseline={baseline:.1f}", flush=True)
+        else:
+            print(f"      [RA RL BETTER] best_pred={pred:.1f} < baseline={baseline:.1f}", flush=True)
+        return alloc, pred, baseline
+    else:
+        # Return list of top-k (alloc, pred, baseline)
+        preds = [r[1] for r in top_k_results]
+        print(f"      [RA top-{top_k}] preds: {[f'{p:.1f}' for p in preds]} (baseline={baseline_pred:.1f})", flush=True)
+        return top_k_results
 
 
 # ============================================================

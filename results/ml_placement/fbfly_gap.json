@@ -1,0 +1,322 @@
+[
+  {
+    "workload": "tree_allreduce",
+    "K": 16,
+    "N": 4,
+    "budget_per_pair": 4,
+    "L_adj": 32.7007,
+    "L_greedy": 29.6616,
+    "L_fbfly": 29.7494,
+    "fbfly_n_express_pairs": 24
+  },
+  {
+    "workload": "tree_allreduce",
+    "K": 16,
+    "N": 4,
+    "budget_per_pair": 3,
+    "L_adj": 33.0958,
+    "L_greedy": 30.3456,
+    "L_fbfly": 31.0768,
+    "fbfly_n_express_pairs": 24
+  },
+  {
+    "workload": "tree_allreduce",
+    "K": 16,
+    "N": 4,
+    "budget_per_pair": 2,
+    "L_adj": 34.5314,
+    "L_greedy": 31.9146,
+    "L_fbfly": 33.0702,
+    "fbfly_n_express_pairs": 24
+  },
+  {
+    "workload": "hybrid_tp_pp",
+    "K": 16,
+    "N": 4,
+    "budget_per_pair": 2,
+    "L_adj": 41.7565,
+    "L_greedy": 39.5648,
+    "L_fbfly": 35.7244,
+    "fbfly_n_express_pairs": 24
+  },
+  {
+    "workload": "hybrid_tp_pp",
+    "K": 16,
+    "N": 4,
+    "budget_per_pair": 3,
+    "L_adj": 40.4677,
+    "L_greedy": 33.5675,
+    "L_fbfly": 34.2923,
+    "fbfly_n_express_pairs": 24
+  },
+  {
+    "workload": "hybrid_tp_pp",
+    "K": 16,
+    "N": 4,
+    "budget_per_pair": 4,
+    "L_adj": 40.1156,
+    "L_greedy": 31.4928,
+    "L_fbfly": 33.2193,
+    "fbfly_n_express_pairs": 24
+  },
+  {
+    "workload": "moe",
+    "K": 16,
+    "N": 4,
+    "budget_per_pair": 4,
+    "L_adj": 49.6391,
+    "L_greedy": 33.0665,
+    "L_fbfly": 34.6175,
+    "fbfly_n_express_pairs": 24
+  },
+  {
+    "workload": "moe",
+    "K": 16,
+    "N": 4,
+    "budget_per_pair": 2,
+    "L_adj": 50.9777,
+    "L_greedy": 39.437,
+    "L_fbfly": 37.3233,
+    "fbfly_n_express_pairs": 24
+  },
+  {
+    "workload": "moe",
+    "K": 16,
+    "N": 4,
+    "budget_per_pair": 3,
+    "L_adj": 49.5139,
+    "L_greedy": 34.677,
+    "L_fbfly": 36.1448,
+    "fbfly_n_express_pairs": 24
+  },
+  {
+    "workload": "uniform_random",
+    "K": 16,
+    "N": 4,
+    "budget_per_pair": 2,
+    "L_adj": 48.8037,
+    "L_greedy": 39.5726,
+    "L_fbfly": 37.18,
+    "fbfly_n_express_pairs": 24
+  },
+  {
+    "workload": "uniform_random",
+    "K": 16,
+    "N": 4,
+    "budget_per_pair": 3,
+    "L_adj": 47.616,
+    "L_greedy": 37.8698,
+    "L_fbfly": 36.214,
+    "fbfly_n_express_pairs": 24
+  },
+  {
+    "workload": "uniform_random",
+    "K": 16,
+    "N": 4,
+    "budget_per_pair": 4,
+    "L_adj": 47.2595,
+    "L_greedy": 36.68,
+    "L_fbfly": 34.9992,
+    "fbfly_n_express_pairs": 24
+  },
+  {
+    "workload": "tree_allreduce",
+    "K": 32,
+    "N": 4,
+    "budget_per_pair": 2,
+    "L_adj": 38.7386,
+    "L_greedy": 34.5352,
+    "L_fbfly": 34.3512,
+    "fbfly_n_express_pairs": 52
+  },
+  {
+    "workload": "tree_allreduce",
+    "K": 32,
+    "N": 4,
+    "budget_per_pair": 4,
+    "L_adj": 36.8802,
+    "L_greedy": 33.0445,
+    "L_fbfly": 31.1966,
+    "fbfly_n_express_pairs": 68
+  },
+  {
+    "workload": "hybrid_tp_pp",
+    "K": 32,
+    "N": 4,
+    "budget_per_pair": 2,
+    "L_adj": 57.8226,
+    "L_greedy": 46.8215,
+    "L_fbfly": 39.3779,
+    "fbfly_n_express_pairs": 52
+  },
+  {
+    "workload": "hybrid_tp_pp",
+    "K": 32,
+    "N": 4,
+    "budget_per_pair": 4,
+    "L_adj": 55.9328,
+    "L_greedy": 35.6905,
+    "L_fbfly": 36.7666,
+    "fbfly_n_express_pairs": 68
+  },
+  {
+    "workload": "moe",
+    "K": 32,
+    "N": 4,
+    "budget_per_pair": 2,
+    "L_adj": 72.7372,
+    "L_greedy": 48.3945,
+    "L_fbfly": 45.7394,
+    "fbfly_n_express_pairs": 52
+  },
+  {
+    "workload": "moe",
+    "K": 32,
+    "N": 4,
+    "budget_per_pair": 4,
+    "L_adj": 74.004,
+    "L_greedy": 41.0555,
+    "L_fbfly": 40.9658,
+    "fbfly_n_express_pairs": 68
+  },
+  {
+    "workload": "tree_allreduce",
+    "K": 16,
+    "N": 8,
+    "budget_per_pair": 2,
+    "L_adj": 60.4086,
+    "L_greedy": 53.0896,
+    "L_fbfly": 52.4605,
+    "fbfly_n_express_pairs": 24
+  },
+  {
+    "workload": "tree_allreduce",
+    "K": 16,
+    "N": 8,
+    "budget_per_pair": 7,
+    "L_adj": 52.4678,
+    "L_greedy": 44.7509,
+    "L_fbfly": 44.4225,
+    "fbfly_n_express_pairs": 24
+  },
+  {
+    "workload": "tree_allreduce",
+    "K": 16,
+    "N": 8,
+    "budget_per_pair": 4,
+    "L_adj": 54.9799,
+    "L_greedy": 47.4702,
+    "L_fbfly": 48.5134,
+    "fbfly_n_express_pairs": 24
+  },
+  {
+    "workload": "uniform_random",
+    "K": 16,
+    "N": 8,
+    "budget_per_pair": 2,
+    "L_adj": 87.1352,
+    "L_greedy": 61.7741,
+    "L_fbfly": 57.3598,
+    "fbfly_n_express_pairs": 24
+  },
+  {
+    "workload": "hybrid_tp_pp",
+    "K": 16,
+    "N": 8,
+    "budget_per_pair": 4,
+    "L_adj": 68.4458,
+    "L_greedy": 49.8596,
+    "L_fbfly": 52.7723,
+    "fbfly_n_express_pairs": 24
+  },
+  {
+    "workload": "moe",
+    "K": 16,
+    "N": 8,
+    "budget_per_pair": 4,
+    "L_adj": 85.263,
+    "L_greedy": 50.6134,
+    "L_fbfly": 55.5928,
+    "fbfly_n_express_pairs": 24
+  },
+  {
+    "workload": "hybrid_tp_pp",
+    "K": 16,
+    "N": 8,
+    "budget_per_pair": 7,
+    "L_adj": 66.5374,
+    "L_greedy": 46.3679,
+    "L_fbfly": 49.9937,
+    "fbfly_n_express_pairs": 24
+  },
+  {
+    "workload": "hybrid_tp_pp",
+    "K": 16,
+    "N": 8,
+    "budget_per_pair": 2,
+    "L_adj": 72.7148,
+    "L_greedy": 66.6015,
+    "L_fbfly": 55.5014,
+    "fbfly_n_express_pairs": 24
+  },
+  {
+    "workload": "moe",
+    "K": 16,
+    "N": 8,
+    "budget_per_pair": 7,
+    "L_adj": 83.184,
+    "L_greedy": 47.2481,
+    "L_fbfly": 52.6412,
+    "fbfly_n_express_pairs": 24
+  },
+  {
+    "workload": "moe",
+    "K": 16,
+    "N": 8,
+    "budget_per_pair": 2,
+    "L_adj": 90.011,
+    "L_greedy": 63.1221,
+    "L_fbfly": 58.7836,
+    "fbfly_n_express_pairs": 24
+  },
+  {
+    "workload": "uniform_random",
+    "K": 16,
+    "N": 8,
+    "budget_per_pair": 4,
+    "L_adj": 83.1307,
+    "L_greedy": 57.0816,
+    "L_fbfly": 55.1576,
+    "fbfly_n_express_pairs": 24
+  },
+  {
+    "workload": "uniform_random",
+    "K": 16,
+    "N": 8,
+    "budget_per_pair": 7,
+    "L_adj": 81.0997,
+    "L_greedy": 53.1888,
+    "L_fbfly": 52.9387,
+    "fbfly_n_express_pairs": 24
+  },
+  {
+    "workload": "uniform_random",
+    "K": 32,
+    "N": 4,
+    "budget_per_pair": 2,
+    "L_adj": 64.7866,
+    "L_greedy": 48.8569,
+    "L_fbfly": 45.7973,
+    "fbfly_n_express_pairs": 52
+  },
+  {
+    "workload": "uniform_random",
+    "K": 32,
+    "N": 4,
+    "budget_per_pair": 4,
+    "L_adj": 63.3903,
+    "L_greedy": 42.8728,
+    "L_fbfly": 40.3798,
+    "fbfly_n_express_pairs": 68
+  }
+]

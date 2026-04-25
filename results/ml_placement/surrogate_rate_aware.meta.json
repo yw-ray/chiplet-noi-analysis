@@ -1,0 +1,8 @@
+{
+  "input_dim": 501,
+  "n_samples": 1152,
+  "n_train": 979,
+  "n_val": 173,
+  "best_val_mse": 2687.18896484375,
+  "last_val_rho": 0.9019030688752865
+}
