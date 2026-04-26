@@ -7,9 +7,10 @@
     "greedy": 37.9991,
     "fbfly": 37.0427,
     "v4": 36.4873,
+    "v5": 36.3419,
     "ga": 36.8696,
-    "meta_best": 36.4873,
-    "chosen_method": "v4"
+    "meta_best": 36.3419,
+    "chosen_method": "v5"
   },
   {
     "workload": "all_to_all",
@@ -19,6 +20,7 @@
     "greedy": 55.8054,
     "fbfly": 57.7449,
     "v4": 53.8301,
+    "v5": 53.824,
     "ga": 53.419,
     "meta_best": 53.419,
     "chosen_method": "ga"
@@ -31,6 +33,7 @@
     "greedy": 45.8573,
     "fbfly": 41.7961,
     "v4": 41.081,
+    "v5": 40.7976,
     "ga": 38.9054,
     "meta_best": 38.9054,
     "chosen_method": "ga"
@@ -43,8 +46,10 @@
     "greedy": 64.4087,
     "fbfly": 61.3058,
     "v4": 57.8174,
-    "meta_best": 57.8174,
-    "chosen_method": "v4"
+    "v5": 57.6965,
+    "ga": 55.7292,
+    "meta_best": 55.7292,
+    "chosen_method": "ga"
   },
   {
     "workload": "hybrid_tp_pp",
@@ -54,6 +59,7 @@
     "greedy": 33.2106,
     "fbfly": 35.0993,
     "v4": 33.6489,
+    "v5": 33.6057,
     "ga": 33.2106,
     "sa": 33.2106,
     "meta_best": 33.2106,
@@ -67,6 +73,7 @@
     "greedy": 51.551,
     "fbfly": 54.7733,
     "v4": 51.2534,
+    "v5": 51.4244,
     "ga": 51.551,
     "meta_best": 51.2534,
     "chosen_method": "v4"
@@ -79,6 +86,7 @@
     "greedy": 36.243,
     "fbfly": 37.6251,
     "v4": 35.7832,
+    "v5": 35.7832,
     "ga": 36.243,
     "meta_best": 35.7832,
     "chosen_method": "v4"
@@ -91,6 +99,8 @@
     "greedy": 53.4867,
     "fbfly": 55.3623,
     "v4": 53.1753,
+    "v5": 53.2237,
+    "ga": 53.4867,
     "meta_best": 53.1753,
     "chosen_method": "v4"
   },
@@ -102,9 +112,10 @@
     "greedy": 37.4708,
     "fbfly": 40.0606,
     "v4": 35.9147,
+    "v5": 35.241,
     "ga": 37.2338,
-    "meta_best": 35.9147,
-    "chosen_method": "v4"
+    "meta_best": 35.241,
+    "chosen_method": "v5"
   },
   {
     "workload": "moe",
@@ -114,6 +125,7 @@
     "greedy": 55.0186,
     "fbfly": 198.571,
     "v4": 53.9412,
+    "v5": 54.3498,
     "ga": 53.0604,
     "meta_best": 53.0604,
     "chosen_method": "ga"
@@ -165,6 +177,7 @@
     "greedy": 58.0579,
     "fbfly": 51.9588,
     "v4": 49.3146,
+    "v5": 50.3375,
     "ga": 51.9588,
     "meta_best": 49.3146,
     "chosen_method": "v4"
@@ -177,9 +190,10 @@
     "greedy": 36.9362,
     "fbfly": 32.6913,
     "v4": 31.6905,
+    "v5": 31.3888,
     "ga": 32.6913,
-    "meta_best": 31.6905,
-    "chosen_method": "v4"
+    "meta_best": 31.3888,
+    "chosen_method": "v5"
   },
   {
     "workload": "pipeline_parallel",
@@ -189,8 +203,10 @@
     "greedy": 60.2556,
     "fbfly": 49.5986,
     "v4": 48.7628,
-    "meta_best": 48.7628,
-    "chosen_method": "v4"
+    "v5": 48.0298,
+    "ga": 49.5986,
+    "meta_best": 48.0298,
+    "chosen_method": "v5"
   },
   {
     "workload": "ring_allreduce",
@@ -215,9 +231,10 @@
     "greedy": 62.6605,
     "fbfly": 52.8922,
     "v4": 50.4031,
+    "v5": 50.32,
     "ga": 52.8922,
-    "meta_best": 50.4031,
-    "chosen_method": "v4"
+    "meta_best": 50.32,
+    "chosen_method": "v5"
   },
   {
     "workload": "ring_allreduce",
@@ -227,9 +244,10 @@
     "greedy": 40.7503,
     "fbfly": 33.8898,
     "v4": 32.3143,
+    "v5": 32.0913,
     "ga": 33.8898,
-    "meta_best": 32.3143,
-    "chosen_method": "v4"
+    "meta_best": 32.0913,
+    "chosen_method": "v5"
   },
   {
     "workload": "ring_allreduce",
@@ -239,8 +257,10 @@
     "greedy": 66.7327,
     "fbfly": 50.6857,
     "v4": 49.5306,
-    "meta_best": 49.5306,
-    "chosen_method": "v4"
+    "v5": 49.4264,
+    "ga": 50.6857,
+    "meta_best": 49.4264,
+    "chosen_method": "v5"
   },
   {
     "workload": "tree_allreduce",
@@ -250,6 +270,7 @@
     "greedy": 30.6878,
     "fbfly": 31.0947,
     "v4": 30.9958,
+    "v5": 30.9935,
     "ga": 30.6878,
     "sa": 30.6878,
     "meta_best": 30.6878,
@@ -263,9 +284,10 @@
     "greedy": 48.2264,
     "fbfly": 49.6982,
     "v4": 47.6312,
+    "v5": 47.4227,
     "ga": 48.2264,
-    "meta_best": 47.6312,
-    "chosen_method": "v4"
+    "meta_best": 47.4227,
+    "chosen_method": "v5"
   },
   {
     "workload": "tree_allreduce",
@@ -292,6 +314,7 @@
     "v4": 54.2432,
     "v5": 54.3777,
     "v5alt": 54.167,
+    "ga": 53.5029,
     "sa": 53.5029,
     "meta_best": 53.5029,
     "chosen_method": "fbfly"
@@ -304,9 +327,10 @@
     "greedy": 39.3038,
     "fbfly": 37.1736,
     "v4": 36.793,
+    "v5": 36.5989,
     "ga": 37.1736,
-    "meta_best": 36.793,
-    "chosen_method": "v4"
+    "meta_best": 36.5989,
+    "chosen_method": "v5"
   },
   {
     "workload": "uniform_random",
@@ -316,6 +340,7 @@
     "greedy": 65.0624,
     "fbfly": 57.7164,
     "v4": 55.2369,
+    "v5": 55.1649,
     "ga": 53.9634,
     "meta_best": 53.9634,
     "chosen_method": "ga"
@@ -328,6 +353,7 @@
     "greedy": 45.7936,
     "fbfly": 41.7835,
     "v4": 40.1502,
+    "v5": 40.2075,
     "ga": 39.0691,
     "meta_best": 39.0691,
     "chosen_method": "ga"
@@ -340,7 +366,9 @@
     "greedy": 72.1907,
     "fbfly": 61.0483,
     "v4": 58.7776,
-    "meta_best": 58.7776,
-    "chosen_method": "v4"
+    "v5": 57.567,
+    "ga": 56.2777,
+    "meta_best": 56.2777,
+    "chosen_method": "ga"
   }
 ]
