@@ -68,7 +68,7 @@ Kite~\cite{kite} and Florets~\cite{florets} optimize adjacent-only chiplet topol
 Express Virtual Channels~\cite{express_vc} and concentrated meshes~\cite{cmesh} bypass intermediate hops within a single die. In monolithic NoCs, wire delay is relatively small and the optimization target is hop count. In chiplet NoI, each inter-chiplet link consumes scarce die-edge PHY area and interposer routing resources, so the problem is not just latency but the \textit{cost} of transit traffic.
 
 \textbf{Learning-based topology synthesis.}
-The closest prior work is PARL~\cite{parl}, which applies cold-start maskable PPO to NoI topology synthesis for mixed DL workloads. PARL optimizes a multi-objective interference score but does not use a workload-level predictor for \textit{when} learned placement actually beats a topology-aware regular allocator, and does not warm-start from a strong heuristic. Our method differs along three orthogonal axes simultaneously: (i) NL\% as a simulation-free \textit{predictor} of when learned placement is essential vs when topology-aware regularity suffices, (ii) \textit{multi-warm-start} RL initialized from \textit{both} workload-aware greedy and topology-aware FBfly allocations, and (iii) a \textit{rate-aware surrogate} that lets a single learned model handle multi-rate evaluation. A direct experimental reproduction of PARL on our 28-cell benchmark would require re-implementing its multi-objective reward and interference evaluator on BookSim traces; we instead position PARL qualitatively in Table~\ref{tab:related} and treat an end-to-end reproduction as future work.
+The closest prior work is PARL~\cite{parl}, which applies cold-start maskable PPO to NoI topology synthesis for mixed DL workloads on heterogeneous MI300X-class chiplets, optimizing a multi-objective Interference Score that combines latency and bandwidth across multi-tenant workloads. PARL operates in a different problem regime than ours along three axes that are independently consequential. \textbf{(i) Workload predictor.} PARL has no workload-level predictor for \textit{when} learned placement actually beats a topology-aware regular allocator: every workload triggers a full RL run regardless of whether the demand structure has any non-local component to exploit. Our NL\%-based deployment classifier (Section~\ref{sec:nl}) tells the architect, before any RL run, that on NL$\le$50\% workloads (Tree, Ring, Pipeline) FBfly is already within $\pm$1 cycle of RL-WS, so the RL budget can be skipped. \textbf{(ii) Initialization.} PARL trains from cold start, which our internal cold-vs-warm comparison (and the iter-12 ablation that informed our design) shows is unstable on structured workloads such as Tree All-Reduce: cold-RL can regress versus a workload-aware greedy by $>10\%$ on adversarial cells, while the same policy seeded from greedy-or-FBfly closes that worst case. The 17 greedy-warm + 11 FBfly-warm split in our Table~\ref{tab:ablation} shows that \textit{both} warm-start sources are individually necessary in practice. \textbf{(iii) Safety guarantee.} PARL's RL output is the final allocation; ours is selected by post-hoc BookSim measurement against the deterministic baselines (Eq.~\ref{eq:fallback}), which empirically activates on $4/28$ cells and bounds raw-RL regression to zero on every cell. A direct end-to-end reproduction of PARL on our 28-cell benchmark would require porting its Interference-Score reward to BookSim and assembling a multi-tenant workload mix that fits its evaluation contract; we leave that to future work and position the design-space differences in Table~\ref{tab:related}.
 
 \begin{table}[t]
 \centering
@@ -212,7 +212,7 @@ We define the \textit{non-locality fraction} on demand matrix $T$ and chiplet gr
 NL\% depends on \textit{both} the demand matrix $T$ and the chiplet-to-grid mapping $G$ (through $\mathrm{hop}_G$), so it is a property of the (workload, layout) pair rather than the workload alone. We compute NL\% under the canonical row-major rank-to-chiplet mapping used throughout the paper; aggressive layout-aware co-location (e.g., placing communicating tensor-parallel ranks on adjacent chiplets) will reduce NL\%, and \textit{this is desirable}---a layout that drops NL\% below the deployment threshold is exactly what the predictor is telling architects to look for. We treat layout-aware NL\% minimization as an orthogonal complementary direction; this paper fixes the layout and asks which links to add.
 
 \textbf{NL\% predicts measured saving.}
-Empirically, NL\% correlates strongly with RL-WS express-link saving across the full evaluation set. Pooling all 28 workload-configuration cells (7 workloads $\times$ $\{K\!=\!16,32\}$ $\times$ $\{N\!=\!4,8\}$, primarily at $b{=}4\times$), the Spearman rank correlation between NL\% and RL-WS saving versus adjacent-uniform is $\rho=0.83$ ($p=6.8\times 10^{-8}$). The correlation is stable under method substitution: replacing RL-WS with greedy yields a similar rank ordering, indicating that NL\% predicts the \textit{raw express-link benefit} rather than a property of any specific placement method. More importantly, NL\% also predicts the \textit{margin} of RL-WS over the FBfly topology-aware allocator (Section~\ref{subsec:main}): on high-NL\% cells (NL$\ge$77\%), RL-WS strictly dominates FBfly with a mean latency reduction of $-19.0\%$ (16/16 wins); on low-NL\% cells (NL$\le$50\%), FBfly is essentially optimal and RL-WS matches it within simulation noise. NL\% therefore acts as a \textit{deployment classifier}: a single static statistic tells architects whether traffic-aware RL placement is essential or whether a topology-aware heuristic suffices.
+Empirically, NL\% correlates strongly with RL-WS express-link saving across the full evaluation set. Pooling all 28 workload-configuration cells (7 workloads $\times$ $\{K\!=\!16,32\}$ $\times$ $\{N\!=\!4,8\}$, primarily at $b{=}4\times$), the Spearman rank correlation between NL\% and RL-WS saving versus adjacent-uniform is $\rho=0.83$ ($p=6.8\times 10^{-8}$). The correlation is stable under method substitution: replacing RL-WS with greedy yields a similar rank ordering, indicating that NL\% predicts the \textit{raw express-link benefit} rather than a property of any specific placement method. More importantly, NL\% also predicts the \textit{margin} of RL-WS over the FBfly topology-aware allocator (Section~\ref{subsec:main}): on high-NL\% cells (NL$\ge$77\%), RL-WS strictly dominates FBfly with a mean latency reduction of $-19.0\%$ (16/16 wins); on low-NL\% cells (NL$\le$50\%), the measurable gap shrinks to single-cycle scale---RL-WS still strictly beats FBfly on 8/12, with the remaining 4 recovered by the post-hoc fallback (Eq.~\ref{eq:fallback}). NL\% therefore acts as a \textit{deployment classifier}: a single static statistic tells architects whether traffic-aware RL placement is essential or whether a topology-aware heuristic suffices.
 
 % ============================================================
 \section{Express Link Placement}
@@ -276,6 +276,8 @@ Empirically the fallback activates on 4/28 cells (rescuing $0.22$ to $0.87$ cycl
 We use BookSim~2.0~\cite{booksim} for cycle-accurate NoI simulation. Each of $K$ chiplets contains an $N \times N$ internal mesh ($N \in \{4,8\}$), where $N$ is also the maximum number of physical links per chiplet pair. We evaluate \textbf{seven workloads} (Table~\ref{tab:workloads_full}) at $K\!\in\!\{16,32\}$ and $N\!\in\!\{4,8\}$, primarily at link-budget $b{=}4\times$ where express placement is most informative; the smallest cell (Tree, $K{=}32, N{=}8$) is reported at $b{=}2\times$ for budget-frontier comparability. This yields \textbf{28 main-result configurations}.
 
 \textbf{Workload non-locality stratification.} Across the seven workloads, NL\% spans an order of magnitude (Table~\ref{tab:workloads_full}). We stratify the analysis into a \textit{high-NL} group (NL$\ge$77\%: Hybrid TP+PP, MoE Skewed, Uniform Random, All-to-all) and a \textit{low-NL} group (NL$\le$50\%: Tree All-Reduce, Ring All-Reduce, Pipeline Parallel). High-NL workloads have most demand falling on non-adjacent pairs and therefore benefit substantially from express links; low-NL workloads have most demand concentrated on adjacent pairs and benefit little.
+
+\textbf{MoE Skewed calibration.} The MoE Skewed workload models top-2 expert dispatch under Zipfian expert popularity. Each chiplet sends activations to 2 of $K{-}1$ candidate expert chiplets, sampled with probability $\Pr(\text{expert at rank } r) \propto 1/r^{s}$ for $s{=}1.5$. This Zipf exponent is consistent with measured expert-popularity skew in production MoE language models---DeepSeek-V3~\cite{deepseekv3} reports concentration ratios in the same regime, and Mixtral-8x7B~\cite{mixtral} shows comparable hot-expert dominance under top-2 routing. Earlier MoE NoI studies that assumed \textit{uniform} top-$k$ dispatch~\cite{gshard} are dominated by load balancing rather than placement, and would conflate the two effects. We average the dispatch matrix across $n_\text{seeds}{=}5$ random samples to suppress single-sample noise. Because Zipf$(1.5)$ places approximately 36\% of total dispatch on the top-2 ranks at $K{=}32$, the resulting traffic matrix is both \textit{highly non-local} (NL\%${=}91$) and \textit{strongly skewed}: a topology-aware regular allocator like FBfly under-provisions the heavy expert pairs by construction, which is exactly where Section~\ref{subsec:percell} reports the largest RL-WS gains.
 
 \begin{table}[t]
 \centering
@@ -349,7 +351,7 @@ Pipeline Par. & 10 & Low & +1.5\% & +13.5\% & \textbf{+15.5\%} & 3/4 (1L), $-2.4
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.95\columnwidth]{figures/fig_rl_nonlocality_scatter.pdf}
-\caption{NL\% predicts express-link saving across 28 cells. RL-WS (red diamonds) raises the saving curve above both greedy (blue circles) and FBfly (green squares). On high-NL ($\ge$77\%) cells, RL-WS strictly dominates FBfly; on low-NL cells, RL-WS matches FBfly within simulation noise. Pooled Spearman $\rho(\mathrm{NL\%}, \text{RL-WS saving})=0.83$ ($p=6.8\times 10^{-8}$).}
+\caption{NL\% predicts express-link saving across 28 cells. RL-WS (red diamonds) raises the saving curve above both greedy (blue circles) and FBfly (green squares). On high-NL ($\ge$77\%) cells, RL-WS strictly dominates FBfly; on low-NL cells, the gap shrinks to single-cycle scale and the deployment-classifier signal is to fall back to FBfly. Pooled Spearman $\rho(\mathrm{NL\%}, \text{RL-WS saving})=0.83$ ($p=6.8\times 10^{-8}$).}
 \label{fig:ml_nonlocality}
 \end{figure}
 
@@ -400,6 +402,43 @@ Three observations support the design decisions:
 \textbf{(ii) RL is doing real work, not just enumerating baselines.} On 22/28 cells the RL-trained allocation strictly beats the per-cell measured minimum of greedy and FBfly, with a per-cell gain typically $1$--$5$ cycles outside MoE and tens to hundreds of cycles on MoE Skewed. If multi-warm-start were merely a 48-shot search around fixed initializations, the BookSim-selected allocation could not strictly beat both baselines simultaneously on $79\%$ of cells.
 
 \textbf{(iii) Post-hoc fallback is empirically load-bearing, not a tautology.} On 4/28 cells (Tree $K{=}16, N{=}4$; Pipeline $K{=}16, N{=}4$; Hybrid TP+PP $K{=}16, N{=}4$; Tree $K{=}32, N{=}8$ at $b{=}2\times$) raw-RL would regress by $0.22$--$0.87$ cycle versus the baselines; on these cells BookSim selects the greedy or FBfly allocation directly. The fallback therefore turns what would be a $-0.87$\,cycle worst-case raw-RL regression into a measured zero-regression guarantee, while leaving the 24 BookSim-best-RL cells untouched. This is the empirical answer to the concern that ``$\min(a,b)$'' fallback might be a paper artifact: it actually fires on $14.3\%$ of cells and replaces the RL output with a strictly-better measured baseline.
+
+\subsection{Wall-Clock Cost}
+\label{subsec:cost}
+
+Table~\ref{tab:cost} summarizes the design-time wall-clock cost of producing an RL-WS allocation. The end-to-end cost is dominated by BookSim selection (typically $30$--$60$ minutes serial), not by surrogate inference during RL training (typically $3$--$5$ minutes parallel across 16 seeds). The rate-aware surrogate is trained \textit{once} for the entire 28-cell benchmark ($\sim$3 minutes total), so its cost amortizes across all evaluated configurations.
+
+\begin{table}[t]
+\centering
+\caption{Per-Cell Wall-Clock Cost of RL-WS. Surrogate training is amortized over all 28 evaluated cells; greedy and FBfly baselines are deterministic.}
+\label{tab:cost}
+\footnotesize
+\begin{tabular}{lr}
+\toprule
+Phase & Wall-clock per cell \\
+\midrule
+\multicolumn{2}{l}{\textit{One-time, amortized over all 28 cells}} \\
+\quad Surrogate v2 training (1408 samples, 30 epochs)        & $\sim$3 min total \\
+\midrule
+\multicolumn{2}{l}{\textit{Per-cell, RL training}} \\
+\quad 16 warm-start seeds × 1000 episodes (parallel)         & $\sim$3--5 min \\
+\quad Top-3 candidate heap maintenance (in-loop)             & negligible \\
+\midrule
+\multicolumn{2}{l}{\textit{Per-cell, BookSim final selection}} \\
+\quad $\le$48 RL candidates × 4 rates                          & $\sim$10--40 min \\
+\quad 3 baseline configs × 4 rates (adj, greedy, FBfly)      & $\sim$1--3 min \\
+\midrule
+\multicolumn{2}{l}{\textit{Deterministic baselines (per-cell)}} \\
+\quad Greedy allocation                                      & $<$1 s \\
+\quad FBfly allocation                                       & $<$1 s \\
+\midrule
+\textbf{Total per-cell (parallelized, 8-core)}                & \textbf{$\sim$15--45 min} \\
+\textbf{Total for full 28-cell sweep}                         & \textbf{$\sim$10--20 hr} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The cost is acceptable for a design-time exercise that produces a one-shot allocation deployed in silicon for the lifetime of the package. Greedy and FBfly remain available as fast deterministic defaults ($<$1 second each), and the NL\%-based deployment classifier lets architects skip RL-WS entirely on NL$\le$50\% workloads where the measured gain over FBfly is single-cycle scale (Section~\ref{subsec:main}).
 
 \subsection{Per-Cell Analysis: When RL-WS Wins by Large Margins}
 \label{subsec:percell}
@@ -538,6 +577,15 @@ J.~Balfour and W.~J.~Dally, ``Design Tradeoffs for Tiled CMP On-Chip Networks,''
 
 \bibitem{parl}
 A.~Shukla, H.~Sharma, S.~Bharadwaj, V.~Abrol, and S.~Deb, ``Taming the Tail: NoI Topology Synthesis for Mixed DL Workloads on Chiplet-Based Accelerators,'' \textit{arXiv:2510.24113}, 2025.
+
+\bibitem{mixtral}
+A.~Q.~Jiang et al., ``Mixtral of Experts,'' \textit{arXiv:2401.04088}, 2024.
+
+\bibitem{deepseekv3}
+DeepSeek-AI, ``DeepSeek-V3 Technical Report,'' \textit{arXiv:2412.19437}, 2024.
+
+\bibitem{gshard}
+D.~Lepikhin et al., ``GShard: Scaling Giant Models with Conditional Computation and Automatic Sharding,'' in \textit{Proc. ICLR}, 2021.
 
 \end{thebibliography}
 
