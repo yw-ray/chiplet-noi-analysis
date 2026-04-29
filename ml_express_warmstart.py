@@ -148,30 +148,43 @@ class SwapPolicy(nn.Module):
         self.remove_head = nn.Linear(hidden, n_pairs)
         self.add_head = nn.Linear(hidden + n_pairs, n_pairs)
 
-    def select_swap(self, state, alloc, max_lpp):
+    def select_swap(self, state, alloc, max_lpp, hop_mask=None,
+                     min_alloc_mask=None):
         """Select (remove_idx, add_idx) pair.
 
         alloc: current allocation vector
         max_lpp: max links per pair
+        hop_mask: bool tensor of shape [n_pairs]; True = pair is allowed
+            (e.g., hop <= max_dist). If None, all pairs allowed.
+        min_alloc_mask: bool tensor [n_pairs]; True = pair is "protected"
+            (alloc must stay >= 1, e.g. mesh adj). Such pairs are removable
+            only if alloc > 1.
         """
         h = self.trunk(state)
 
-        # Step 1: choose remove_idx (must have allocation > 0)
+        # Step 1: choose remove_idx (must have allocation > 0, and within hop_mask)
         remove_logits = self.remove_head(h)
         remove_mask = torch.full_like(remove_logits, -1e9)
         valid_remove = (alloc > 0)
+        if hop_mask is not None:
+            valid_remove = valid_remove & hop_mask
+        if min_alloc_mask is not None:
+            # Protected pairs are removable only if alloc > 1
+            valid_remove = valid_remove & ((alloc > 1) | ~min_alloc_mask)
         remove_mask[valid_remove] = 0
         remove_probs = F.softmax(remove_logits + remove_mask, dim=-1)
         remove_dist = torch.distributions.Categorical(remove_probs)
         remove_idx = remove_dist.sample()
         remove_logp = remove_dist.log_prob(remove_idx)
 
-        # Step 2: choose add_idx (must have allocation < max_lpp, different from remove)
+        # Step 2: choose add_idx (must have allocation < max_lpp, within hop_mask, different from remove)
         one_hot = F.one_hot(remove_idx, num_classes=alloc.shape[0]).float()
         add_input = torch.cat([h, one_hot], dim=-1)
         add_logits = self.add_head(add_input)
         add_mask = torch.full_like(add_logits, -1e9)
         valid_add = (alloc < max_lpp)
+        if hop_mask is not None:
+            valid_add = valid_add & hop_mask
         valid_add = valid_add.clone()
         valid_add[remove_idx.item()] = False  # can't add to same pair we removed from
         add_mask[valid_add] = 0
@@ -297,7 +310,7 @@ def train_warmstart_rl_ra(surrogate_ra, workload_name, K, N, R, C,
                            budget_per_pair, n_episodes=200, n_swaps=None,
                            rate_mult=4.0, rate_weights=None,
                            warm_start_alloc=None, entropy_coef=0.0,
-                           top_k=1):
+                           top_k=1, max_dist=None):
     """Rate-aware warm-start RL with enhanced options.
 
     Reward:
@@ -322,11 +335,19 @@ def train_warmstart_rl_ra(surrogate_ra, workload_name, K, N, R, C,
     n_pairs = len(all_pairs)
     pair_to_idx = {p: i for i, p in enumerate(all_pairs)}
 
-    max_dist = min(3, max(R, C) - 1)
-    if max_dist < 2:
-        max_dist = 2
+    if max_dist is None:
+        max_dist = min(3, max(R, C) - 1)
+        if max_dist < 2:
+            max_dist = 2
 
-    # Warm-start allocation (defaults to greedy)
+    # hop_mask for action space restriction (True = allowed pair)
+    hop_mask_np = np.array(
+        [1 if grid.get_hops(p[0], p[1]) <= max_dist else 0 for p in all_pairs],
+        dtype=bool,
+    )
+    hop_mask_t = torch.tensor(hop_mask_np, device=DEVICE)
+
+    # Warm-start allocation (defaults to greedy at this max_dist)
     if warm_start_alloc is None:
         greedy_alloc = alloc_express_greedy(grid, traffic, budget, max_dist=max_dist)
         warm_start_alloc = {p: min(n, N) for p, n in greedy_alloc.items()}
@@ -403,7 +424,7 @@ def train_warmstart_rl_ra(surrogate_ra, workload_name, K, N, R, C,
             ]).astype(np.float32)
             state_t = torch.tensor(state, device=DEVICE)
             alloc_t = torch.tensor(allocation, device=DEVICE)
-            rem_idx, add_idx, logp = policy.select_swap(state_t, alloc_t, N)
+            rem_idx, add_idx, logp = policy.select_swap(state_t, alloc_t, N, hop_mask=hop_mask_t)
             allocation[rem_idx] -= 1
             allocation[add_idx] += 1
             log_probs.append(logp)

@@ -122,8 +122,11 @@ def main():
             lats.append(r['latency']); tps.append(r['throughput'])
         result['candidates'][tag] = {'latency': lats, 'throughput': tps}
 
+    def _safe_max(lats):
+        vals = [x for x in lats if x is not None]
+        return max(vals) if vals else float('inf')
     best_tag = min(result['candidates'].keys(),
-                    key=lambda t: max(result['candidates'][t]['latency']))
+                    key=lambda t: _safe_max(result['candidates'][t]['latency']))
     best = result['candidates'][best_tag]
     result['ours_v5'] = {
         'latency': best['latency'], 'throughput': best['throughput'],

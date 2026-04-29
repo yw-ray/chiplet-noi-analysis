@@ -1,0 +1,150 @@
+{
+  "bpp1": {
+    "super_wire": 108.1,
+    "rows": {
+      "moe": {
+        "mesh_lat": 482.084,
+        "kite_l_lat": 769.78,
+        "ours_lat": 587.15,
+        "mesh_wire": 108.0,
+        "kite_l_wire": 104.0,
+        "ours_wire": 108.1
+      },
+      "hybrid_tp_pp": {
+        "mesh_lat": 78.0074,
+        "kite_l_lat": 78.006,
+        "ours_lat": 78.4586,
+        "mesh_wire": 108.0,
+        "kite_l_wire": 104.0,
+        "ours_wire": 108.1
+      },
+      "uniform_random": {
+        "mesh_lat": 398.321,
+        "kite_l_lat": 149.456,
+        "ours_lat": 232.603,
+        "mesh_wire": 108.0,
+        "kite_l_wire": 104.0,
+        "ours_wire": 108.1
+      },
+      "all_to_all": {
+        "mesh_lat": 379.379,
+        "kite_l_lat": 105.926,
+        "ours_lat": 201.412,
+        "mesh_wire": 108.0,
+        "kite_l_wire": 104.0,
+        "ours_wire": 108.1
+      }
+    }
+  },
+  "bpp2": {
+    "super_wire": 336.0,
+    "rows": {
+      "moe": {
+        "mesh_lat": 318.97,
+        "kite_l_lat": 578.62,
+        "ours_lat": 272.434,
+        "mesh_wire": 336.0,
+        "kite_l_wire": 335.8000000000002,
+        "ours_wire": 336.0
+      },
+      "hybrid_tp_pp": {
+        "mesh_lat": 57.6581,
+        "kite_l_lat": 52.9851,
+        "ours_lat": 62.5259,
+        "mesh_wire": 336.0,
+        "kite_l_wire": 335.8000000000002,
+        "ours_wire": 336.0
+      },
+      "uniform_random": {
+        "mesh_lat": 66.0555,
+        "kite_l_lat": 51.3527,
+        "ours_lat": 55.3616,
+        "mesh_wire": 336.0,
+        "kite_l_wire": 335.8000000000002,
+        "ours_wire": 336.0
+      },
+      "all_to_all": {
+        "mesh_lat": 66.1617,
+        "kite_l_lat": 51.4772,
+        "ours_lat": 55.8068,
+        "mesh_wire": 336.0,
+        "kite_l_wire": 335.8000000000002,
+        "ours_wire": 336.0
+      }
+    }
+  },
+  "bpp3": {
+    "super_wire": 532.9000000000003,
+    "rows": {
+      "moe": {
+        "mesh_lat": 292.449,
+        "kite_l_lat": 557.651,
+        "ours_lat": 279.055,
+        "mesh_wire": 416.0,
+        "kite_l_wire": 531.0000000000009,
+        "ours_wire": 532.9000000000003
+      },
+      "hybrid_tp_pp": {
+        "mesh_lat": 56.9769,
+        "kite_l_lat": 46.0396,
+        "ours_lat": 47.2379,
+        "mesh_wire": 416.0,
+        "kite_l_wire": 531.0000000000009,
+        "ours_wire": 532.9000000000003
+      },
+      "uniform_random": {
+        "mesh_lat": 65.7583,
+        "kite_l_lat": 45.5398,
+        "ours_lat": 49.0102,
+        "mesh_wire": 416.0,
+        "kite_l_wire": 531.0000000000009,
+        "ours_wire": 532.9000000000003
+      },
+      "all_to_all": {
+        "mesh_lat": 65.8242,
+        "kite_l_lat": 45.7626,
+        "ours_lat": 49.2978,
+        "mesh_wire": 416.0,
+        "kite_l_wire": 531.0000000000009,
+        "ours_wire": 532.9000000000003
+      }
+    }
+  },
+  "bpp4": {
+    "super_wire": 763.1000000000007,
+    "rows": {
+      "moe": {
+        "mesh_lat": 292.449,
+        "kite_l_lat": 169.366,
+        "ours_lat": 411.61,
+        "mesh_wire": 416.0,
+        "kite_l_wire": 762.8000000000015,
+        "ours_wire": 763.1000000000007
+      },
+      "hybrid_tp_pp": {
+        "mesh_lat": 56.9769,
+        "kite_l_lat": 41.2155,
+        "ours_lat": 39.6287,
+        "mesh_wire": 416.0,
+        "kite_l_wire": 762.8000000000015,
+        "ours_wire": 763.1000000000007
+      },
+      "uniform_random": {
+        "mesh_lat": 65.7583,
+        "kite_l_lat": 41.7994,
+        "ours_lat": 44.6763,
+        "mesh_wire": 416.0,
+        "kite_l_wire": 762.8000000000015,
+        "ours_wire": 763.1000000000007
+      },
+      "all_to_all": {
+        "mesh_lat": 65.8242,
+        "kite_l_lat": 41.8971,
+        "ours_lat": 44.3104,
+        "mesh_wire": 416.0,
+        "kite_l_wire": 762.8000000000015,
+        "ours_wire": 763.1000000000007
+      }
+    }
+  }
+}

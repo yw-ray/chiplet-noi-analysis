@@ -1,0 +1,22 @@
+{
+  "superset_raw_moe": {
+    "latency": 249.362,
+    "throughput": 0.00420977,
+    "success": true
+  },
+  "superset_raw_hybrid_tp_pp": {
+    "latency": 398.707,
+    "throughput": 0.00351367,
+    "success": true
+  },
+  "mask_moe": {
+    "latency": null,
+    "throughput": null,
+    "success": false
+  },
+  "mask_hybrid_tp_pp": {
+    "latency": null,
+    "throughput": null,
+    "success": false
+  }
+}

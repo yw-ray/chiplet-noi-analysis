@@ -1,0 +1,76 @@
+{
+  "K": 16,
+  "N": 4,
+  "workload_set": [
+    "moe",
+    "hybrid_tp_pp"
+  ],
+  "budget": 48,
+  "results": {
+    "mesh": {
+      "workload_set": [
+        "moe",
+        "hybrid_tp_pp"
+      ],
+      "latencies": [
+        411.2815246582031,
+        42.819374084472656
+      ],
+      "avg": 227.0504493713379,
+      "worst": 411.2815246582031,
+      "budget": 48
+    },
+    "kite_s": {
+      "workload_set": [
+        "moe",
+        "hybrid_tp_pp"
+      ],
+      "latencies": [
+        238.48997497558594,
+        36.708038330078125
+      ],
+      "avg": 137.59900665283203,
+      "worst": 238.48997497558594,
+      "budget": 48
+    },
+    "kite_m": {
+      "workload_set": [
+        "moe",
+        "hybrid_tp_pp"
+      ],
+      "latencies": [
+        222.52139282226562,
+        36.91447448730469
+      ],
+      "avg": 129.71793365478516,
+      "worst": 222.52139282226562,
+      "budget": 48
+    },
+    "kite_l": {
+      "workload_set": [
+        "moe",
+        "hybrid_tp_pp"
+      ],
+      "latencies": [
+        241.9556884765625,
+        36.92350769042969
+      ],
+      "avg": 139.4395980834961,
+      "worst": 241.9556884765625,
+      "budget": 48
+    },
+    "ours_superset": {
+      "workload_set": [
+        "moe",
+        "hybrid_tp_pp"
+      ],
+      "latencies": [
+        305.1653747558594,
+        38.650054931640625
+      ],
+      "avg": 171.90771484375,
+      "worst": 305.1653747558594,
+      "budget": 48
+    }
+  }
+}

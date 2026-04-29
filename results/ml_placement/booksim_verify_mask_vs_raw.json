@@ -1,0 +1,106 @@
+{
+  "bpp1": {
+    "moe": {
+      "raw_lat": 587.15,
+      "mask_lat": 587.15,
+      "raw_wire": 108.1,
+      "mask_wire": 108.1
+    },
+    "hybrid_tp_pp": {
+      "raw_lat": 78.4586,
+      "mask_lat": 78.4586,
+      "raw_wire": 108.1,
+      "mask_wire": 108.1
+    },
+    "uniform_random": {
+      "raw_lat": 232.603,
+      "mask_lat": 232.603,
+      "raw_wire": 108.1,
+      "mask_wire": 108.1
+    },
+    "all_to_all": {
+      "raw_lat": 201.412,
+      "mask_lat": 201.412,
+      "raw_wire": 108.1,
+      "mask_wire": 108.1
+    }
+  },
+  "bpp2": {
+    "moe": {
+      "raw_lat": 272.434,
+      "mask_lat": 554.67,
+      "raw_wire": 336.0,
+      "mask_wire": 197.49999999999997
+    },
+    "hybrid_tp_pp": {
+      "raw_lat": 62.5259,
+      "mask_lat": 62.1943,
+      "raw_wire": 336.0,
+      "mask_wire": 201.49999999999997
+    },
+    "uniform_random": {
+      "raw_lat": 55.3616,
+      "mask_lat": 327.278,
+      "raw_wire": 336.0,
+      "mask_wire": 191.39999999999998
+    },
+    "all_to_all": {
+      "raw_lat": 55.8068,
+      "mask_lat": 70.6216,
+      "raw_wire": 336.0,
+      "mask_wire": 191.39999999999998
+    }
+  },
+  "bpp3": {
+    "moe": {
+      "raw_lat": 279.055,
+      "mask_lat": 324.811,
+      "raw_wire": 532.9000000000003,
+      "mask_wire": 327.1
+    },
+    "hybrid_tp_pp": {
+      "raw_lat": 47.2379,
+      "mask_lat": 50.2141,
+      "raw_wire": 532.9000000000003,
+      "mask_wire": 317.0
+    },
+    "uniform_random": {
+      "raw_lat": 49.0102,
+      "mask_lat": 60.2365,
+      "raw_wire": 532.9000000000003,
+      "mask_wire": 333.40000000000003
+    },
+    "all_to_all": {
+      "raw_lat": 49.2978,
+      "mask_lat": 57.6116,
+      "raw_wire": 532.9000000000003,
+      "mask_wire": 322.79999999999995
+    }
+  },
+  "bpp4": {
+    "moe": {
+      "raw_lat": 411.61,
+      "mask_lat": 372.17,
+      "raw_wire": 763.1000000000007,
+      "mask_wire": 461.7000000000003
+    },
+    "hybrid_tp_pp": {
+      "raw_lat": 39.6287,
+      "mask_lat": 42.634,
+      "raw_wire": 763.1000000000007,
+      "mask_wire": 479.5000000000001
+    },
+    "uniform_random": {
+      "raw_lat": 44.6763,
+      "mask_lat": 47.2388,
+      "raw_wire": 763.1000000000007,
+      "mask_wire": 497.90000000000003
+    },
+    "all_to_all": {
+      "raw_lat": 44.3104,
+      "mask_lat": 48.038,
+      "raw_wire": 763.1000000000007,
+      "mask_wire": 491.7000000000001
+    }
+  }
+}

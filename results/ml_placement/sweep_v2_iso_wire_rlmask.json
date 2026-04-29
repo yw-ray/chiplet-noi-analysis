@@ -1,0 +1,166 @@
+{
+  "K": 16,
+  "N": 4,
+  "workloads": [
+    "moe",
+    "hybrid_tp_pp",
+    "uniform_random",
+    "all_to_all"
+  ],
+  "ours_wires": {
+    "moe": 90.69999999999999,
+    "hybrid_tp_pp": 92.80000000000001,
+    "uniform_random": 92.80000000000001,
+    "all_to_all": 90.80000000000001
+  },
+  "raw": {
+    "mesh": {
+      "moe": 392.355,
+      "hybrid_tp_pp": 48.3831,
+      "uniform_random": 55.019,
+      "all_to_all": 55.0842
+    },
+    "kite_s": {
+      "moe": 495.529,
+      "hybrid_tp_pp": 55.0847,
+      "uniform_random": 249.628,
+      "all_to_all": 80.0948
+    },
+    "kite_m": {
+      "moe": 495.529,
+      "hybrid_tp_pp": 55.0847,
+      "uniform_random": 249.628,
+      "all_to_all": 80.0948
+    },
+    "kite_l": {
+      "moe": 263.006,
+      "hybrid_tp_pp": 52.6825,
+      "uniform_random": 60.5877,
+      "all_to_all": 60.3091
+    },
+    "ours": {
+      "moe": 220.074,
+      "hybrid_tp_pp": 58.7398,
+      "uniform_random": 71.166,
+      "all_to_all": 64.2696
+    }
+  },
+  "wire_used": {
+    "mesh": {
+      "moe": 90.0,
+      "hybrid_tp_pp": 92.0,
+      "uniform_random": 92.0,
+      "all_to_all": 90.0
+    },
+    "kite_s": {
+      "moe": 88.99999999999997,
+      "hybrid_tp_pp": 88.99999999999997,
+      "uniform_random": 88.99999999999997,
+      "all_to_all": 88.99999999999997
+    },
+    "kite_m": {
+      "moe": 88.99999999999997,
+      "hybrid_tp_pp": 88.99999999999997,
+      "uniform_random": 88.99999999999997,
+      "all_to_all": 88.99999999999997
+    },
+    "kite_l": {
+      "moe": 90.69999999999997,
+      "hybrid_tp_pp": 90.69999999999997,
+      "uniform_random": 90.69999999999997,
+      "all_to_all": 90.69999999999997
+    },
+    "ours": {
+      "moe": 90.69999999999999,
+      "hybrid_tp_pp": 92.80000000000001,
+      "uniform_random": 92.80000000000001,
+      "all_to_all": 90.80000000000001
+    }
+  },
+  "mix_results": {
+    "moe+hybrid_tp_pp": {
+      "mesh": 220.36905000000002,
+      "kite_s": 275.30685,
+      "kite_m": 275.30685,
+      "kite_l": 157.84425,
+      "ours": 139.4069
+    },
+    "moe+uniform_random": {
+      "mesh": 223.687,
+      "kite_s": 372.57849999999996,
+      "kite_m": 372.57849999999996,
+      "kite_l": 161.79684999999998,
+      "ours": 145.62
+    },
+    "moe+all_to_all": {
+      "mesh": 223.7196,
+      "kite_s": 287.8119,
+      "kite_m": 287.8119,
+      "kite_l": 161.65755,
+      "ours": 142.17180000000002
+    },
+    "hybrid_tp_pp+uniform_random": {
+      "mesh": 51.701049999999995,
+      "kite_s": 152.35635,
+      "kite_m": 152.35635,
+      "kite_l": 56.635099999999994,
+      "ours": 64.9529
+    },
+    "hybrid_tp_pp+all_to_all": {
+      "mesh": 51.73365,
+      "kite_s": 67.58975000000001,
+      "kite_m": 67.58975000000001,
+      "kite_l": 56.4958,
+      "ours": 61.5047
+    },
+    "uniform_random+all_to_all": {
+      "mesh": 55.0516,
+      "kite_s": 164.8614,
+      "kite_m": 164.8614,
+      "kite_l": 60.4484,
+      "ours": 67.7178
+    },
+    "moe+hybrid_tp_pp+uniform_random": {
+      "mesh": 165.2523666666667,
+      "kite_s": 266.7472333333333,
+      "kite_m": 266.7472333333333,
+      "kite_l": 125.42539999999998,
+      "ours": 116.65993333333334
+    },
+    "moe+hybrid_tp_pp+all_to_all": {
+      "mesh": 165.2741,
+      "kite_s": 210.23616666666666,
+      "kite_m": 210.23616666666666,
+      "kite_l": 125.33253333333333,
+      "ours": 114.36113333333333
+    },
+    "moe+uniform_random+all_to_all": {
+      "mesh": 167.4860666666667,
+      "kite_s": 275.0839333333333,
+      "kite_m": 275.0839333333333,
+      "kite_l": 127.96759999999999,
+      "ours": 118.50319999999999
+    },
+    "hybrid_tp_pp+uniform_random+all_to_all": {
+      "mesh": 52.82876666666667,
+      "kite_s": 128.26916666666668,
+      "kite_m": 128.26916666666668,
+      "kite_l": 57.859766666666665,
+      "ours": 64.72513333333333
+    },
+    "moe+hybrid_tp_pp+uniform_random+all_to_all": {
+      "mesh": 137.710325,
+      "kite_s": 220.084125,
+      "kite_m": 220.084125,
+      "kite_l": 109.14632499999999,
+      "ours": 103.56235000000001
+    }
+  },
+  "win_count": {
+    "mesh": 4,
+    "kite_s": 0,
+    "kite_m": 0,
+    "kite_l": 0,
+    "ours": 7
+  }
+}

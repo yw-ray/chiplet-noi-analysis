@@ -1,0 +1,82 @@
+{
+  "K": 16,
+  "N": 4,
+  "workload_set": [
+    "moe",
+    "hybrid_tp_pp"
+  ],
+  "budget": 48,
+  "rate_mult": 4.0,
+  "results": {
+    "mesh": {
+      "moe": {
+        "latency": 466.673,
+        "throughput": 0.00369922,
+        "elapsed": 4.647562503814697,
+        "success": true
+      },
+      "hybrid_tp_pp": {
+        "latency": 46.1123,
+        "throughput": 0.00497474,
+        "elapsed": 18.69315505027771,
+        "success": true
+      }
+    },
+    "kite_s": {
+      "moe": {
+        "latency": null,
+        "throughput": null,
+        "elapsed": 600.155415058136,
+        "success": false
+      },
+      "hybrid_tp_pp": {
+        "latency": null,
+        "throughput": null,
+        "elapsed": 600.1466619968414,
+        "success": false
+      }
+    },
+    "kite_m": {
+      "moe": {
+        "latency": 370.457,
+        "throughput": 0.00219844,
+        "elapsed": 5.243149518966675,
+        "success": true
+      },
+      "hybrid_tp_pp": {
+        "latency": 189.153,
+        "throughput": 0.00388398,
+        "elapsed": 7.951438665390015,
+        "success": true
+      }
+    },
+    "kite_l": {
+      "moe": {
+        "latency": 59.6885,
+        "throughput": 0.0049916,
+        "elapsed": 19.853466033935547,
+        "success": true
+      },
+      "hybrid_tp_pp": {
+        "latency": 48.9129,
+        "throughput": 0.00497552,
+        "elapsed": 17.358445405960083,
+        "success": true
+      }
+    },
+    "ours_superset": {
+      "moe": {
+        "latency": 249.362,
+        "throughput": 0.00420977,
+        "elapsed": 4.079876899719238,
+        "success": true
+      },
+      "hybrid_tp_pp": {
+        "latency": 398.707,
+        "throughput": 0.00351367,
+        "elapsed": 4.596790790557861,
+        "success": true
+      }
+    }
+  }
+}
