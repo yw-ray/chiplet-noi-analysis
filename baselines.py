@@ -94,7 +94,21 @@ def kite_alloc(grid, budget, per_pair_cap, variant='small'):
     if remaining <= 0 or not eligible:
         return alloc
 
-    eligible.sort(key=lambda p: (grid.get_hops(p[0], p[1]), p[0], p[1]))
+    if variant == 'medium':
+        # Interleave dist=2 and dist=3 so kite_m gets a true mixed family
+        elig_2 = sorted([p for p in eligible
+                         if grid.get_hops(p[0], p[1]) == 2])
+        elig_3 = sorted([p for p in eligible
+                         if grid.get_hops(p[0], p[1]) == 3])
+        eligible = []
+        for k in range(max(len(elig_2), len(elig_3))):
+            if k < len(elig_2):
+                eligible.append(elig_2[k])
+            if k < len(elig_3):
+                eligible.append(elig_3[k])
+    else:
+        eligible.sort(key=lambda p: (grid.get_hops(p[0], p[1]),
+                                      p[0], p[1]))
 
     while remaining > 0:
         progressed = False

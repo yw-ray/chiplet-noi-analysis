@@ -1,8 +1,8 @@
 # Paper Plan V2: Multi-Workload Joint RL for Reconfigurable Chiplet NoI
 
-**Last updated**: 2026-04-28
+**Last updated**: 2026-04-30
 **Supersedes**: PAPER_PLAN_V1.md (single-workload NL%-guided thesis)
-**Status**: Major thesis pivot — framework reformulation
+**Status**: V3 sweep in progress (BookSim-greedy mask + PARL/GIA baselines)
 
 ---
 
@@ -49,6 +49,55 @@ A single chiplet NoI hardware can serve diverse LLM workloads near-optimally **i
 - 4 cells × 11 mixes × 7 methods = 308 BookSim runs
 - Iso-wire-mm² Pareto comparison
 - Tests robustness across mix-size scaling (more workloads → harder problem)
+
+---
+
+## V3 Update — Current Plan (2026-04-30)
+
+### Methodology improvements
+1. **Stage 2 mask = BookSim-greedy** (not surrogate). The earlier
+   surrogate-driven RL mask was OOD on uniform/a2a placements; replacing
+   with direct BookSim greedy mask (max_steps=3, candidates=6) yields
+   strict latency improvements over raw superset for many workloads
+   while saving 5-20% wire.
+2. **Kite-M interleave fix**. baselines.py kite_alloc(`medium`) now
+   interleaves dist=2 and dist=3 round-robin so Kite-M is a true mixed
+   family (was identical to Kite-S before).
+3. **Subset sweep**: input workload set is treated as a first-class
+   parameter — 2-W (6) + 3-W (4) + 4-W (1) = 11 subsets, demonstrating
+   that superset/mask both vary with input set.
+
+### V3 baselines (7-way)
+- **Mesh** (sanity floor)
+- **Kite-S, Kite-M, Kite-L** (DAC 2020)
+- **GIA** (ICCAD 2022) — Fat-Tree subnet heuristic in `baseline_gia.py`
+- **PARL** (arXiv 2510.24113) — heuristic placeholder in `baseline_parl.py`,
+  Maskable PPO trainer TODO
+- **Ours** — joint multi-W RL superset + BookSim-greedy mask
+
+### Sweep status
+- `sweep_v2_full_subsets.json`: in progress (mesh + kite_l + ours)
+  - Done: K=16 N=4 (22), K=32 N=4 (22) = 44/88
+  - Remaining: K=16 N=8 (12), K=32 N=8 (22)
+  - K=32 N=4 4-W bpp=3: ours 49 vs mesh 120 vs kite_l 173 (60-72% better)
+- `sweep_v2_kite_sm.py`: re-measure Kite-S/M (now distinct allocs)
+- PARL/GIA sweep: pending (heuristic ready, full PPO trainer is followup)
+
+### Eval matrix (target)
+| Dim | Spec |
+|---|---|
+| Methods | mesh, kite_s, kite_m, kite_l, GIA, PARL, ours = **7** |
+| Subsets | 2-W (6) + 3-W (4) + 4-W (1) = **11** |
+| Cells | K∈{16,32} × N∈{4,8} = **4** |
+| Bpps | **2, 3** (realistic chiplet wire-area) |
+| Total | 11 × 4 × 2 = 88 (subset, cell, bpp); 7 methods each |
+
+### Plan figures
+- F-mainBars: 12-panel grouped bar (4 cells × 3 mix sizes), x = wire-area,
+  y = ours mask latency, bars colored by workload (`plot_v2_subsets.py`)
+- F-pareto: latency vs wire-mm² Pareto curve per cell
+  (`plot_v2_wire_pareto.py`)
+- F-tableComparison: 2-W subset latency table (mesh / kite_l / ours)
 
 ---
 
