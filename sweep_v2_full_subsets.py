@@ -41,8 +41,8 @@ for k in [2, 3, 4]:
 
 CELLS = [
     (16, 4, 4, 4),
-    (16, 8, 4, 4),
     (32, 4, 4, 8),
+    (16, 8, 4, 4),
     (32, 8, 4, 8),
 ]
 BPP_POINTS = [2, 3]
@@ -69,12 +69,12 @@ def main():
     n_done = 0
     n_total = len(SUBSETS) * len(CELLS) * len(BPP_POINTS)
 
-    for subset in SUBSETS:
-        subset_key = '+'.join(subset)
-        results.setdefault(subset_key, {})
+    for K, N, R, C in CELLS:
+        cell_key = f'K{K}_N{N}'
 
-        for K, N, R, C in CELLS:
-            cell_key = f'K{K}_N{N}'
+        for subset in SUBSETS:
+            subset_key = '+'.join(subset)
+            results.setdefault(subset_key, {})
             results[subset_key].setdefault(cell_key, {})
 
             for bpp in BPP_POINTS:
