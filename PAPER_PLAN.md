@@ -67,13 +67,21 @@ A single chiplet NoI hardware can serve diverse LLM workloads near-optimally **i
    parameter — 2-W (6) + 3-W (4) + 4-W (1) = 11 subsets, demonstrating
    that superset/mask both vary with input set.
 
-### V3 baselines (7-way)
+### V3 baselines (5-way, **PARL excluded**)
 - **Mesh** (sanity floor)
-- **Kite-S, Kite-M, Kite-L** (DAC 2020)
+- **Kite-S, Kite-M, Kite-L** (DAC 2020) — `baselines.py` (kite_m interleave fixed)
 - **GIA** (ICCAD 2022) — Fat-Tree subnet heuristic in `baseline_gia.py`
-- **PARL** (arXiv 2510.24113) — heuristic placeholder in `baseline_parl.py`,
-  Maskable PPO trainer TODO
 - **Ours** — joint multi-W RL superset + BookSim-greedy mask
+
+### Why PARL excluded
+- arXiv 2510.24113, code unreleased
+- Maskable PPO complex; reproduction details (hyperparams, reward shaping,
+  state encoding) not fully specified → re-implementation accuracy uncertain
+- Algorithm targeted at single output topology; multi-W extension requires
+  inputs (mixed traffic) the paper does not detail
+- Decision: position PARL as future work in the paper, not direct comparison.
+  Honest disclosure: "PARL is the closest RL competitor; we leave direct
+  reproduction to future work due to unavailable code."
 
 ### Sweep status
 - `sweep_v2_full_subsets.json`: in progress (mesh + kite_l + ours)
@@ -86,11 +94,40 @@ A single chiplet NoI hardware can serve diverse LLM workloads near-optimally **i
 ### Eval matrix (target)
 | Dim | Spec |
 |---|---|
-| Methods | mesh, kite_s, kite_m, kite_l, GIA, PARL, ours = **7** |
-| Subsets | 2-W (6) + 3-W (4) + 4-W (1) = **11** |
+| Methods | mesh, kite_s, kite_m, kite_l, GIA, **ours = 6** (PARL excluded) |
+| Subsets | 2-W (6) + 3-W (4) + 4-W (1) = **11** (single excluded) |
 | Cells | K∈{16,32} × N∈{4,8} = **4** |
 | Bpps | **2, 3** (realistic chiplet wire-area) |
-| Total | 11 × 4 × 2 = 88 (subset, cell, bpp); 7 methods each |
+| Total | 11 × 4 × 2 = 88 (subset, cell, bpp); 6 methods each |
+
+### Hyperparameters (locked)
+| Parameter | Value | Reason |
+|---|---|---|
+| Stage 1 RL episodes | 200 | sufficient for swap-RL convergence |
+| Stage 2 BookSim-greedy `max_steps` | **3** | wire saving 5-10%, 4-5 step is marginal |
+| Stage 2 candidates per step | **6** | ~50% time saved vs 10 |
+| Stage 1 reward | `normalized_avg` | per-W best-ratio (scale-invariant across W) |
+| Surrogate rate_mult | 4.0 | high-load regime |
+| Mask budget (initial) | 70% of superset | balance latency / wire saving |
+| Latency tolerance for mask | 1.02× raw | avoid catastrophic mask |
+| Mesh-protect | adj×1 forced | prevent isolated chiplets |
+
+### Why these design choices
+1. **2-W/3-W/4-W (no single)**: single-workload is V1 thesis. Multi-W set as
+   input is V2's contribution; framework value emerges from set diversity.
+2. **bpp=2, 3 only**: realistic chiplet wire regime. bpp=1 mesh-only floor,
+   bpp=4 saturated regime where Kite-L dominates by "lay every long-link"
+   (impractical wire cost).
+3. **K=16/32 × N=4/8**: standard chiplet-NoI benchmark grid. K=32 N=4 is the
+   sweet spot where multi-W RL value emerges (medium grid, medium wire).
+4. **BookSim-greedy mask (not surrogate RL)**: surrogate is OOD on
+   uniform/a2a placements (50-70% err); RL trained against surrogate finds
+   bad masks. Direct BookSim feedback bypasses surrogate.
+5. **PARL excluded**: code unavailable, reproduction uncertain. GIA simpler
+   to approximate (Fat-Tree subnet structural).
+6. **Cell ordering K=16 N=4 → K=32 N=4 → K=16 N=8 → K=32 N=8 (last)**: K=32
+   N=8 is slowest (~60min/combo). Run last so partial results give earlier
+   cells fully if time runs out.
 
 ### Plan figures
 - F-mainBars: 12-panel grouped bar (4 cells × 3 mix sizes), x = wire-area,
