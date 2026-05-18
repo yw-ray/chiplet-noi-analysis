@@ -1,0 +1,30 @@
+  Loaded rate-aware surrogate from /home/youngwoo.jeong/grepo/research/projects/chiplet-noi-analysis/results/ml_placement/surrogate_rate_aware.pt
+
+=== [1/11] moe+hybrid_tp_pp | K32_N8 | W=520 ===
+  Stage 1a: 6 candidates (bpp_eq=6, 170.1 min)
+    [cand] greedy_union  : links=193 wire= 516.2 mean_raw=281.0 (182.4s)
+    [cand] rl_seed42     : links=190 wire= 516.5 mean_raw=350.9 (184.3s)
+    [cand] rl_seed43     : links=191 wire= 518.5 mean_raw=420.6 (223.2s)
+    [cand] rl_seed44     : links=191 wire= 518.5 mean_raw=369.4 (181.8s)
+    [cand] rl_seed45     : links=191 wire= 518.5 mean_raw=243.9 (183.0s)
+    [cand] rl_seed46     : links=193 wire= 518.3 mean_raw=364.2 (180.8s)
+  Stage 1b: selected=rl_seed45 (raw_mean=243.9)
+    [mask] moe           : raw=414.0 mask=315.9 active=188/191 (98.4%) (982.9s)
+    [mask] hybrid_tp_pp  : raw=73.9 mask=73.3 active=188/191 (98.4%) (2428.2s)
+    [base] mesh  : links=260 wire= 520.0 moe=351.8 hybr=99.4
+    [base] kite_s: links=153 wire= 518.1 moe=594.6 hybr=71.6
+    [base] kite_m: links=147 wire= 519.5 moe=588.2 hybr=72.8
+    [base] kite_l: links=120 wire= 518.8 moe=393.1 hybr=64.7
+    [base] gia   : links=150 wire= 517.8 moe=535.2 hybr=391.2
+  Combo done in 260.5 min (1/11)
+
+=== [2/11] moe+uniform_random | K32_N8 | W=520 ===
+  Stage 1a: 6 candidates (bpp_eq=6, 201.0 min)
+    [cand] greedy_union  : links=191 wire= 516.4 mean_raw=422.1 (123.9s)
+    [cand] rl_seed42     : links=187 wire= 516.8 mean_raw=550.8 (106.1s)
+    [cand] rl_seed43     : links=188 wire= 518.8 mean_raw=365.9 (103.8s)
+    [cand] rl_seed44     : links=190 wire= 518.6 mean_raw=516.4 (105.3s)
+    [cand] rl_seed45     : links=188 wire= 518.8 mean_raw=419.2 (104.7s)
+    [cand] rl_seed46     : links=189 wire= 518.7 mean_raw=330.6 (121.3s)
+  Stage 1b: selected=rl_seed46 (raw_mean=330.6)
+    [mask] moe           : raw=428.5 mask=351.7 active=186/189 (98.4%) (980.8s)

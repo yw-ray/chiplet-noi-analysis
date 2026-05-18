@@ -93,6 +93,50 @@ def load_rate_aware_surrogate():
     return model
 
 
+class SurrogateV3(nn.Module):
+    """v3 surrogate: [traffic_496, alloc_496, K/32, N/8, log_rate] = 995 dim."""
+    def __init__(self, input_dim=995, hidden=512):
+        super().__init__()
+        self.net = nn.Sequential(
+            nn.Linear(input_dim, hidden), nn.ReLU(), nn.LayerNorm(hidden),
+            nn.Linear(hidden, hidden), nn.ReLU(), nn.LayerNorm(hidden),
+            nn.Linear(hidden, 256),    nn.ReLU(), nn.LayerNorm(256),
+            nn.Linear(256, 64),        nn.ReLU(),
+            nn.Linear(64, 1),
+        )
+
+    def forward(self, x):
+        return self.net(x).squeeze(-1)
+
+
+def load_surrogate_v3():
+    model = SurrogateV3(input_dim=995).to(DEVICE)
+    path = RESULTS_DIR / 'surrogate_v3.pt'
+    model.load_state_dict(torch.load(path, map_location=DEVICE))
+    model.eval()
+    print(f"  Loaded surrogate v3 from {path}", flush=True)
+    return model
+
+
+def surrogate_predict_v3(surrogate, traffic_flat, alloc_vec, all_pairs, N,
+                          K, N_val, rate_mult=4.0):
+    """Predict latency using v3 surrogate (full alloc_flat in features).
+
+    alloc_vec: numpy array of length n_pairs, values = link counts.
+    """
+    import math
+    n = len(all_pairs)
+    alloc_norm = (alloc_vec / N).tolist()
+    alloc_padded = alloc_norm + [0.0] * (496 - n)
+    traffic_padded = list(traffic_flat) + [0.0] * (496 - len(traffic_flat))
+    log_rate = math.log(max(rate_mult, 1e-6)) / math.log(8.0)
+    feat = traffic_padded[:496] + alloc_padded[:496] + [K / 32.0, N_val / 8.0, log_rate]
+    x = torch.tensor([feat], dtype=torch.float32, device=DEVICE)
+    with torch.no_grad():
+        log_pred = surrogate(x).item()
+    return float(np.expm1(log_pred))
+
+
 def surrogate_predict(surrogate, traffic_flat, allocation, adj_set, all_pairs,
                      K, N, budget, n_adj):
     """Predict latency for a given allocation."""

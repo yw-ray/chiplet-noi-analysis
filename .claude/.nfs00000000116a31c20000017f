@@ -1,0 +1,34 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:arxiv.org)",
+      "Bash(mkdir -p ~/.claude/sessions/chiplet-noi)",
+      "Bash(cat)",
+      "Bash(touch ~/.claude/sessions/chiplet-noi/STATUS.md)",
+      "Read(//home/youngwoo.jeong/.claude/sessions/**)",
+      "WebFetch(domain:jiemingyin.github.io)",
+      "WebFetch(domain:dl.acm.org)",
+      "WebFetch(domain:people.eecs.berkeley.edu)",
+      "WebFetch(domain:www.uciexpress.org)",
+      "WebFetch(domain:cva.stanford.edu)",
+      "Bash(awk '/ours_mask|Stage 2|Verdict|Total:|Saved:|Traceback|FAIL/ {print; fflush\\(\\)} /Saved:/ {exit}')",
+      "Bash(awk '/RL done|Mix-avg|Winner|won|Saved:|Traceback|FAIL|^  ours| superset/ {print; fflush\\(\\)} /Saved:/ {exit}')",
+      "Bash(awk '/wire-area|workload=|ours    |Mix-avg|Winner|won|Saved:|Traceback|FAIL/ {print; fflush\\(\\)} /Saved:/ {exit}')",
+      "Bash(awk '/Training Mask|Done|improvement|diff|Saved:|Traceback|FAIL/ {print; fflush\\(\\)} /Saved:/ {exit}')",
+      "Bash(awk '/bpp=|Stage 1 done|winners|Pareto summary|Saved:|Traceback|FAIL/ {print; fflush\\(\\)} /Saved:/ {exit}')",
+      "Bash(awk '/^=== |Stage 1 RL|ALL DONE|Saved:|Traceback|FULL SWEEP/ {print; fflush\\(\\)} /FULL SWEEP/ {exit}')",
+      "Bash(awk '/bpp/ {print; fflush\\(\\)} /Saved:/ {print; exit}')",
+      "Bash(awk '/bpp[0-9]+/ {print; fflush\\(\\)} /Saved:|4-W avg/ {print; fflush\\(\\)} /Saved:/ {exit}')",
+      "Bash(awk '/^=== |raw_lat|Saved partial|Total|Traceback|skip|miss/ {print; fflush\\(\\)} /^Total/ {exit}')",
+      "Bash(awk '/^=== |raw_lat|Saved partial|Total|Traceback/ {print; fflush\\(\\)} /^Total/ {exit}')",
+      "Bash(awk '/wire_target|Saved:|Traceback/ {print; fflush\\(\\)} /Saved:/ {exit}')",
+      "Bash(awk '/^=== |Combo done|ALL DONE|Saved:|Traceback|skip/ {print; fflush\\(\\)} /ALL DONE/ {exit}')",
+      "Bash(awk '/^=== |Combo done|ALL DONE|Saved:|Traceback|Resuming|skip/ {print; fflush\\(\\)} /ALL DONE/ {exit}')",
+      "Bash(awk '/^=== |Combo done|ALL DONE|Saved:|Traceback/ {print; fflush\\(\\)} /ALL DONE/ {exit}')",
+      "Bash(awk '/parl|gia|kite_|Saved:|Traceback|Total/ {print; fflush\\(\\)} /^Total/ {exit}')",
+      "Bash(awk '/parl|gia|kite_|Saved:|Traceback|Total|PARL PPO trained/ {print; fflush\\(\\)} /^Total/ {exit}')",
+      "Bash(awk '/gia|kite_|Saved:|Traceback|Total/ {print; fflush\\(\\)} /^Total/ {exit}')"
+    ]
+  }
+}

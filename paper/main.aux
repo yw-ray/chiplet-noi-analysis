@@ -1,0 +1,121 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyperFirstAtBeginDocument{\AtBeginDocument}
+\HyperFirstAtBeginDocument{\ifx\hyper@anchor\@undefined
+\global\let\oldcontentsline\contentsline
+\gdef\contentsline#1#2#3#4{\oldcontentsline{#1}{#2}{#3}}
+\global\let\oldnewlabel\newlabel
+\gdef\newlabel#1#2{\newlabelxx{#1}#2}
+\gdef\newlabelxx#1#2#3#4#5#6{\oldnewlabel{#1}{{#2}{#3}}}
+\AtEndDocument{\ifx\hyper@anchor\@undefined
+\let\contentsline\oldcontentsline
+\let\newlabel\oldnewlabel
+\fi}
+\fi}
+\global\let\hyper@last\relax 
+\gdef\HyperFirstAtBeginDocument#1{#1}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{mi300x}
+\citation{blackwell}
+\citation{kite,florets,ucie}
+\citation{kite}
+\citation{florets}
+\citation{parl}
+\@writefile{toc}{\contentsline {section}{\numberline {I}Introduction}{1}{section.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces The phantom load problem. (a)\nobreakspace  {}Center-link amplification grows super-linearly with chiplet count. (b)\nobreakspace  {}Adding adjacent links yields diminishing returns: at $K$=16, 4$\times $ budget gives only 1.5$\times $ speedup.}}{1}{figure.1}\protected@file@percent }
+\newlabel{fig:motivation}{{1}{1}{The phantom load problem. (a)~Center-link amplification grows super-linearly with chiplet count. (b)~Adding adjacent links yields diminishing returns: at $K$=16, 4$\times $ budget gives only 1.5$\times $ speedup}{figure.1}{}}
+\citation{kite}
+\citation{florets}
+\citation{express_vc}
+\citation{cmesh}
+\citation{parl}
+\citation{kite}
+\citation{florets}
+\citation{parl}
+\@writefile{toc}{\contentsline {section}{\numberline {II}Background and Related Work}{2}{section.2}\protected@file@percent }
+\newlabel{sec:related}{{II}{2}{Background and Related Work}{section.2}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {I}{\ignorespaces Comparison with Prior Work Along the Three Novelty Axes (Predictor / Warm-Start / Safety)}}{2}{table.1}\protected@file@percent }
+\newlabel{tab:related}{{I}{2}{Comparison with Prior Work Along the Three Novelty Axes (Predictor / Warm-Start / Safety)}{table.1}{}}
+\citation{ucie}
+\citation{mi300x}
+\citation{blackwell}
+\@writefile{toc}{\contentsline {section}{\numberline {III}Phantom Load Analysis}{3}{section.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-A}}Physical Substrate and Chiplet Grid}{3}{subsection.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-B}}System Model}{3}{subsection.3.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {II}{\ignorespaces Phantom Load Scaling Across Grid Sizes}}{3}{table.2}\protected@file@percent }
+\newlabel{tab:scaling}{{II}{3}{Phantom Load Scaling Across Grid Sizes}{table.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-C}}Closed-Form Scaling}{3}{subsection.3.3}\protected@file@percent }
+\newlabel{cor:theta}{{1}{3}{$\Theta (K^{3/2})$ scaling for square grids}{corollary.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-D}}Routing Algorithm Independence}{3}{subsection.3.4}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Physical substrate and the source of phantom load. (a)\nobreakspace  {}Vertical cross-section: chiplets sit on a silicon interposer that contains a small number of metal routing layers (typically 3--6 in current CoWoS); adjacent links are short horizontal wires while an express link is a longer wire that may traverse vias across layers. (b)\nobreakspace  {}Top-down view of a $4\times 4$ chiplet grid with only adjacent links: communication between corner chiplets S and D requires six hops, and every intermediate link must carry that transit traffic (phantom load). (c)\nobreakspace  {}Adding a single distance-3 express link (green) absorbs three of the intermediate hops in one physical wire, eliminating phantom load on those links. Our paper asks which non-adjacent pairs should receive such express wires under a fixed interposer routing budget.}}{4}{figure.2}\protected@file@percent }
+\newlabel{fig:interposer}{{2}{4}{Physical substrate and the source of phantom load. (a)~Vertical cross-section: chiplets sit on a silicon interposer that contains a small number of metal routing layers (typically 3--6 in current CoWoS); adjacent links are short horizontal wires while an express link is a longer wire that may traverse vias across layers. (b)~Top-down view of a $4\times 4$ chiplet grid with only adjacent links: communication between corner chiplets S and D requires six hops, and every intermediate link must carry that transit traffic (phantom load). (c)~Adding a single distance-3 express link (green) absorbs three of the intermediate hops in one physical wire, eliminating phantom load on those links. Our paper asks which non-adjacent pairs should receive such express wires under a fixed interposer routing budget}{figure.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Phantom load example on a 4$\times $4 chiplet grid. (a)\nobreakspace  {}Adjacent-only: C0$\to $C15 requires 6 hops via XY routing; every intermediate link carries transit traffic. (b)\nobreakspace  {}An express link C0$\to $C3 reduces the path to 4 hops, freeing 2 intermediate links.}}{4}{figure.3}\protected@file@percent }
+\newlabel{fig:phantom4x4}{{3}{4}{Phantom load example on a 4$\times $4 chiplet grid. (a)~Adjacent-only: C0$\to $C15 requires 6 hops via XY routing; every intermediate link carries transit traffic. (b)~An express link C0$\to $C3 reduces the path to 4 hops, freeing 2 intermediate links}{figure.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {III}{\ignorespaces Load Imbalance Across Routing Algorithms}}{4}{table.3}\protected@file@percent }
+\newlabel{tab:routing}{{III}{4}{Load Imbalance Across Routing Algorithms}{table.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {IV}Non-Locality Analysis}{4}{section.4}\protected@file@percent }
+\newlabel{sec:nl}{{IV}{4}{Non-Locality Analysis}{section.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {V}Express Link Placement}{4}{section.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-A}}System Overview}{4}{subsection.5.1}\protected@file@percent }
+\citation{booksim}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Greedy Express Link Placement}}{5}{algorithm.1}\protected@file@percent }
+\newlabel{alg:greedy_express}{{1}{5}{Greedy Baseline}{algorithm.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-B}}Greedy Baseline}{5}{subsection.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-C}}Multi-Warm-Start RL Refinement}{5}{subsection.5.3}\protected@file@percent }
+\newlabel{sec:rl_ws}{{\mbox  {V-C}}{5}{Multi-Warm-Start RL Refinement}{subsection.5.3}{}}
+\newlabel{eq:fallback}{{7}{5}{Multi-Warm-Start RL Refinement}{equation.5.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {VI}Evaluation}{5}{section.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-A}}Setup}{5}{subsection.6.1}\protected@file@percent }
+\citation{deepseekv3}
+\citation{mixtral}
+\citation{gshard}
+\@writefile{lot}{\contentsline {table}{\numberline {IV}{\ignorespaces Seven Workloads and Non-Locality at $K{=}32$. Stratification: \textit  {High-NL} (NL$\ge $77\%) vs \textit  {Low-NL} (NL$\le $50\%).}}{6}{table.4}\protected@file@percent }
+\newlabel{tab:workloads_full}{{IV}{6}{Seven Workloads and Non-Locality at $K{=}32$. Stratification: \textit {High-NL} (NL$\ge $77\%) vs \textit {Low-NL} (NL$\le $50\%)}{table.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-B}}Main Result: RL-WS Beats FBfly on High-NL Workloads}{6}{subsection.6.2}\protected@file@percent }
+\newlabel{subsec:main}{{\mbox  {VI-B}}{6}{Main Result: RL-WS Beats FBfly on High-NL Workloads}{subsection.6.2}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {V}{\ignorespaces Main Result: RL-WS vs Baselines, Mean Saving vs Adjacent-Uniform No-Express (28 cells, primarily $b{=}4\times $). \textit  {vs FBfly} reports per-cell wins (strict latency reduction) and the per-workload mean latency reduction relative to FBfly.}}{7}{table.5}\protected@file@percent }
+\newlabel{tab:main_result}{{V}{7}{Main Result: RL-WS vs Baselines, Mean Saving vs Adjacent-Uniform No-Express (28 cells, primarily $b{=}4\times $). \textit {vs FBfly} reports per-cell wins (strict latency reduction) and the per-workload mean latency reduction relative to FBfly}{table.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces NL\% predicts express-link saving across 28 cells. RL-WS (red diamonds) raises the saving curve above both greedy (blue circles) and FBfly (green squares). On high-NL ($\ge $77\%) cells, RL-WS strictly dominates FBfly; on low-NL cells, the gap shrinks to single-cycle scale and the deployment-classifier signal is to fall back to FBfly. Pooled Spearman $\rho (\mathrm  {NL\%}, \text  {RL-WS saving})=0.83$ ($p=6.8\times 10^{-8}$).}}{7}{figure.4}\protected@file@percent }
+\newlabel{fig:ml_nonlocality}{{4}{7}{NL\% predicts express-link saving across 28 cells. RL-WS (red diamonds) raises the saving curve above both greedy (blue circles) and FBfly (green squares). On high-NL ($\ge $77\%) cells, RL-WS strictly dominates FBfly; on low-NL cells, the gap shrinks to single-cycle scale and the deployment-classifier signal is to fall back to FBfly. Pooled Spearman $\rho (\mathrm {NL\%}, \text {RL-WS saving})=0.83$ ($p=6.8\times 10^{-8}$)}{figure.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-C}}Ablation: Multi-Warm-Start and Post-Hoc Fallback}{7}{subsection.6.3}\protected@file@percent }
+\newlabel{subsec:ablation}{{\mbox  {VI-C}}{7}{Ablation: Multi-Warm-Start and Post-Hoc Fallback}{subsection.6.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {VI}{\ignorespaces Ablation of RL-WS Design Choices Across 28 Cells. ``BookSim-best source'' counts which member of the candidate pool is finally selected in BookSim; ``vs min(greedy, FBfly)'' counts strict beats / ties / losses against the per-cell measured minimum of the two deterministic baselines.}}{7}{table.6}\protected@file@percent }
+\newlabel{tab:ablation}{{VI}{7}{Ablation of RL-WS Design Choices Across 28 Cells. ``BookSim-best source'' counts which member of the candidate pool is finally selected in BookSim; ``vs min(greedy, FBfly)'' counts strict beats / ties / losses against the per-cell measured minimum of the two deterministic baselines}{table.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-D}}Wall-Clock Cost}{7}{subsection.6.4}\protected@file@percent }
+\newlabel{subsec:cost}{{\mbox  {VI-D}}{7}{Wall-Clock Cost}{subsection.6.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Max-rate latency versus link budget at $K$=32, $N$=8 for the four high-NL training workloads. The gap between adjacent-uniform (gray), greedy (blue), FBfly (green), and RL-WS (red) widens as NL\% grows.}}{8}{figure.5}\protected@file@percent }
+\newlabel{fig:cost_saving_4panel}{{5}{8}{Max-rate latency versus link budget at $K$=32, $N$=8 for the four high-NL training workloads. The gap between adjacent-uniform (gray), greedy (blue), FBfly (green), and RL-WS (red) widens as NL\% grows}{figure.5}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {VII}{\ignorespaces Per-Cell Wall-Clock Cost of RL-WS. Surrogate training is amortized over all 28 evaluated cells; greedy and FBfly baselines are deterministic.}}{8}{table.7}\protected@file@percent }
+\newlabel{tab:cost}{{VII}{8}{Per-Cell Wall-Clock Cost of RL-WS. Surrogate training is amortized over all 28 evaluated cells; greedy and FBfly baselines are deterministic}{table.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-E}}Per-Cell Analysis: When RL-WS Wins by Large Margins}{8}{subsection.6.5}\protected@file@percent }
+\newlabel{subsec:percell}{{\mbox  {VI-E}}{8}{Per-Cell Analysis: When RL-WS Wins by Large Margins}{subsection.6.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-F}}Physical Overhead}{8}{subsection.6.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {VII}Discussion}{8}{section.7}\protected@file@percent }
+\citation{kite,florets}
+\citation{parl}
+\@writefile{lot}{\contentsline {table}{\numberline {VIII}{\ignorespaces Physical Overhead of Express Links (CoWoS-class Estimates)}}{9}{table.8}\protected@file@percent }
+\newlabel{tab:physical}{{VIII}{9}{Physical Overhead of Express Links (CoWoS-class Estimates)}{table.8}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {IX}{\ignorespaces Express-link wire-delay sensitivity. Cells are the four best-budget $K{=}32, N{=}8$ configurations. Entries are \emph  {saving vs adjacent-uniform} (\%). Each row is one workload; each column is a per-hop express-latency scaling factor $\lambda $.}}{9}{table.9}\protected@file@percent }
+\newlabel{tab:lambda_sensitivity}{{IX}{9}{Express-link wire-delay sensitivity. Cells are the four best-budget $K{=}32, N{=}8$ configurations. Entries are \emph {saving vs adjacent-uniform} (\%). Each row is one workload; each column is a per-hop express-latency scaling factor $\lambda $}{table.9}{}}
+\bibstyle{IEEEtran}
+\bibcite{blackwell}{1}
+\bibcite{mi300x}{2}
+\bibcite{kite}{3}
+\bibcite{florets}{4}
+\bibcite{modular_routing}{5}
+\bibcite{ucie}{6}
+\bibcite{chiplet_actuary}{7}
+\bibcite{catch}{8}
+\bibcite{cpelide}{9}
+\bibcite{cnsim}{10}
+\bibcite{booksim}{11}
+\bibcite{express_vc}{12}
+\bibcite{cmesh}{13}
+\bibcite{parl}{14}
+\bibcite{mixtral}{15}
+\bibcite{deepseekv3}{16}
+\bibcite{gshard}{17}
+\@writefile{toc}{\contentsline {section}{\numberline {VIII}Conclusion}{10}{section.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{References}{10}{section*.1}\protected@file@percent }
+\gdef \@abspage@last{10}

@@ -31,7 +31,12 @@ from noi_topology_synthesis import ChipletGrid
 from ml_express_warmstart import (
     RESULTS_DIR,
     load_rate_aware_surrogate,
+    load_surrogate_v3,
 )
+
+
+# Surrogate variant — 'v3' uses full alloc_flat features (better OOD).
+SURROGATE_VARIANT = 'v3'
 from run_rl_multi_workload import (
     train_warmstart_rl_multi,
     warm_start_union_greedy,
@@ -43,29 +48,59 @@ from sweep_v2_iso_wire import (
 )
 from sweep_v2_mask_greedy import booksim_greedy_mask, run_booksim_alloc
 from baseline_gia import gia_alloc
+from mcts_search import mcts_search
 
 
-ALL_WORKLOADS = ['moe', 'hybrid_tp_pp', 'uniform_random', 'all_to_all']
+ALL_WORKLOADS = ['moe', 'hybrid_tp_pp', 'tree_allreduce', 'uniform_random',
+                 'ep_all_to_all', 'fsdp']
 SUBSETS = []
 for k in [2, 3, 4]:
     for combo in itertools.combinations(ALL_WORKLOADS, k):
         SUBSETS.append(combo)
 
 # (K, N, R, C, W_mm²) — single W per cell main eval.
+# W scaled with N²/N_ref² so per-pair traffic-to-wire ratio is constant.
+# K=16 base: W=240 at N=4 → W=960 at N=8 (4×).
+# K=32 base: W=520 at N=4 → W=2080 at N=8 (4×).
 # K32_N8 first (largest, most likely to expose surrogate fragility).
 CELLS = [
-    (32, 8, 4, 8, 520.0),
-    (16, 8, 4, 4, 240.0),
+    (32, 8, 4, 8, 2080.0),
+    (16, 8, 4, 4, 960.0),
     (32, 4, 4, 8, 520.0),
     (16, 4, 4, 4, 240.0),
 ]
 
 RL_SEEDS = [42, 43, 44, 45, 46]
 RL_EPISODES = 200
-MASK_MAX_STEPS = 3
-MASK_N_CANDIDATES = 6
+# Per-cell mask params (set by main()). Overridable via env or arg.
+MASK_MAX_STEPS = 20  # K16; K32 overrides to 12 below
+MASK_N_CANDIDATES = 15  # K16; K32 overrides to 10 below
+MASK_N_PARALLEL = 8  # threads for parallel candidate BookSim eval
 
-OUT_PATH = RESULTS_DIR / 'sweep_v3_isowire.json'
+CELL_MASK_PARAMS = {
+    'K16_N4': (20, 15),
+    'K16_N8': (20, 15),
+    'K32_N4': (12, 10),
+    'K32_N8': (12, 10),
+}
+
+# MCTS adds 3 tree-search candidates with diverse seeds. Each seed expands
+# a Monte Carlo tree from the greedy_union warm-start, returning the best
+# state by surrogate value. The combined pool (greedy + 5 REINFORCE +
+# 3 MCTS) covers both gradient-based and search-based exploration.
+MCTS_SEEDS = [101, 102, 103]
+MCTS_N_ITERS = 1500
+MCTS_ROLLOUT_DEPTH = 12
+MCTS_EXPANSION_BRANCH = 25
+MCTS_ROLLOUT_BRANCH = 8
+
+
+def out_path_for(cell_idx):
+    suffix = '_v3surr' if SURROGATE_VARIANT == 'v3' else ''
+    if cell_idx is None:
+        return RESULTS_DIR / f'sweep_v3_isowire{suffix}.json'
+    K, N, _, _, _ = CELLS[cell_idx]
+    return RESULTS_DIR / f'sweep_v3_isowire_K{K}_N{N}{suffix}.json'
 
 
 def vec_to_dict(vec, all_pairs):
@@ -132,6 +167,7 @@ def evaluate_raw(alloc, K, N, R, C, subset, label):
 def gen_candidates(subset, K, N, R, C, W, surrogate):
     grid = ChipletGrid(R, C)
     n_adj = len(grid.get_adj_pairs())
+    adj_set = set(grid.get_adj_pairs())
     # Generous link budget so wire is binding constraint for RL/greedy.
     bpp_eq = max(2, int(W / (WIRE_AREA[1] * n_adj)) + 1)
     budget = n_adj * bpp_eq
@@ -155,14 +191,49 @@ def gen_candidates(subset, K, N, R, C, W, surrogate):
             surrogate, list(subset), K, N, R, C, bpp_eq,
             n_episodes=RL_EPISODES, rate_mult=4.0,
             reward_type='normalized_avg', max_dist=3, verbose=False,
+            surrogate_version=SURROGATE_VARIANT,
         )
         a = cap_alloc(rl_res['superset_alloc'], N)
         cands[f'rl_seed{s}'] = prune_to_wire(a, grid, W)
 
+    # MCTS candidates — Monte Carlo Tree Search from greedy_union.
+    hop_mask_np = np.array(
+        [1 if grid.get_hops(p[0], p[1]) <= 3 else 0 for p in all_pairs],
+        dtype=bool)
+    mesh_protect_np = np.array(
+        [1 if p in adj_set else 0 for p in all_pairs], dtype=bool)
+    surrogate_args = []
+    for traffic, traffic_flat, _ in workload_traffics:
+        surrogate_args.append({
+            'traffic_flat': traffic_flat,
+            'adj_set': adj_set, 'all_pairs': all_pairs,
+            'K': K, 'N': N, 'budget': budget, 'n_adj': n_adj,
+            'rate_mult': 4.0,
+        })
+    for s in MCTS_SEEDS:
+        torch.manual_seed(s)
+        np.random.seed(s)
+        top = mcts_search(
+            gv.copy(), surrogate, surrogate_args,
+            hop_mask_np, mesh_protect_np, N,
+            n_iters=MCTS_N_ITERS,
+            rollout_depth=MCTS_ROLLOUT_DEPTH,
+            expansion_branch=MCTS_EXPANSION_BRANCH,
+            rollout_branch=MCTS_ROLLOUT_BRANCH,
+            top_k=1, seed=s, verbose=False,
+            surrogate_version=SURROGATE_VARIANT,
+        )
+        if top:
+            best_state, _ = top[0]
+            a = cap_alloc(vec_to_dict(best_state, all_pairs), N)
+            cands[f'mcts_seed{s}'] = prune_to_wire(a, grid, W)
+
     return cands, grid, bpp_eq
 
 
-def stage2_per_workload(superset, K, N, R, C, subset, label_prefix):
+def stage2_per_workload(superset, K, N, R, C, subset, label_prefix,
+                         mask_max_steps=None, mask_n_cands=None,
+                         n_parallel=None):
     """Per-workload greedy mask with strict no-degradation guard.
 
     Mask must satisfy mask_lat ≤ raw_lat. We pass lat_tolerance=1.0 to
@@ -178,10 +249,11 @@ def stage2_per_workload(superset, K, N, R, C, subset, label_prefix):
         t0 = time.time()
         final_mask, history, raw_lat = booksim_greedy_mask(
             superset, K, N, R, C, w,
-            max_steps=MASK_MAX_STEPS,
-            max_candidates=MASK_N_CANDIDATES,
+            max_steps=mask_max_steps if mask_max_steps else MASK_MAX_STEPS,
+            max_candidates=mask_n_cands if mask_n_cands else MASK_N_CANDIDATES,
             lat_tolerance=1.0,
             label_prefix=label,
+            n_parallel=n_parallel if n_parallel else MASK_N_PARALLEL,
         )
         final_lat = history[-1]['lat'] if history else None
         reverted = False
@@ -257,22 +329,34 @@ def evaluate_baselines(K, N, R, C, W, subset, grid, label_prefix):
 
 
 def main():
-    if OUT_PATH.exists():
+    cell_idx = None
+    if len(sys.argv) > 1:
+        cell_idx = int(sys.argv[1])
+        cells_to_run = [CELLS[cell_idx]]
+        n_total_cells = 1
+    else:
+        cells_to_run = CELLS
+        n_total_cells = len(CELLS)
+    out_path = out_path_for(cell_idx)
+    if out_path.exists():
         try:
-            results = json.loads(OUT_PATH.read_text())
-            print(f"Resuming from {OUT_PATH}", flush=True)
+            results = json.loads(out_path.read_text())
+            print(f"Resuming from {out_path}", flush=True)
         except Exception:
             results = {}
     else:
         results = {}
 
-    surrogate = load_rate_aware_surrogate()
+    if SURROGATE_VARIANT == 'v3':
+        surrogate = load_surrogate_v3()
+    else:
+        surrogate = load_rate_aware_surrogate()
 
     overall_t0 = time.time()
     n_done = 0
-    n_total = len(SUBSETS) * len(CELLS)
+    n_total = len(SUBSETS) * n_total_cells
 
-    for K, N, R, C, W in CELLS:
+    for K, N, R, C, W in cells_to_run:
         cell_key = f'K{K}_N{N}'
         for subset in SUBSETS:
             subset_key = '+'.join(subset)
@@ -330,7 +414,7 @@ def main():
                     'stage2': None,
                     'baselines_at_W': None,
                 }
-                OUT_PATH.write_text(json.dumps(results, indent=2))
+                out_path.write_text(json.dumps(results, indent=2))
                 n_done += 1
                 continue
 
@@ -361,7 +445,7 @@ def main():
                 'stage2': stage2,
                 'baselines_at_W': baselines,
             }
-            OUT_PATH.write_text(json.dumps(results, indent=2))
+            out_path.write_text(json.dumps(results, indent=2))
             n_done += 1
             print(f"  Combo done in "
                   f"{(time.time() - t_combo) / 60:.1f} min "
@@ -369,7 +453,7 @@ def main():
 
     print(f"\n=== ALL DONE in "
           f"{(time.time() - overall_t0) / 3600:.1f} h ===", flush=True)
-    print(f"Saved: {OUT_PATH}", flush=True)
+    print(f"Saved: {out_path}", flush=True)
 
 
 if __name__ == '__main__':

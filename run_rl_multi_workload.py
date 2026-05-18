@@ -29,6 +29,7 @@ from ml_express_warmstart import (
     SwapPolicy,
     load_rate_aware_surrogate,
     surrogate_predict_ra,
+    surrogate_predict_v3,
 )
 
 
@@ -95,6 +96,47 @@ def warm_start_union_greedy(workload_traffics, grid, budget, max_dist,
     return union_alloc
 
 
+def alloc_dict_to_vec(alloc_dict, all_pairs, pair_to_idx):
+    """Convert alloc dict {(i,j): n} to float32 vector indexed by all_pairs."""
+    vec = np.zeros(len(all_pairs), dtype=np.float32)
+    for p, n in alloc_dict.items():
+        if p in pair_to_idx:
+            vec[pair_to_idx[p]] = float(n)
+    return vec
+
+
+def warm_start_intersection_backbone(workload_traffics, grid, budget, max_dist,
+                                     max_lpp, all_pairs, pair_to_idx):
+    """Boolean backbone mask: mesh adj + links present in ALL per-workload greedies.
+
+    Backbone links must stay >= 1 during RL/MCTS swaps. For dense-only workload
+    mixes, the intersection converges to a uniform spine-like structure, guiding
+    RL toward kite-L territory without injecting kite-L directly as a candidate.
+    """
+    adj_set = set(grid.get_adj_pairs())
+    mesh_mask = np.array([p in adj_set for p in all_pairs], dtype=bool)
+
+    per_wl_present = []
+    for traffic, _, _ in workload_traffics:
+        per_alloc = alloc_express_greedy(grid, traffic, budget, max_dist=max_dist)
+        present = np.zeros(len(all_pairs), dtype=bool)
+        for p in per_alloc:
+            if p in pair_to_idx:
+                present[pair_to_idx[p]] = True
+        per_wl_present.append(present)
+
+    if len(per_wl_present) > 1:
+        intersection = per_wl_present[0].copy()
+        for mask in per_wl_present[1:]:
+            intersection &= mask
+    elif per_wl_present:
+        intersection = per_wl_present[0].copy()
+    else:
+        intersection = np.zeros(len(all_pairs), dtype=bool)
+
+    return mesh_mask | intersection
+
+
 def train_warmstart_rl_multi(
     surrogate_ra,
     workload_set,
@@ -107,6 +149,8 @@ def train_warmstart_rl_multi(
     max_dist=3,
     warm_start_alloc=None,
     verbose=True,
+    surrogate_version='v2',
+    frozen_backbone_mask=None,
 ):
     grid = ChipletGrid(R, C)
     n_workloads = len(workload_set)
@@ -130,7 +174,12 @@ def train_warmstart_rl_multi(
     mesh_protect_np = np.array(
         [1 if p in set(adj_pairs) else 0 for p in all_pairs], dtype=bool,
     )
-    mesh_protect_t = torch.tensor(mesh_protect_np, device=DEVICE)
+    # Merge backbone constraint: backbone links cannot be removed below 1.
+    if frozen_backbone_mask is not None:
+        combined_protect_np = mesh_protect_np | frozen_backbone_mask
+    else:
+        combined_protect_np = mesh_protect_np
+    mesh_protect_t = torch.tensor(combined_protect_np, device=DEVICE)
 
     if warm_start_alloc is None:
         greedy_vec = warm_start_union_greedy(
@@ -147,11 +196,17 @@ def train_warmstart_rl_multi(
     def _per_workload_latencies(vec):
         latencies = []
         for _, traffic_flat, _ in workload_traffics:
-            lat = surrogate_predict_ra(
-                surrogate_ra, traffic_flat, vec,
-                adj_set, all_pairs, K, N, budget, n_adj,
-                rate_mult=rate_mult,
-            )
+            if surrogate_version == 'v3':
+                lat = surrogate_predict_v3(
+                    surrogate_ra, traffic_flat, vec,
+                    all_pairs, N, K, N, rate_mult=rate_mult,
+                )
+            else:
+                lat = surrogate_predict_ra(
+                    surrogate_ra, traffic_flat, vec,
+                    adj_set, all_pairs, K, N, budget, n_adj,
+                    rate_mult=rate_mult,
+                )
             latencies.append(lat)
         return latencies
 

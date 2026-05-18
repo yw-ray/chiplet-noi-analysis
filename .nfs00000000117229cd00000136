@@ -1,0 +1,93 @@
+  Loaded rate-aware surrogate from /home/youngwoo.jeong/grepo/research/projects/chiplet-noi-analysis/results/ml_placement/surrogate_rate_aware.pt
+
+=== [1/11] moe+hybrid_tp_pp | K32_N4 | W=520 ===
+  Stage 1a: 6 candidates (bpp_eq=6, 172.4 min)
+    [cand] greedy_union  : links=191 wire= 516.4 mean_raw=240.2 (37.2s)
+    [cand] rl_seed42     : links=186 wire= 519.0 mean_raw=412.3 (37.4s)
+    [cand] rl_seed43     : links=186 wire= 519.0 mean_raw=299.4 (39.0s)
+    [cand] rl_seed44     : links=190 wire= 516.5 mean_raw=353.2 (38.7s)
+    [cand] rl_seed45     : links=185 wire= 517.0 mean_raw=187.5 (37.4s)
+    [cand] rl_seed46     : links=183 wire= 519.3 mean_raw=147.4 (37.3s)
+  Stage 1b: selected=rl_seed46 (raw_mean=147.4)
+    [mask] moe           : raw=250.9 mask=206.9 active=180/183 (98.4%) (125.4s)
+    [mask] hybrid_tp_pp  : raw=43.9 mask=43.9 active=183/183 (100.0%) (205.5s)
+    [base] mesh  : links=208 wire= 416.0 moe=292.4 hybr=57.0
+    [base] kite_s: links=153 wire= 518.1 moe=574.5 hybr=47.5
+    [base] kite_m: links=147 wire= 519.5 moe=556.3 hybr=46.7
+    [base] kite_l: links=120 wire= 518.8 moe=544.6 hybr=46.1
+    [base] gia   : links=144 wire= 517.2 moe=564.2 hybr=62.6
+  Combo done in 184.9 min (1/11)
+
+=== [2/11] moe+uniform_random | K32_N4 | W=520 ===
+  Stage 1a: 6 candidates (bpp_eq=6, 178.8 min)
+    [cand] greedy_union  : links=192 wire= 516.3 mean_raw=185.0 (46.5s)
+    [cand] rl_seed42     : links=187 wire= 518.9 mean_raw=289.9 (60.2s)
+    [cand] rl_seed43     : links=189 wire= 518.7 mean_raw=169.0 (39.7s)
+    [cand] rl_seed44     : links=188 wire= 518.8 mean_raw=256.7 (41.4s)
+    [cand] rl_seed45     : links=187 wire= 516.8 mean_raw=313.1 (19.7s)
+    [cand] rl_seed46     : links=190 wire= 518.6 mean_raw=193.0 (60.6s)
+  Stage 1b: selected=rl_seed43 (raw_mean=169.0)
+    [mask] moe           : raw=283.7 mask=225.9 active=186/189 (98.4%) (150.4s)
+    [mask] uniform_random: raw=54.4 mask=54.3 active=186/189 (98.4%) (620.7s)
+    [base] mesh  : links=208 wire= 416.0 moe=292.4 unif=65.8
+    [base] kite_s: links=153 wire= 518.1 moe=574.5 unif=48.5
+    [base] kite_m: links=147 wire= 519.5 moe=556.3 unif=47.4
+    [base] kite_l: links=120 wire= 518.8 moe=544.6 unif=45.6
+    [base] gia   : links=144 wire= 517.2 moe=564.2 unif=56.2
+  Combo done in 199.3 min (2/11)
+
+=== [3/11] moe+all_to_all | K32_N4 | W=520 ===
+  Stage 1a: 6 candidates (bpp_eq=6, 95.1 min)
+    [cand] greedy_union  : links=180 wire= 517.5 mean_raw=269.4 (38.5s)
+    [cand] rl_seed42     : links=176 wire= 517.9 mean_raw=317.9 (38.2s)
+    [cand] rl_seed43     : links=176 wire= 517.9 mean_raw=251.9 (38.0s)
+    [cand] rl_seed44     : links=177 wire= 519.9 mean_raw=336.7 (39.9s)
+    [cand] rl_seed45     : links=177 wire= 519.9 mean_raw=222.7 (39.1s)
+    [cand] rl_seed46     : links=179 wire= 517.6 mean_raw=324.4 (38.3s)
+  Stage 1b: selected=rl_seed45 (raw_mean=222.7)
+    [mask] moe           : raw=392.2 mask=359.9 active=174/177 (98.3%) (146.1s)
+    [mask] all_to_all    : raw=53.2 mask=52.0 active=174/177 (98.3%) (582.1s)
+    [base] mesh  : links=208 wire= 416.0 moe=292.4 all_=65.8
+    [base] kite_s: links=153 wire= 518.1 moe=574.5 all_=48.7
+    [base] kite_m: links=147 wire= 519.5 moe=556.3 all_=47.6
+    [base] kite_l: links=120 wire= 518.8 moe=544.6 all_=45.9
+    [base] gia   : links=144 wire= 517.2 moe=564.2 all_=57.7
+  Combo done in 114.3 min (3/11)
+
+=== [4/11] hybrid_tp_pp+uniform_random | K32_N4 | W=520 ===
+  Stage 1a: 6 candidates (bpp_eq=6, 361.9 min)
+    [cand] greedy_union  : links=203 wire= 519.4 mean_raw=50.5 (65.4s)
+    [cand] rl_seed42     : links=194 wire= 518.2 mean_raw=48.4 (63.7s)
+    [cand] rl_seed43     : links=194 wire= 516.1 mean_raw=77.5 (52.3s)
+    [cand] rl_seed44     : links=196 wire= 518.0 mean_raw=79.4 (43.2s)
+    [cand] rl_seed45     : links=195 wire= 516.0 mean_raw=48.2 (63.5s)
+    [cand] rl_seed46     : links=194 wire= 518.2 mean_raw=54.5 (71.2s)
+  Stage 1b: selected=rl_seed45 (raw_mean=48.2)
+    [mask] hybrid_tp_pp  : raw=43.9 mask=43.9 active=195/195 (100.0%) (212.7s)
+    [mask] uniform_random: raw=52.5 mask=52.5 active=195/195 (100.0%) (243.3s)
+    [base] mesh  : links=208 wire= 416.0 hybr=57.0 unif=65.8
+    [base] kite_s: links=153 wire= 518.1 hybr=47.5 unif=48.5
+    [base] kite_m: links=147 wire= 519.5 hybr=46.7 unif=47.4
+    [base] kite_l: links=120 wire= 518.8 hybr=46.1 unif=45.6
+    [base] gia   : links=144 wire= 517.2 hybr=62.6 unif=56.2
+  Combo done in 381.2 min (4/11)
+
+=== [5/11] hybrid_tp_pp+all_to_all | K32_N4 | W=520 ===
+  Stage 1a: 6 candidates (bpp_eq=6, 307.3 min)
+    [cand] greedy_union  : links=198 wire= 517.8 mean_raw=50.9 (78.9s)
+    [cand] rl_seed42     : links=190 wire= 518.6 mean_raw=58.8 (85.0s)
+    [cand] rl_seed43     : links=193 wire= 516.2 mean_raw=50.5 (74.0s)
+    [cand] rl_seed44     : links=192 wire= 518.4 mean_raw=49.2 (71.1s)
+    [cand] rl_seed45     : links=194 wire= 516.1 mean_raw=51.7 (86.1s)
+    [cand] rl_seed46     : links=189 wire= 516.6 mean_raw=48.4 (72.3s)
+  Stage 1b: selected=rl_seed46 (raw_mean=48.4)
+    [mask] hybrid_tp_pp  : raw=45.1 mask=45.1 active=188/189 (99.5%) (458.0s)
+    [mask] all_to_all    : raw=51.7 mask=51.7 active=189/189 (100.0%) (262.6s)
+    [base] mesh  : links=208 wire= 416.0 hybr=57.0 all_=65.8
+    [base] kite_s: links=153 wire= 518.1 hybr=47.5 all_=48.7
+    [base] kite_m: links=147 wire= 519.5 hybr=46.7 all_=47.6
+    [base] kite_l: links=120 wire= 518.8 hybr=46.1 all_=45.9
+    [base] gia   : links=144 wire= 517.2 hybr=62.6 all_=57.7
+  Combo done in 333.4 min (5/11)
+
+=== [6/11] uniform_random+all_to_all | K32_N4 | W=520 ===

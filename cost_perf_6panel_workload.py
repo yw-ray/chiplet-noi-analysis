@@ -162,6 +162,58 @@ def gen_all_to_all(K, grid, data_size=1000.0):
     return T
 
 
+def gen_ep_all_to_all(K, grid, data_size=1000.0, zipf_s=1.5):
+    """EP all-to-all token shuffle with Zipf expert popularity (DeepSeek-V3).
+
+    Dense version of `gen_moe`. Every chiplet sends/receives tokens
+    proportional to expert popularity at the destination. Models the
+    actual dispatch+combine pattern in production MoE expert parallelism.
+    Differs from sparse `gen_moe` (top-2 dispatch) by being dense:
+    every (i, j) pair carries traffic weighted by Zipf popularity.
+    """
+    T = np.zeros((K, K))
+    ranks = np.arange(1, K + 1, dtype=float)
+    probs = 1.0 / ranks ** zipf_s
+    probs /= probs.sum()
+    for i in range(K):
+        for j in range(K):
+            if i != j:
+                # dispatch (i→expert@j) + combine (expert@i→j)
+                T[i][j] = data_size * (probs[i] + probs[j])
+    return T
+
+
+def gen_fsdp(K, grid, data_size=1000.0, group_size=8):
+    """FSDP/ZeRO-3 parameter all-gather + reduce-scatter.
+
+    Hierarchical model: within each FSDP group (size=group_size, mimicking
+    intra-node NVLink), all-gather is direct dense. Between groups,
+    cross-group reduce is sparse single-edge (mimicking inter-node IB).
+    For K=16 with group_size=8 → 2 groups; K=32 → 4 groups.
+
+    NL% is medium — intra-group dense is short-distance under row-major
+    chiplet mapping, while inter-group has long-distance hops.
+    """
+    T = np.zeros((K, K))
+    n_groups = max(1, K // group_size)
+    # All-gather + reduce-scatter within each group (dense intra-group)
+    for g in range(n_groups):
+        start, end = g * group_size, min((g + 1) * group_size, K)
+        for i in range(start, end):
+            for j in range(start, end):
+                if i != j:
+                    # 2× = all-gather + reduce-scatter directions
+                    T[i][j] += 2 * data_size / group_size
+    # Cross-group reduce (sparse, like Megatron PP edge)
+    for g in range(n_groups - 1):
+        src = min((g + 1) * group_size - 1, K - 1)
+        dst = min((g + 1) * group_size, K - 1)
+        if src != dst:
+            T[src][dst] += data_size * 0.2
+            T[dst][src] += data_size * 0.2
+    return T
+
+
 WORKLOADS = {
     'uniform_random':    gen_uniform_random,
     'hybrid_tp_pp':      gen_hybrid_tp_pp,
@@ -171,6 +223,8 @@ WORKLOADS = {
     'tree_allreduce':    gen_tree_allreduce,
     'pipeline_parallel': gen_pipeline_parallel,
     'all_to_all':        gen_all_to_all,
+    'ep_all_to_all':     gen_ep_all_to_all,
+    'fsdp':              gen_fsdp,
 }
 
 

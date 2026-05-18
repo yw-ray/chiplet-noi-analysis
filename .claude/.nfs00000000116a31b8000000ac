@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:arxiv.org)",
+      "Bash(mkdir -p ~/.claude/sessions/chiplet-noi)",
+      "Bash(cat)",
+      "Bash(touch ~/.claude/sessions/chiplet-noi/STATUS.md)",
+      "Read(//home/youngwoo.jeong/.claude/sessions/**)",
+      "WebFetch(domain:jiemingyin.github.io)",
+      "WebFetch(domain:dl.acm.org)",
+      "WebFetch(domain:people.eecs.berkeley.edu)",
+      "WebFetch(domain:www.uciexpress.org)",
+      "WebFetch(domain:cva.stanford.edu)"
+    ]
+  }
+}

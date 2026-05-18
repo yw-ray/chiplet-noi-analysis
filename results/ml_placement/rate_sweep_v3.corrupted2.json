@@ -1,0 +1,1522 @@
+{
+  "K16_N4|moe+ep_all_to_all|ours_mask_moe|moe|0.0010": {
+    "label": "K16_N4_moe+ep_all_to_all_ours_mask_moe",
+    "wl": "moe",
+    "rate": 0.008,
+    "latency": 367.639,
+    "throughput": 0.00612461,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|ours_mask_moe|moe|0.0020": {
+    "label": "K16_N4_moe+ep_all_to_all_ours_mask_moe",
+    "wl": "moe",
+    "rate": 0.001,
+    "latency": 39.7726,
+    "throughput": 0.000988932,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|ours_mask_moe|moe|0.0030": {
+    "label": "K16_N4_moe+ep_all_to_all_ours_mask_moe",
+    "wl": "moe",
+    "rate": 0.012,
+    "latency": 336.584,
+    "throughput": 0.00390469,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|ours_mask_moe|moe|0.0050": {
+    "label": "K16_N4_moe+ep_all_to_all_ours_mask_moe",
+    "wl": "moe",
+    "rate": 0.002,
+    "latency": 41.1916,
+    "throughput": 0.00198997,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|ours_mask_moe|moe|0.0080": {
+    "label": "K16_N4_moe+ep_all_to_all_ours_mask_ep_all_to_all",
+    "wl": "ep_all_to_all",
+    "rate": 0.001,
+    "latency": 44.1459,
+    "throughput": 0.000988411,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|ours_mask_moe|moe|0.0120": {
+    "label": "K16_N4_moe+ep_all_to_all_ours_mask_moe",
+    "wl": "moe",
+    "rate": 0.003,
+    "latency": 43.0562,
+    "throughput": 0.00299935,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|ours_mask_moe|moe|0.0180": {
+    "label": "K16_N4_moe+ep_all_to_all_ours_mask_ep_all_to_all",
+    "wl": "ep_all_to_all",
+    "rate": 0.005,
+    "latency": 260.592,
+    "throughput": 0.00436016,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|ours_mask_ep_all_to_all|ep_all_to_all|0.0010": {
+    "label": "K16_N4_moe+ep_all_to_all_ours_mask_moe",
+    "wl": "moe",
+    "rate": 0.018,
+    "latency": 296.996,
+    "throughput": 0.00275195,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|ours_mask_ep_all_to_all|ep_all_to_all|0.0020": {
+    "label": "K16_N4_moe+ep_all_to_all_ours_mask_ep_all_to_all",
+    "wl": "ep_all_to_all",
+    "rate": 0.002,
+    "latency": 45.9162,
+    "throughput": 0.00198932,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|ours_mask_ep_all_to_all|ep_all_to_all|0.0030": {
+    "label": "K16_N4_moe+ep_all_to_all_ours_mask_moe",
+    "wl": "moe",
+    "rate": 0.005,
+    "latency": 52.4671,
+    "throughput": 0.00497656,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|ours_mask_ep_all_to_all|ep_all_to_all|0.0050": {
+    "label": "K16_N4_moe+ep_all_to_all_ours_mask_ep_all_to_all",
+    "wl": "ep_all_to_all",
+    "rate": 0.008,
+    "latency": 357.81,
+    "throughput": 0.00388359,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|ours_mask_ep_all_to_all|ep_all_to_all|0.0080": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_mesh",
+    "wl": "moe",
+    "rate": 0.003,
+    "latency": 210.384,
+    "throughput": 0.00284883,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|ours_mask_ep_all_to_all|ep_all_to_all|0.0120": {
+    "label": "K16_N4_moe+ep_all_to_all_ours_mask_ep_all_to_all",
+    "wl": "ep_all_to_all",
+    "rate": 0.003,
+    "latency": 50.0961,
+    "throughput": 0.00299896,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|ours_mask_ep_all_to_all|ep_all_to_all|0.0180": {
+    "label": "K16_N4_moe+ep_all_to_all_ours_mask_ep_all_to_all",
+    "wl": "ep_all_to_all",
+    "rate": 0.012,
+    "latency": 386.573,
+    "throughput": 0.00288008,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_mesh|moe|0.0010": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_mesh",
+    "wl": "moe",
+    "rate": 0.001,
+    "latency": 48.7517,
+    "throughput": 0.000988672,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_mesh|moe|0.0020": {
+    "label": "K16_N4_moe+ep_all_to_all_ours_mask_ep_all_to_all",
+    "wl": "ep_all_to_all",
+    "rate": 0.018,
+    "latency": 457.685,
+    "throughput": 0.00241523,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_mesh|moe|0.0030": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_mesh",
+    "wl": "moe",
+    "rate": 0.005,
+    "latency": 276.569,
+    "throughput": 0.00378203,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_mesh|moe|0.0050": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_mesh",
+    "wl": "moe",
+    "rate": 0.008,
+    "latency": 236.998,
+    "throughput": 0.00492852,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_mesh|moe|0.0080": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_mesh",
+    "wl": "moe",
+    "rate": 0.002,
+    "latency": 54.2952,
+    "throughput": 0.00198984,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_mesh|moe|0.0120": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_mesh",
+    "wl": "moe",
+    "rate": 0.012,
+    "latency": 287.802,
+    "throughput": 0.00629219,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_mesh|moe|0.0180": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_mesh",
+    "wl": "ep_all_to_all",
+    "rate": 0.001,
+    "latency": 52.2393,
+    "throughput": 0.000988281,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_mesh|ep_all_to_all|0.0010": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_mesh",
+    "wl": "ep_all_to_all",
+    "rate": 0.003,
+    "latency": 290.439,
+    "throughput": 0.00255352,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_mesh|ep_all_to_all|0.0020": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_mesh",
+    "wl": "moe",
+    "rate": 0.018,
+    "latency": 480.735,
+    "throughput": 0.00795898,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_mesh|ep_all_to_all|0.0030": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_mesh",
+    "wl": "ep_all_to_all",
+    "rate": 0.005,
+    "latency": 281.244,
+    "throughput": 0.00341602,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_mesh|ep_all_to_all|0.0050": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_mesh",
+    "wl": "ep_all_to_all",
+    "rate": 0.008,
+    "latency": 260.909,
+    "throughput": 0.00452773,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_mesh|ep_all_to_all|0.0080": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_kite_s",
+    "wl": "moe",
+    "rate": 0.001,
+    "latency": 36.0474,
+    "throughput": 0.000988932,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_mesh|ep_all_to_all|0.0120": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_mesh",
+    "wl": "ep_all_to_all",
+    "rate": 0.012,
+    "latency": 295.992,
+    "throughput": 0.00586016,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_mesh|ep_all_to_all|0.0180": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_mesh",
+    "wl": "ep_all_to_all",
+    "rate": 0.018,
+    "latency": 500.668,
+    "throughput": 0.00765703,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_kite_s|moe|0.0010": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_kite_s",
+    "wl": "moe",
+    "rate": 0.002,
+    "latency": 37.8609,
+    "throughput": 0.00199049,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_kite_s|moe|0.0020": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_kite_s",
+    "wl": "moe",
+    "rate": 0.005,
+    "latency": 322.779,
+    "throughput": 0.00421055,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_kite_s|moe|0.0030": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_mesh",
+    "wl": "ep_all_to_all",
+    "rate": 0.002,
+    "latency": 198.062,
+    "throughput": 0.00199342,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_kite_s|moe|0.0050": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_kite_s",
+    "wl": "moe",
+    "rate": 0.008,
+    "latency": 480.828,
+    "throughput": 0.00313594,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_kite_s|moe|0.0080": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_kite_s",
+    "wl": "ep_all_to_all",
+    "rate": 0.001,
+    "latency": 36.872,
+    "throughput": 0.000989193,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_kite_s|moe|0.0120": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_kite_s",
+    "wl": "moe",
+    "rate": 0.003,
+    "latency": 40.8457,
+    "throughput": 0.003,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_kite_s|moe|0.0180": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_kite_s",
+    "wl": "moe",
+    "rate": 0.012,
+    "latency": 429.108,
+    "throughput": 0.00201484,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_kite_s|ep_all_to_all|0.0010": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_kite_s",
+    "wl": "moe",
+    "rate": 0.018,
+    "latency": 385.956,
+    "throughput": 0.00150156,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_kite_s|ep_all_to_all|0.0020": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_kite_s",
+    "wl": "ep_all_to_all",
+    "rate": 0.005,
+    "latency": 665.97,
+    "throughput": 0.00325977,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_kite_s|ep_all_to_all|0.0030": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_kite_s",
+    "wl": "ep_all_to_all",
+    "rate": 0.002,
+    "latency": 39.3364,
+    "throughput": 0.00198997,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_kite_s|ep_all_to_all|0.0050": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_kite_s",
+    "wl": "ep_all_to_all",
+    "rate": 0.008,
+    "latency": 574.653,
+    "throughput": 0.00224023,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_kite_s|ep_all_to_all|0.0080": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_kite_m",
+    "wl": "moe",
+    "rate": 0.001,
+    "latency": 34.8945,
+    "throughput": 0.000988932,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_kite_s|ep_all_to_all|0.0120": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_kite_s",
+    "wl": "ep_all_to_all",
+    "rate": 0.012,
+    "latency": 435.565,
+    "throughput": 0.00168008,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_kite_s|ep_all_to_all|0.0180": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_kite_s",
+    "wl": "ep_all_to_all",
+    "rate": 0.003,
+    "latency": 46.4553,
+    "throughput": 0.00299863,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_kite_m|moe|0.0010": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_kite_m",
+    "wl": "moe",
+    "rate": 0.005,
+    "latency": 331.39,
+    "throughput": 0.00429141,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_kite_m|moe|0.0020": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_kite_m",
+    "wl": "moe",
+    "rate": 0.002,
+    "latency": 36.3676,
+    "throughput": 0.00199036,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_kite_m|moe|0.0030": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_kite_s",
+    "wl": "ep_all_to_all",
+    "rate": 0.018,
+    "latency": 322.657,
+    "throughput": 0.00120312,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_kite_m|moe|0.0050": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_kite_m",
+    "wl": "moe",
+    "rate": 0.008,
+    "latency": 381.858,
+    "throughput": 0.00263242,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_kite_m|moe|0.0080": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_kite_m",
+    "wl": "moe",
+    "rate": 0.003,
+    "latency": 38.7557,
+    "throughput": 0.00299922,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_kite_m|moe|0.0120": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_kite_m",
+    "wl": "ep_all_to_all",
+    "rate": 0.001,
+    "latency": 35.5282,
+    "throughput": 0.000988932,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_kite_m|moe|0.0180": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_kite_m",
+    "wl": "moe",
+    "rate": 0.012,
+    "latency": 438.559,
+    "throughput": 0.00198711,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_kite_m|ep_all_to_all|0.0010": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_kite_m",
+    "wl": "ep_all_to_all",
+    "rate": 0.002,
+    "latency": 37.3596,
+    "throughput": 0.00198984,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_kite_m|ep_all_to_all|0.0020": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_kite_m",
+    "wl": "ep_all_to_all",
+    "rate": 0.005,
+    "latency": 654.526,
+    "throughput": 0.0030832,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_kite_m|ep_all_to_all|0.0030": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_kite_m",
+    "wl": "moe",
+    "rate": 0.018,
+    "latency": 371.097,
+    "throughput": 0.00138789,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_kite_m|ep_all_to_all|0.0050": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_kite_m",
+    "wl": "ep_all_to_all",
+    "rate": 0.008,
+    "latency": 521.472,
+    "throughput": 0.00199922,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_kite_m|ep_all_to_all|0.0080": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_kite_l",
+    "wl": "moe",
+    "rate": 0.001,
+    "latency": 35.3505,
+    "throughput": 0.000988802,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_kite_m|ep_all_to_all|0.0120": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_kite_m",
+    "wl": "ep_all_to_all",
+    "rate": 0.012,
+    "latency": 357.878,
+    "throughput": 0.0014207,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_kite_m|ep_all_to_all|0.0180": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_kite_m",
+    "wl": "ep_all_to_all",
+    "rate": 0.003,
+    "latency": 44.0164,
+    "throughput": 0.00299883,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_kite_l|moe|0.0010": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_kite_l",
+    "wl": "moe",
+    "rate": 0.002,
+    "latency": 36.698,
+    "throughput": 0.00199023,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_kite_l|moe|0.0020": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_kite_m",
+    "wl": "ep_all_to_all",
+    "rate": 0.018,
+    "latency": 404.565,
+    "throughput": 0.00116641,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_kite_l|moe|0.0030": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_kite_l",
+    "wl": "moe",
+    "rate": 0.005,
+    "latency": 205.118,
+    "throughput": 0.0044082,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_kite_l|moe|0.0050": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_kite_l",
+    "wl": "moe",
+    "rate": 0.008,
+    "latency": 296.859,
+    "throughput": 0.00338555,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_kite_l|moe|0.0080": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_kite_l",
+    "wl": "ep_all_to_all",
+    "rate": 0.001,
+    "latency": 35.8068,
+    "throughput": 0.000988802,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_kite_l|moe|0.0120": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_kite_l",
+    "wl": "moe",
+    "rate": 0.003,
+    "latency": 38.3779,
+    "throughput": 0.00299948,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_kite_l|moe|0.0180": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_kite_l",
+    "wl": "moe",
+    "rate": 0.012,
+    "latency": 414.781,
+    "throughput": 0.00258633,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_kite_l|ep_all_to_all|0.0010": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_kite_l",
+    "wl": "ep_all_to_all",
+    "rate": 0.005,
+    "latency": 391.358,
+    "throughput": 0.00380898,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_kite_l|ep_all_to_all|0.0020": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_kite_l",
+    "wl": "moe",
+    "rate": 0.018,
+    "latency": 403.345,
+    "throughput": 0.00157773,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_kite_l|ep_all_to_all|0.0030": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_kite_l",
+    "wl": "ep_all_to_all",
+    "rate": 0.002,
+    "latency": 37.4936,
+    "throughput": 0.00198984,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_kite_l|ep_all_to_all|0.0050": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_kite_l",
+    "wl": "ep_all_to_all",
+    "rate": 0.008,
+    "latency": 470.792,
+    "throughput": 0.0028168,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_kite_l|ep_all_to_all|0.0080": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_kite_l",
+    "wl": "ep_all_to_all",
+    "rate": 0.003,
+    "latency": 40.4459,
+    "throughput": 0.00299896,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_kite_l|ep_all_to_all|0.0120": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_gia",
+    "wl": "moe",
+    "rate": 0.001,
+    "latency": 38.7211,
+    "throughput": 0.000989062,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_kite_l|ep_all_to_all|0.0180": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_kite_l",
+    "wl": "ep_all_to_all",
+    "rate": 0.012,
+    "latency": 547.487,
+    "throughput": 0.00196406,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_gia|moe|0.0010": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_gia",
+    "wl": "moe",
+    "rate": 0.005,
+    "latency": 379.0,
+    "throughput": 0.00403555,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_gia|moe|0.0020": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_kite_l",
+    "wl": "ep_all_to_all",
+    "rate": 0.018,
+    "latency": 450.72,
+    "throughput": 0.00149336,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_gia|moe|0.0030": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_gia",
+    "wl": "moe",
+    "rate": 0.002,
+    "latency": 41.0773,
+    "throughput": 0.00199023,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_gia|moe|0.0050": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_gia",
+    "wl": "moe",
+    "rate": 0.008,
+    "latency": 333.416,
+    "throughput": 0.00229102,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_gia|moe|0.0080": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_gia",
+    "wl": "ep_all_to_all",
+    "rate": 0.001,
+    "latency": 39.7457,
+    "throughput": 0.000988802,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_gia|moe|0.0120": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_gia",
+    "wl": "moe",
+    "rate": 0.012,
+    "latency": 277.606,
+    "throughput": 0.0018832,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_gia|moe|0.0180": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_gia",
+    "wl": "moe",
+    "rate": 0.003,
+    "latency": 47.721,
+    "throughput": 0.00299873,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_gia|ep_all_to_all|0.0010": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_gia",
+    "wl": "ep_all_to_all",
+    "rate": 0.002,
+    "latency": 42.9031,
+    "throughput": 0.00198984,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_gia|ep_all_to_all|0.0020": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_gia",
+    "wl": "moe",
+    "rate": 0.018,
+    "latency": 327.863,
+    "throughput": 0.00139219,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_gia|ep_all_to_all|0.0030": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_gia",
+    "wl": "ep_all_to_all",
+    "rate": 0.005,
+    "latency": 358.668,
+    "throughput": 0.00269414,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_gia|ep_all_to_all|0.0050": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_gia",
+    "wl": "ep_all_to_all",
+    "rate": 0.008,
+    "latency": 337.874,
+    "throughput": 0.00203906,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_gia|ep_all_to_all|0.0080": {
+    "label": "K16_N4_tree_allreduce+uniform_random_ours_mask_tree_allreduce",
+    "wl": "tree_allreduce",
+    "rate": 0.001,
+    "latency": 29.9908,
+    "throughput": 0.000988802,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_gia|ep_all_to_all|0.0120": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_gia",
+    "wl": "ep_all_to_all",
+    "rate": 0.012,
+    "latency": 359.185,
+    "throughput": 0.00173281,
+    "success": true
+  },
+  "K16_N4|moe+ep_all_to_all|baseline_gia|ep_all_to_all|0.0180": {
+    "label": "K16_N4_tree_allreduce+uniform_random_ours_mask_tree_allreduce",
+    "wl": "tree_allreduce",
+    "rate": 0.002,
+    "latency": 30.3574,
+    "throughput": 0.0019901,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|ours_mask_tree_allreduce|tree_allreduce|0.0010": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_gia",
+    "wl": "ep_all_to_all",
+    "rate": 0.018,
+    "latency": 337.102,
+    "throughput": 0.00130898,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|ours_mask_tree_allreduce|tree_allreduce|0.0020": {
+    "label": "K16_N4_tree_allreduce+uniform_random_ours_mask_tree_allreduce",
+    "wl": "tree_allreduce",
+    "rate": 0.003,
+    "latency": 30.654,
+    "throughput": 0.0029987,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|ours_mask_tree_allreduce|tree_allreduce|0.0030": {
+    "label": "K16_N4_moe+ep_all_to_all_baseline_gia",
+    "wl": "ep_all_to_all",
+    "rate": 0.003,
+    "latency": 66.7692,
+    "throughput": 0.00299676,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|ours_mask_tree_allreduce|tree_allreduce|0.0050": {
+    "label": "K16_N4_tree_allreduce+uniform_random_ours_mask_uniform_random",
+    "wl": "uniform_random",
+    "rate": 0.001,
+    "latency": 38.954,
+    "throughput": 0.000988672,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|ours_mask_tree_allreduce|tree_allreduce|0.0080": {
+    "label": "K16_N4_tree_allreduce+uniform_random_ours_mask_tree_allreduce",
+    "wl": "tree_allreduce",
+    "rate": 0.005,
+    "latency": 31.2632,
+    "throughput": 0.00497383,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|ours_mask_tree_allreduce|tree_allreduce|0.0120": {
+    "label": "K16_N4_tree_allreduce+uniform_random_ours_mask_uniform_random",
+    "wl": "uniform_random",
+    "rate": 0.002,
+    "latency": 39.6398,
+    "throughput": 0.0019901,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|ours_mask_tree_allreduce|tree_allreduce|0.0180": {
+    "label": "K16_N4_tree_allreduce+uniform_random_ours_mask_tree_allreduce",
+    "wl": "tree_allreduce",
+    "rate": 0.018,
+    "latency": 71.2065,
+    "throughput": 0.0155787,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|ours_mask_uniform_random|uniform_random|0.0010": {
+    "label": "K16_N4_tree_allreduce+uniform_random_ours_mask_tree_allreduce",
+    "wl": "tree_allreduce",
+    "rate": 0.008,
+    "latency": 32.6029,
+    "throughput": 0.00799167,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|ours_mask_uniform_random|uniform_random|0.0020": {
+    "label": "K16_N4_tree_allreduce+uniform_random_ours_mask_uniform_random",
+    "wl": "uniform_random",
+    "rate": 0.003,
+    "latency": 40.6271,
+    "throughput": 0.00299766,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|ours_mask_uniform_random|uniform_random|0.0030": {
+    "label": "K16_N4_tree_allreduce+uniform_random_ours_mask_uniform_random",
+    "wl": "uniform_random",
+    "rate": 0.012,
+    "latency": 246.284,
+    "throughput": 0.00453203,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|ours_mask_uniform_random|uniform_random|0.0050": {
+    "label": "K16_N4_tree_allreduce+uniform_random_ours_mask_tree_allreduce",
+    "wl": "tree_allreduce",
+    "rate": 0.012,
+    "latency": 35.1525,
+    "throughput": 0.0119762,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|ours_mask_uniform_random|uniform_random|0.0080": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_mesh",
+    "wl": "tree_allreduce",
+    "rate": 0.001,
+    "latency": 32.5235,
+    "throughput": 0.000988932,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|ours_mask_uniform_random|uniform_random|0.0120": {
+    "label": "K16_N4_tree_allreduce+uniform_random_ours_mask_uniform_random",
+    "wl": "uniform_random",
+    "rate": 0.005,
+    "latency": 43.5614,
+    "throughput": 0.00497539,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|ours_mask_uniform_random|uniform_random|0.0180": {
+    "label": "K16_N4_tree_allreduce+uniform_random_ours_mask_uniform_random",
+    "wl": "uniform_random",
+    "rate": 0.018,
+    "latency": 260.295,
+    "throughput": 0.00225469,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_mesh|tree_allreduce|0.0010": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_mesh",
+    "wl": "tree_allreduce",
+    "rate": 0.002,
+    "latency": 32.8295,
+    "throughput": 0.00198997,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_mesh|tree_allreduce|0.0020": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_mesh",
+    "wl": "tree_allreduce",
+    "rate": 0.003,
+    "latency": 33.2481,
+    "throughput": 0.00299883,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_mesh|tree_allreduce|0.0030": {
+    "label": "K16_N4_tree_allreduce+uniform_random_ours_mask_uniform_random",
+    "wl": "uniform_random",
+    "rate": 0.008,
+    "latency": 61.1682,
+    "throughput": 0.00799401,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_mesh|tree_allreduce|0.0050": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_mesh",
+    "wl": "uniform_random",
+    "rate": 0.001,
+    "latency": 47.3561,
+    "throughput": 0.000988932,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_mesh|tree_allreduce|0.0080": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_mesh",
+    "wl": "tree_allreduce",
+    "rate": 0.005,
+    "latency": 33.7559,
+    "throughput": 0.00497422,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_mesh|tree_allreduce|0.0120": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_mesh",
+    "wl": "uniform_random",
+    "rate": 0.002,
+    "latency": 47.6693,
+    "throughput": 0.00199023,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_mesh|tree_allreduce|0.0180": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_mesh",
+    "wl": "tree_allreduce",
+    "rate": 0.008,
+    "latency": 35.051,
+    "throughput": 0.00799245,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_mesh|uniform_random|0.0010": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_mesh",
+    "wl": "uniform_random",
+    "rate": 0.012,
+    "latency": 156.26,
+    "throughput": 0.011073,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_mesh|uniform_random|0.0020": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_mesh",
+    "wl": "uniform_random",
+    "rate": 0.003,
+    "latency": 48.4962,
+    "throughput": 0.00299818,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_mesh|uniform_random|0.0030": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_mesh",
+    "wl": "tree_allreduce",
+    "rate": 0.012,
+    "latency": 37.203,
+    "throughput": 0.0119762,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_mesh|uniform_random|0.0050": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_kite_s",
+    "wl": "tree_allreduce",
+    "rate": 0.001,
+    "latency": 32.3404,
+    "throughput": 0.000988932,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_mesh|uniform_random|0.0080": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_mesh",
+    "wl": "uniform_random",
+    "rate": 0.005,
+    "latency": 50.2173,
+    "throughput": 0.004975,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_mesh|uniform_random|0.0120": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_kite_s",
+    "wl": "tree_allreduce",
+    "rate": 0.002,
+    "latency": 32.9556,
+    "throughput": 0.00199023,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_mesh|uniform_random|0.0180": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_mesh",
+    "wl": "uniform_random",
+    "rate": 0.018,
+    "latency": 295.1,
+    "throughput": 0.0143562,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_kite_s|tree_allreduce|0.0010": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_mesh",
+    "wl": "tree_allreduce",
+    "rate": 0.018,
+    "latency": 43.0233,
+    "throughput": 0.0179505,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_kite_s|tree_allreduce|0.0020": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_kite_s",
+    "wl": "tree_allreduce",
+    "rate": 0.003,
+    "latency": 33.6149,
+    "throughput": 0.0029987,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_kite_s|tree_allreduce|0.0030": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_kite_s",
+    "wl": "uniform_random",
+    "rate": 0.001,
+    "latency": 37.1661,
+    "throughput": 0.000988932,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_kite_s|tree_allreduce|0.0050": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_kite_s",
+    "wl": "tree_allreduce",
+    "rate": 0.018,
+    "latency": 568.303,
+    "throughput": 0.0062375,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_kite_s|tree_allreduce|0.0080": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_kite_s",
+    "wl": "tree_allreduce",
+    "rate": 0.005,
+    "latency": 35.3588,
+    "throughput": 0.0049737,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_kite_s|tree_allreduce|0.0120": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_kite_s",
+    "wl": "tree_allreduce",
+    "rate": 0.012,
+    "latency": 168.79,
+    "throughput": 0.0077123,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_kite_s|tree_allreduce|0.0180": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_kite_s",
+    "wl": "uniform_random",
+    "rate": 0.002,
+    "latency": 38.0999,
+    "throughput": 0.0019901,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_kite_s|uniform_random|0.0010": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_kite_s",
+    "wl": "tree_allreduce",
+    "rate": 0.008,
+    "latency": 40.1779,
+    "throughput": 0.00799375,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_kite_s|uniform_random|0.0020": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_kite_s",
+    "wl": "uniform_random",
+    "rate": 0.003,
+    "latency": 39.2588,
+    "throughput": 0.00299857,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_kite_s|uniform_random|0.0030": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_kite_m",
+    "wl": "tree_allreduce",
+    "rate": 0.001,
+    "latency": 32.396,
+    "throughput": 0.000988932,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_kite_s|uniform_random|0.0050": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_kite_s",
+    "wl": "uniform_random",
+    "rate": 0.012,
+    "latency": 205.979,
+    "throughput": 0.00259023,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_kite_s|uniform_random|0.0080": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_kite_s",
+    "wl": "uniform_random",
+    "rate": 0.005,
+    "latency": 43.4027,
+    "throughput": 0.004975,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_kite_s|uniform_random|0.0120": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_kite_s",
+    "wl": "uniform_random",
+    "rate": 0.018,
+    "latency": 198.33,
+    "throughput": 0.00159414,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_kite_s|uniform_random|0.0180": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_kite_s",
+    "wl": "uniform_random",
+    "rate": 0.008,
+    "latency": 142.454,
+    "throughput": 0.000536328,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_kite_m|tree_allreduce|0.0010": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_kite_m",
+    "wl": "tree_allreduce",
+    "rate": 0.002,
+    "latency": 33.0026,
+    "throughput": 0.00198997,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_kite_m|tree_allreduce|0.0020": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_kite_m",
+    "wl": "tree_allreduce",
+    "rate": 0.003,
+    "latency": 33.6824,
+    "throughput": 0.00299831,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_kite_m|tree_allreduce|0.0030": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_kite_m",
+    "wl": "uniform_random",
+    "rate": 0.001,
+    "latency": 36.5959,
+    "throughput": 0.000988932,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_kite_m|tree_allreduce|0.0050": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_kite_m",
+    "wl": "tree_allreduce",
+    "rate": 0.005,
+    "latency": 35.485,
+    "throughput": 0.0049737,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_kite_m|tree_allreduce|0.0080": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_kite_m",
+    "wl": "tree_allreduce",
+    "rate": 0.012,
+    "latency": 161.251,
+    "throughput": 0.00765879,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_kite_m|tree_allreduce|0.0120": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_kite_m",
+    "wl": "tree_allreduce",
+    "rate": 0.018,
+    "latency": 581.545,
+    "throughput": 0.00533789,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_kite_m|tree_allreduce|0.0180": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_mesh",
+    "wl": "uniform_random",
+    "rate": 0.008,
+    "latency": 211.761,
+    "throughput": 0.00798225,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_kite_m|uniform_random|0.0010": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_kite_m",
+    "wl": "tree_allreduce",
+    "rate": 0.008,
+    "latency": 40.4684,
+    "throughput": 0.0079931,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_kite_m|uniform_random|0.0020": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_kite_m",
+    "wl": "uniform_random",
+    "rate": 0.002,
+    "latency": 37.5009,
+    "throughput": 0.0019901,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_kite_m|uniform_random|0.0030": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_kite_m",
+    "wl": "uniform_random",
+    "rate": 0.012,
+    "latency": 225.821,
+    "throughput": 0.00314375,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_kite_m|uniform_random|0.0050": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_kite_m",
+    "wl": "uniform_random",
+    "rate": 0.003,
+    "latency": 38.5127,
+    "throughput": 0.00299883,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_kite_m|uniform_random|0.0080": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_kite_l",
+    "wl": "tree_allreduce",
+    "rate": 0.001,
+    "latency": 34.1047,
+    "throughput": 0.000988932,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_kite_m|uniform_random|0.0120": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_kite_m",
+    "wl": "uniform_random",
+    "rate": 0.018,
+    "latency": 202.683,
+    "throughput": 0.00168242,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_kite_m|uniform_random|0.0180": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_kite_m",
+    "wl": "uniform_random",
+    "rate": 0.005,
+    "latency": 42.2537,
+    "throughput": 0.00497487,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_kite_l|tree_allreduce|0.0010": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_kite_l",
+    "wl": "tree_allreduce",
+    "rate": 0.002,
+    "latency": 34.8329,
+    "throughput": 0.00198971,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_kite_l|tree_allreduce|0.0020": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_kite_l",
+    "wl": "tree_allreduce",
+    "rate": 0.003,
+    "latency": 35.7545,
+    "throughput": 0.00299857,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_kite_l|tree_allreduce|0.0030": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_kite_l",
+    "wl": "tree_allreduce",
+    "rate": 0.012,
+    "latency": 121.81,
+    "throughput": 0.00878672,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_kite_l|tree_allreduce|0.0050": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_kite_l",
+    "wl": "uniform_random",
+    "rate": 0.001,
+    "latency": 36.3688,
+    "throughput": 0.000988932,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_kite_l|tree_allreduce|0.0080": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_kite_l",
+    "wl": "tree_allreduce",
+    "rate": 0.005,
+    "latency": 38.0807,
+    "throughput": 0.00497435,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_kite_l|tree_allreduce|0.0120": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_kite_l",
+    "wl": "tree_allreduce",
+    "rate": 0.018,
+    "latency": 376.223,
+    "throughput": 0.00357266,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_kite_l|tree_allreduce|0.0180": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_kite_l",
+    "wl": "uniform_random",
+    "rate": 0.002,
+    "latency": 37.2257,
+    "throughput": 0.00199049,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_kite_l|uniform_random|0.0010": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_kite_l",
+    "wl": "uniform_random",
+    "rate": 0.003,
+    "latency": 38.0607,
+    "throughput": 0.00299857,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_kite_l|uniform_random|0.0020": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_kite_l",
+    "wl": "tree_allreduce",
+    "rate": 0.008,
+    "latency": 45.3443,
+    "throughput": 0.00799323,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_kite_l|uniform_random|0.0030": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_kite_l",
+    "wl": "uniform_random",
+    "rate": 0.012,
+    "latency": 293.362,
+    "throughput": 0.00555664,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_kite_l|uniform_random|0.0050": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_kite_m",
+    "wl": "uniform_random",
+    "rate": 0.008,
+    "latency": 123.808,
+    "throughput": 0.00654915,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_kite_l|uniform_random|0.0080": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_gia",
+    "wl": "tree_allreduce",
+    "rate": 0.001,
+    "latency": 34.6675,
+    "throughput": 0.000989193,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_kite_l|uniform_random|0.0120": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_kite_l",
+    "wl": "uniform_random",
+    "rate": 0.005,
+    "latency": 40.8459,
+    "throughput": 0.00497487,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_kite_l|uniform_random|0.0180": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_gia",
+    "wl": "tree_allreduce",
+    "rate": 0.002,
+    "latency": 35.3243,
+    "throughput": 0.00198997,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_gia|tree_allreduce|0.0010": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_kite_l",
+    "wl": "uniform_random",
+    "rate": 0.018,
+    "latency": 213.02,
+    "throughput": 0.00178555,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_gia|tree_allreduce|0.0020": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_kite_l",
+    "wl": "uniform_random",
+    "rate": 0.008,
+    "latency": 53.4863,
+    "throughput": 0.00799414,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_gia|tree_allreduce|0.0030": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_gia",
+    "wl": "tree_allreduce",
+    "rate": 0.003,
+    "latency": 36.3076,
+    "throughput": 0.00299831,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_gia|tree_allreduce|0.0050": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_gia",
+    "wl": "tree_allreduce",
+    "rate": 0.012,
+    "latency": 270.456,
+    "throughput": 0.00670508,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_gia|tree_allreduce|0.0080": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_gia",
+    "wl": "uniform_random",
+    "rate": 0.001,
+    "latency": 38.8779,
+    "throughput": 0.000988802,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_gia|tree_allreduce|0.0120": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_gia",
+    "wl": "tree_allreduce",
+    "rate": 0.018,
+    "latency": 496.983,
+    "throughput": 0.00399023,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_gia|tree_allreduce|0.0180": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_gia",
+    "wl": "tree_allreduce",
+    "rate": 0.005,
+    "latency": 38.8959,
+    "throughput": 0.00497474,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_gia|uniform_random|0.0010": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_gia",
+    "wl": "uniform_random",
+    "rate": 0.002,
+    "latency": 39.9123,
+    "throughput": 0.00199023,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_gia|uniform_random|0.0020": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_gia",
+    "wl": "uniform_random",
+    "rate": 0.008,
+    "latency": 225.718,
+    "throughput": 0.00387852,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_gia|uniform_random|0.0030": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_gia",
+    "wl": "uniform_random",
+    "rate": 0.003,
+    "latency": 41.7113,
+    "throughput": 0.00299818,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_gia|uniform_random|0.0050": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_gia",
+    "wl": "uniform_random",
+    "rate": 0.012,
+    "latency": 186.76,
+    "throughput": 0.00170664,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_gia|uniform_random|0.0080": {
+    "label": "K16_N4_moe+uniform_random+ep_all_to_all_ours_mask_moe",
+    "wl": "moe",
+    "rate": 0.001,
+    "latency": 41.1526,
+    "throughput": 0.000988932,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_gia|uniform_random|0.0120": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_gia",
+    "wl": "uniform_random",
+    "rate": 0.018,
+    "latency": 191.198,
+    "throughput": 0.00147031,
+    "success": true
+  },
+  "K16_N4|tree_allreduce+uniform_random|baseline_gia|uniform_random|0.0180": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_gia",
+    "wl": "tree_allreduce",
+    "rate": 0.008,
+    "latency": 51.323,
+    "throughput": 0.00802438,
+    "success": true
+  },
+  "K16_N4|moe+uniform_random+ep_all_to_all|ours_mask_moe|moe|0.0010": {
+    "label": "K16_N4_tree_allreduce+uniform_random_baseline_gia",
+    "wl": "uniform_random",
+    "rate": 0.005,
+    "latency": 48.6658,
+    "throughput": 0.00497448,
+    "success": true
+  },
+  "K16_N4|moe+uniform_random+ep_all_to_all|ours_mask_moe|moe|0.0020": {
+    "label": "K16_N4_moe+uniform_random+ep_all_to_all_ours_mask_moe",
+    "wl": "moe",
+    "rate": 0.002,
+    "latency": 42.7744,
+    "throughput": 0.0019901,
+    "success": true
+  },
+  "K16_N4|moe+uniform_random+ep_all_to_all|ours_mask_moe|moe|0.0030": {
+    "label": "K16_N4_moe+uniform_random+ep_all_to_all_ours_mask_moe",
+    "wl": "moe",
+    "rate": 0.008,
+    "latency": 480.291,
+    "throughput": 0.00602344,
+    "success": true
+  },
+  "K16_N4|moe+uniform_random+ep_all_to_all|ours_mask_moe|moe|0.0050": {
+    "label": "K16_N4_moe+uniform_random+ep_all_to_all_ours_mask_uniform_random",
+    "wl": "uniform_random",
+    "rate": 0.001,
+    "latency": 44.2704,
+    "throughput": 0.000988542,
+    "success": true
+  },
+  "K16_N4|moe+uniform_random+ep_all_to_all|ours_mask_moe|moe|0.0080": {
+    "label": "K16_N4_moe+uniform_random+ep_all_to_all_ours_mask_moe",
+    "wl": "moe",
+    "rate": 0.012,
+    "latency": 450.364,
+    "throughput": 0.00446367,
+    "success": true
+  },
+  "K16_N4|moe+uniform_random+ep_all_to_all|ours_mask_moe|moe|0.0120": {
+    "label": "K16_N4_moe+uniform_random+ep_all_to_all_ours_mask_moe",
+    "wl": "moe",
+    "rate": 0.003,
+    "latency": 45.1148,
+    "throughput": 0.00300039,
+    "success": true
+  },
+  "K16_N4|moe+uniform_random+ep_all_to_all|ours_mask_moe|moe|0.0180": {
+    "label": "K16_N4_moe+uniform_random+ep_all_to_all_ours_mask_moe",
+    "wl": "moe",
+    "rate": 0.018,
+    "latency": 484.127,
+    "throughput": 0.00320742,
+    "success": true
+  },
+  "K16_N4|moe+uniform_random+ep_all_to_all|ours_mask_uniform_random|uniform_random|0.0010": {
+    "label": "K16_N4_moe+uniform_random+ep_all_to_all_ours_mask_uniform_random",
+    "wl": "uniform_random",
+    "rate": 0.008,
+    "latency": 109.373,
+    "throughput": 0.00486406,
+    "success": true
+  },
+  "K16_N4|moe+uniform_random+ep_all_to_all|ours_mask_uniform_random|uniform_random|0.0020": {
+    "label": "K16_N4_moe+uniform_random+ep_all_to_all_ours_mask_uniform_random",
+    "wl": "uniform_random",
+    "rate": 0.002,
+    "latency": 45.0692,
+    "throughput": 0.0019901,
+    "success": true
+  },
+  "K16_N4|moe+uniform_random+ep_all_to_all|ours_mask_uniform_random|uniform_random|0.0030": {
+    "label": "K16_N4_moe+uniform_random+ep_all_to_all_ours_mask_uniform_random",
+    "wl": "uniform_random",
+    "rate": 0.012,
+    "latency": 187.731,
+    "throughput": 0.00302422,
+    "success": true
+  },
+  "K16_N4|moe+uniform_random+ep_all_to_all|ours_mask_uniform_random|uniform_random|0.0050": {
+    "label": "K16_N4_moe+uniform_random+ep_all_to_all_ours_mask_ep_all_to_all",
+    "wl": "ep_all_to_all",
+    "rate": 0.001,
+    "latency": 42.6125,
+    "throughput": 0.000988411,
+    "success": true
+  },
+  "K16_N4|moe+uniform_random+ep_all_to_all|ours_mask_uniform_random|uniform_random|0.0080": {
+    "label": "K16_N4_moe+uniform_random+ep_all_to_all_ours_mask_uniform_random",
+    "wl": "uniform_random",
+    "rate": 0.003,
+    "latency": 46.1915,
+    "throughput": 0.00299792,
+    "success": true
+  },
+  "K16_N4|moe+uniform_random+ep_all_to_all|ours_mask_uniform_random|uniform_random|0.0120": {
+    "label": "K16_N4_moe+uniform_random+ep_all_to_all_ours_mask_ep_all_to_all",
+    "wl": "ep_all_to_all",
+    "rate": 0.005,
+    "latency": 160.222,
+    "throughput": 0.00475664,
+    "success": true
+  },
+  "K16_N4|moe+uniform_random+ep_all_to_all|ours_mask_uniform_random|uniform_random|0.0180": {
+    "label": "K16_N4_moe+uniform_random+ep_all_to_all_ours_mask_uniform_random",
+    "wl": "uniform_random",
+    "rate": 0.018,
+    "latency": 322.795,
+    "throughput": 0.0021168,
+    "success": true
+  },
+  "K16_N4|moe+uniform_random+ep_all_to_all|ours_mask_ep_all_to_all|ep_all_to_all|0.0010": {
+    "label": "K16_N4_moe+uniform_random+ep_all_to_all_ours_mask_moe",
+    "wl": "moe",
+    "rate": 0.005,
+    "latency": 89.6963,
+    "throughput": 0.00499749,
+    "success": true
+  },
+  "K16_N4|moe+uniform_random+ep_all_to_all|ours_mask_ep_all_to_all|ep_all_to_all|0.0020": {
+    "label": "K16_N4_moe+uniform_random+ep_all_to_all_ours_mask_uniform_random",
+    "wl": "uniform_random",
+    "rate": 0.005,
+    "latency": 51.2287,
+    "throughput": 0.00497435,
+    "success": true
+  },
+  "K16_N4|moe+uniform_random+ep_all_to_all|ours_mask_ep_all_to_all|ep_all_to_all|0.0030": {
+    "label": "K16_N4_moe+uniform_random+ep_all_to_all_ours_mask_ep_all_to_all",
+    "wl": "ep_all_to_all",
+    "rate": 0.002,
+    "latency": 44.4661,
+    "throughput": 0.00198893,
+    "success": true
+  },
+  "K16_N4|moe+uniform_random+ep_all_to_all|ours_mask_ep_all_to_all|ep_all_to_all|0.0050": {
+    "label": "K16_N4_moe+uniform_random+ep_all_to_all_ours_mask_ep_all_to_all",
+    "wl": "ep_all_to_all",
+    "rate": 0.008,
+    "latency": 443.658,
+    "throughput": 0.00529922,
+    "success": true
+  },
+  "K16_N4|moe+uniform_random+ep_all_to_all|ours_mask_ep_all_to_all|ep_all_to_all|0.0080": {
+    "label": "K16_N4_moe+uniform_random+ep_all_to_all_ours_mask_ep_all_to_all",
+    "wl": "ep_all_to_all",
+    "rate": 0.012,
+    "latency": 492.97,
+    "throughput": 0.00378242,
+    "success": true
+  },
+  "K16_N4|moe+uniform_random+ep_all_to_all|ours_mask_ep_all_to_all|ep_all_to_all|0.0120": {
+    "label": "K16_N4_moe+uniform_random+ep_all_to_all_baseline_mesh",
+    "wl": "moe",
+    "rate": 0.003,
+    "latency": 210.384,
+    "throughput": 0.00284883,
+    "success": true
+  },
+  "K16_N4|moe+uniform_random+ep_all_to_all|ours_mask_ep_all_to_all|ep_all_to_all|0.0180": {
+    "label": "K16_N4_moe+uniform_random+ep_all_to_all_ours_mask_ep_all_to_all",
+    "wl": "ep_all_to_all",
+    "rate": 0.003,
+    "latency": 48.2035,
+    "throughput": 0.00299948,
+    "success": true
+  },
+  "K16_N4|moe+uniform_random+ep_all_to_all|baseline_mesh|moe|0.0010": {
+    "label": "K16_N4_moe+uniform_random+ep_all_to_all_baseline_mesh",
+    "wl": "moe",
+    "rate": 0.001,
+    "latency": 48.7517,
+    "throughput": 0.000988672,
+    "success": true
+  }
+}

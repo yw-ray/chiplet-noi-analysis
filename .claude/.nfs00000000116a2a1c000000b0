@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:arxiv.org)",
+      "Bash(mkdir -p ~/.claude/sessions/chiplet-noi)",
+      "Bash(cat)",
+      "Bash(touch ~/.claude/sessions/chiplet-noi/STATUS.md)",
+      "Read(//home/youngwoo.jeong/.claude/sessions/**)",
+      "WebFetch(domain:jiemingyin.github.io)",
+      "WebFetch(domain:dl.acm.org)",
+      "WebFetch(domain:people.eecs.berkeley.edu)",
+      "WebFetch(domain:www.uciexpress.org)",
+      "WebFetch(domain:cva.stanford.edu)",
+      "Bash(awk '/ours_mask|Stage 2|Verdict|Total:|Saved:|Traceback|FAIL/ {print; fflush\\(\\)} /Saved:/ {exit}')",
+      "Bash(awk '/RL done|Mix-avg|Winner|won|Saved:|Traceback|FAIL|^  ours| superset/ {print; fflush\\(\\)} /Saved:/ {exit}')",
+      "Bash(awk '/wire-area|workload=|ours    |Mix-avg|Winner|won|Saved:|Traceback|FAIL/ {print; fflush\\(\\)} /Saved:/ {exit}')",
+      "Bash(awk '/Training Mask|Done|improvement|diff|Saved:|Traceback|FAIL/ {print; fflush\\(\\)} /Saved:/ {exit}')",
+      "Bash(awk '/bpp=|Stage 1 done|winners|Pareto summary|Saved:|Traceback|FAIL/ {print; fflush\\(\\)} /Saved:/ {exit}')",
+      "Bash(awk '/^=== |Stage 1 RL|ALL DONE|Saved:|Traceback|FULL SWEEP/ {print; fflush\\(\\)} /FULL SWEEP/ {exit}')"
+    ]
+  }
+}

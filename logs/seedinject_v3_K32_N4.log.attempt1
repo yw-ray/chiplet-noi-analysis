@@ -1,0 +1,4 @@
+  Loaded rate-aware surrogate from /home/youngwoo.jeong/grepo/research/projects/chiplet-noi-analysis/results/ml_placement/surrogate_rate_aware.pt
+
+=== [1/50] moe+hybrid_tp_pp | K32_N4 | W=520 ===
+    [backbone] 66 protected links (14 express)

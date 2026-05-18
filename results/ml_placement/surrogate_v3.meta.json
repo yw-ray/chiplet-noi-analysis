@@ -1,0 +1,11 @@
+{
+  "input_dim": 995,
+  "n_samples_v2": 11118,
+  "n_samples_orig": 1152,
+  "n_total": 12270,
+  "n_train": 10429,
+  "n_val": 1841,
+  "best_val_mse_log": 0.09376548230648041,
+  "best_val_rho": 0.9600964323167154,
+  "note": "v3: traffic_496 + alloc_496 + K/32 + N/8 + log_rate = 995 dim"
+}

@@ -14,6 +14,7 @@ import json
 import random
 import sys
 import time
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
@@ -44,7 +45,11 @@ def run_booksim_alloc(label, alloc, K, N, R, C, w_name, rate_mult=4.0):
     grid = ChipletGrid(R, C)
     traffic = WORKLOADS[w_name](K, grid)
     npc = N * N
-    rate = (TOTAL_LOAD_BASE / (K * npc)) * rate_mult
+    # Normalize all cells to K16_N4 saturated regime (rate=0.005).
+    # Without this, larger cells (K=32 or N=8) get lower effective injection
+    # rate and run unsaturated, where baselines look artificially strong.
+    NORMALIZE_TO_K16_N4_RATE = 0.005
+    rate = NORMALIZE_TO_K16_N4_RATE
     capped = {p: min(n, N) for p, n in alloc.items() if n > 0}
     cfg = f"v2mg_{label}_{w_name}_K{K}N{N}"
     traf_file = f"traffic_v2mg_{label}_{w_name}_K{K}N{N}.txt"
@@ -57,7 +62,8 @@ def booksim_greedy_mask(superset, K, N, R, C, w_name,
                          max_steps=MAX_STEPS,
                          max_candidates=N_CANDIDATES,
                          lat_tolerance=LAT_TOLERANCE,
-                         label_prefix=''):
+                         label_prefix='',
+                         n_parallel=1):
     grid = ChipletGrid(R, C)
     adj_set = set(grid.get_adj_pairs())
 
@@ -86,20 +92,39 @@ def booksim_greedy_mask(superset, K, N, R, C, w_name,
 
         best_lat = None
         best_pair = None
-        for p, n in candidates:
-            test_mask = dict(mask)
-            if test_mask[p] == 1:
-                del test_mask[p]
-            else:
-                test_mask[p] -= 1
-            cfg_label = f'{label_prefix}_s{step+1}_off_{p[0]}_{p[1]}'
-            cres = run_booksim_alloc(cfg_label, test_mask, K, N, R, C, w_name)
-            lat = cres.get('latency')
-            if lat is None:
-                continue
-            if best_lat is None or lat < best_lat:
-                best_lat = lat
-                best_pair = p
+        if n_parallel <= 1:
+            for p, n in candidates:
+                test_mask = dict(mask)
+                if test_mask[p] == 1:
+                    del test_mask[p]
+                else:
+                    test_mask[p] -= 1
+                cfg_label = f'{label_prefix}_s{step+1}_off_{p[0]}_{p[1]}'
+                cres = run_booksim_alloc(cfg_label, test_mask, K, N, R, C, w_name)
+                lat = cres.get('latency')
+                if lat is None:
+                    continue
+                if best_lat is None or lat < best_lat:
+                    best_lat = lat
+                    best_pair = p
+        else:
+            def eval_cand(pn):
+                p, n = pn
+                test_mask = dict(mask)
+                if test_mask[p] == 1:
+                    del test_mask[p]
+                else:
+                    test_mask[p] -= 1
+                cfg_label = f'{label_prefix}_s{step+1}_off_{p[0]}_{p[1]}'
+                cres = run_booksim_alloc(cfg_label, test_mask, K, N, R, C, w_name)
+                return p, cres.get('latency')
+            with ThreadPoolExecutor(max_workers=n_parallel) as ex:
+                for p, lat in ex.map(eval_cand, candidates):
+                    if lat is None:
+                        continue
+                    if best_lat is None or lat < best_lat:
+                        best_lat = lat
+                        best_pair = p
 
         if best_pair is None or best_lat > target_lat:
             break

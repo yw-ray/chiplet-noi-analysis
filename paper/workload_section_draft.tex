@@ -1,0 +1,107 @@
+% ============================================================
+% Draft: 4-workload section for paper
+% Replaces existing §4 "Setup" workload subsection
+% Anchored to: Kite, Florets, PARL, MI300X, DeepSeek-V3, Mixtral, Megatron-LM
+% ============================================================
+
+\subsection{Workloads}
+\label{subsec:workloads}
+
+We evaluate four communication patterns that represent the dominant
+inter-chiplet traffic regimes observed in current and projected
+chiplet-based LLM training/inference systems
+(AMD MI300X~\cite{mi300x}, NVIDIA Blackwell~\cite{blackwell}).
+The four workloads span an order of magnitude in non-locality fraction
+(NL\%) and three structurally distinct dispatch shapes:
+butterfly (Tree), grouped-dense (Hybrid TP+PP),
+dense-random (Uniform), and skewed-hotspot (MoE).
+Fig.~\ref{fig:wl_patterns} shows the chiplet-level connectivity for each
+on a $K{=}16$ ($4\times 4$) grid; edge thickness encodes traffic volume
+and chiplet shading encodes incoming traffic intensity.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/fig_workload_patterns.pdf}
+\caption{Chiplet-level traffic patterns for the four workloads
+($K{=}16$, $4\times 4$ grid). Adjacent traffic in blue, non-adjacent
+in red. Chiplet shading encodes incoming traffic; MoE Expert shows
+clear hotspot concentration at low-rank chiplets due to Zipf dispatch.}
+\label{fig:wl_patterns}
+\end{figure}
+
+\textbf{Tree All-Reduce (NL\%=42).}
+Recursive halving-doubling gradient synchronization
+\cite{thakur2005,nccl}, the dominant pattern under data-parallel
+training. At each of $\lceil\log_2 K\rceil$ levels, chiplet $i$
+exchanges a partial gradient with partner $i \oplus 2^\ell$, halving
+the message size each level. The pattern is butterfly-structured: most
+exchanges occur at short stride, so adjacent links carry the bulk of
+traffic. This is the canonical \textit{low-NL} regime.
+
+\textbf{Hybrid TP+PP (NL\%=77).}
+Megatron-LM~\cite{megatron,megatron3} tensor-parallel groups of size
+$\text{TP}{=}8$ exchange activations densely within a group; consecutive
+groups are connected by a single inter-group pipeline edge. For
+$K{=}16$ this realizes two TP groups linked by one PP edge; for
+$K{=}32$, four groups linked sequentially. Intra-group traffic is
+dense and short, while the single inter-group link concentrates
+PP traffic on one chiplet pair.
+
+\textbf{Uniform Random (NL\%=89).}
+A synthetic worst-case baseline in which every chiplet pair $(i,j)$
+receives independent random traffic weight. Unlike the previous
+patterns this is not drawn from a production workload; we include it
+because, under the canonical row-major chiplet mapping, the all-pair
+dense pattern places approximately $1{-}O(1/K)$ of total demand on
+non-adjacent pairs and is therefore a structural worst case for
+adjacent-only allocators. It also matches the assumption that
+prior PARL~\cite{parl} and Kite~\cite{kite} evaluations made implicitly
+when reporting average-case latency across heterogeneous demand.
+
+\textbf{MoE Expert (NL\%=91).}
+Top-2 expert dispatch under Zipfian expert-popularity skew. Each
+chiplet samples 2 of $K{-}1$ candidate experts with probability
+$\Pr(\text{rank } r) \propto 1/r^{1.5}$ and sends activations to
+those expert chiplets. The Zipf exponent $s{=}1.5$ matches measured
+expert-popularity skew in production MoE language models---DeepSeek-V3
+\cite{deepseekv3} reports concentration ratios in the same regime and
+Mixtral-8x7B~\cite{mixtral} shows comparable hot-expert dominance
+under top-2 routing. Earlier MoE studies that assumed
+\textit{uniform} top-$k$ dispatch~\cite{gshard} conflate placement
+with load-balancing; the Zipf model isolates the placement signal
+that NoI optimization can exploit.
+
+\paragraph{Relevance to current chiplet NoI.}
+The four patterns map onto current and projected chiplet AI systems:
+TP+PP is the dominant training regime on multi-chiplet GPU clusters
+(MI300X, B200); Tree All-Reduce drives the gradient synchronization
+step of every distributed-data-parallel workload (NCCL/RCCL ring/tree
+collectives); MoE Expert is exercised by every production-scale MoE
+model (DeepSeek-V3, Mixtral, GPT-4 class). Uniform Random is a
+synthetic baseline retained from prior NoI literature
+\cite{kite,florets,parl} for comparability. Forward compatibility:
+while current shipping chiplet products have $K{\le}8$~\cite{mi300x},
+industry roadmaps project $K{\in}\{16,32\}$ within the next
+generation, motivating our evaluation range.
+
+\begin{table}[t]
+\centering
+\caption{Four LLM-Relevant Workloads. Communication source and
+non-locality fraction at $K{=}32$.}
+\label{tab:workloads}
+\scriptsize
+\begin{tabular}{lrll}
+\toprule
+Workload & NL\% & Pattern & Origin / reference \\
+\midrule
+Tree All-Reduce & 42 & butterfly halving-doubling
+  & NCCL/Horovod~\cite{nccl,thakur2005} \\
+Hybrid TP+PP & 77 & TP-group dense + PP edge
+  & Megatron-LM~\cite{megatron,megatron3} \\
+Uniform Random & 89 & all-pair random (synthetic)
+  & worst-case baseline \\
+MoE Expert & 91 & Zipf top-2 dispatch
+  & DeepSeek-V3~\cite{deepseekv3}, Mixtral~\cite{mixtral} \\
+\bottomrule
+\end{tabular}
+\end{table}
