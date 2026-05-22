@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Chiplet NoI Thesis — Workload-Aware Express Link Placement</title>
+<link rel="stylesheet" href="https://unpkg.com/reveal.js@5.0.4/dist/reset.css">
+<link rel="stylesheet" href="https://unpkg.com/reveal.js@5.0.4/dist/reveal.css">
+<link rel="stylesheet" href="https://unpkg.com/reveal.js@5.0.4/dist/theme/white.css">
+<style>
+:root {
+  --ourblue:  #1F4E79;
+  --ourred:   #B23A48;
+  --ourgreen: #2E7D32;
+}
+.reveal section h1, .reveal section h2 { color: var(--ourblue); }
+.reveal section h2 { font-size: 1.4em; border-bottom: 2px solid var(--ourblue); padding-bottom: 0.15em; }
+.reveal section { font-size: 0.7em; text-align: left; }
+.reveal .slides { text-align: left; }
+.reveal table { font-size: 0.7em; border-collapse: collapse; margin: 0.5em 0; }
+.reveal table th, .reveal table td { padding: 0.25em 0.6em; border-bottom: 1px solid #ccc; }
+.reveal table th { background: #eef2f7; color: var(--ourblue); border-bottom: 2px solid var(--ourblue); }
+.reveal table tr:last-child td { border-bottom: 2px solid var(--ourblue); }
+.win   { color: var(--ourgreen); font-weight: bold; }
+.loss  { color: var(--ourred);   font-weight: bold; }
+.alert { color: var(--ourred);   font-weight: bold; }
+.box {
+  background: #f3f6fb; border-left: 4px solid var(--ourblue);
+  padding: 0.5em 0.8em; margin: 0.5em 0;
+}
+.alertbox {
+  background: #fdecec; border-left: 4px solid var(--ourred);
+  padding: 0.5em 0.8em; margin: 0.5em 0;
+}
+.two-col { display: flex; gap: 1.2em; }
+.two-col > div { flex: 1; }
+.center { text-align: center; }
+.thesis-line {
+  background: var(--ourblue); color: white;
+  padding: 0.7em 1em; font-style: italic;
+  text-align: center; border-radius: 6px;
+}
+ul { line-height: 1.35; }
+li { margin: 0.15em 0; }
+.tiny { font-size: 0.75em; color: #555; }
+</style>
+</head>
+
+<body>
+<div class="reveal">
+<div class="slides">
+
+<!-- ============================================= 1: TITLE -->
+<section>
+  <h1 style="font-size: 1.4em; margin-bottom: 0.3em;">
+    Workload-Aware Express Link Placement<br>
+    for Chiplet NoI under UCIe
+  </h1>
+  <p style="font-size: 1em; color: #555;">
+    Joint multi-workload RL + per-workload activation mask
+  </p>
+  <hr>
+  <p>Youngwoo Jeong &nbsp;·&nbsp; MangoBoost</p>
+  <p>2026-05-20</p>
+</section>
+
+<!-- ============================================= 2: WHY -->
+<section>
+  <h2>Why this work — three pressures meeting at one point</h2>
+  <ul>
+    <li><b>LLM workloads diverged</b>: MoE skewed all-to-all, TP+PP row/col, FSDP ring, Tree all-reduce butterfly.
+        <span class="alert">One package must serve all.</span></li>
+    <li><b>Chiplet count scaling</b> K = 16 → 32 → 64.
+        Phantom load on center adjacent links grows as <b>Θ(K<sup>3/2</sup>)</b>
+        — adding more adjacent links is sub-linear.</li>
+    <li><b>UCIe spec</b>: strictly point-to-point;
+        <i>no on-interposer switching fabric</i>.
+        Wires fixed at integration time — no OCS, no photonic switching.</li>
+    <li><b>Reticle budget bounded</b>: ≤ 2500 mm², 3–6 metal layers.
+        Cannot lay every long link.</li>
+  </ul>
+  <div class="alertbox">
+    <b>The setting we are forced into</b><br>
+    One fixed chiplet package → diverse workloads → no physical reconfig →
+    must reconfig at the <i>activation</i> level, not the <i>wire</i> level.
+  </div>
+</section>
+
+<!-- ============================================= 3: PROBLEM -->
+<section>
+  <h2>The problem in one slide</h2>
+  <p><b>Given</b>: workload set <i>W</i> = {w<sub>1</sub>, …, w<sub>n</sub>},
+     chiplet count K, internal mesh N, wire budget B.</p>
+  <p><b>Find</b>:</p>
+  <ul>
+    <li><span style="color: var(--ourblue);"><b>Superset S</b></span> (design-time, frozen at integration):
+        which non-adjacent chiplet pairs get express UCIe PHY wires.</li>
+    <li><span style="color: var(--ourgreen);"><b>Per-workload mask M(w) ⊆ S</b></span>
+        (runtime, workload-start granularity):
+        which PHY slots are powered up for w.</li>
+  </ul>
+  <p><b>Objective</b>: minimize mean BookSim latency over W;
+     worst-case latency as sensitivity floor.</p>
+  <p><b>Constraints</b>: wire(S) ≤ B, M(w) ⊆ S, strictly point-to-point UCIe.</p>
+  <div class="alertbox">
+    <b>Why two stages</b><br>
+    Wire reconfig is impossible (UCIe). So the <i>only</i> reconfigurability
+    left is choosing <i>which links to power on</i> at workload start —
+    this defines the architecture, not just the algorithm.
+  </div>
+</section>
+
+<!-- ============================================= 4: PHANTOM LOAD -->
+<section>
+  <h2>Phantom load: why express links matter at all</h2>
+  <div class="two-col">
+    <div>
+      <p><b>Theorem (square grid, XY, uniform a2a):</b></p>
+      <p style="text-align:center; font-size: 1.15em;">
+        α<sub>max</sub> = √K · ⌊K/4⌋ = Θ(K<sup>3/2</sup>)
+      </p>
+      <p>Center adjacent link carries α<sub>max</sub>× its direct demand.</p>
+      <p><b>Routing-algorithm independence</b>:
+         ECMP, Valiant smooth imbalance but never remove it.
+         Phantom load is <i>structural</i> to multi-hop adjacency, not a routing artifact.</p>
+    </div>
+    <div>
+      <table>
+        <tr><th>Grid</th><th>K</th><th>α<sub>max</sub></th><th>Imbalance</th></tr>
+        <tr><td>2×2</td><td>4</td><td>2</td><td>1.0</td></tr>
+        <tr><td>4×4</td><td>16</td><td>16</td><td>1.3</td></tr>
+        <tr><td>4×8</td><td>32</td><td>64</td><td>2.7</td></tr>
+        <tr><td>8×8</td><td>64</td><td>128</td><td>2.3</td></tr>
+      </table>
+      <p class="tiny">At K=64: center link must be provisioned at 128× direct demand.
+         Mesh hits a hard wall.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================= 5: WHY RL -->
+<section>
+  <h2>Why RL — heuristics each strong on one pattern, none on the set</h2>
+  <table style="margin: 0 auto;">
+    <tr>
+      <th>Baseline</th><th>MoE-skew</th><th>Uniform</th><th>Tree</th><th>Multi-workload</th>
+    </tr>
+    <tr>
+      <td>Mesh (adj only)</td>
+      <td class="loss">weak</td><td class="loss">weak</td>
+      <td>ok</td><td class="loss">weak</td>
+    </tr>
+    <tr>
+      <td>Kite-S/M/L (hand-crafted)</td>
+      <td>ok</td><td class="win">strong (Kite-L)</td>
+      <td>ok</td><td class="loss">brittle</td>
+    </tr>
+    <tr>
+      <td>FBfly (regular express)</td>
+      <td class="loss">weak</td><td class="win">strong</td>
+      <td>ok</td><td class="loss">workload-blind</td>
+    </tr>
+    <tr>
+      <td>GIA (assembly config)</td>
+      <td>ok</td><td>ok</td>
+      <td>ok</td><td class="loss">not runtime</td>
+    </tr>
+    <tr>
+      <td><b>Ours (RL + mask)</b></td>
+      <td class="win">strong</td><td class="win">strong</td>
+      <td>ok</td><td class="win">set-aware</td>
+    </tr>
+  </table>
+  <ul style="margin-top: 0.8em;">
+    <li>Single-workload search is heuristic-tractable.</li>
+    <li><span class="alert">Workload <i>set</i> search is the genuinely combinatorial part</span>
+        — design-time joint optimization across workloads with conflicting
+        traffic structures is what RL is for.</li>
+  </ul>
+</section>
+
+<!-- ============================================= 6: APPROACH OVERVIEW -->
+<section>
+  <h2>Approach overview — two stages of different cost</h2>
+  <table style="margin: 0 auto;">
+    <tr>
+      <th></th>
+      <th>Stage 1: Joint multi-workload RL</th>
+      <th>Stage 2: Per-workload mask</th>
+    </tr>
+    <tr><td><b>When?</b></td>
+        <td>Design-time, once per package family</td>
+        <td>Each workload start (seconds)</td></tr>
+    <tr><td><b>Cost?</b></td>
+        <td>Hours (RL + surrogate + BookSim top-k)</td>
+        <td>Few minutes (BookSim-greedy)</td></tr>
+    <tr><td><b>Input?</b></td>
+        <td>Workload <b>set</b> W</td>
+        <td>Single workload w, fixed superset S</td></tr>
+    <tr><td><b>Output?</b></td>
+        <td>Superset S (committed wires)</td>
+        <td>Mask M(w) ⊆ S (active PHY)</td></tr>
+    <tr><td><b>Search?</b></td>
+        <td>Swap-based REINFORCE from 8 warm starts</td>
+        <td>Greedy single-link deactivation</td></tr>
+  </table>
+  <p class="tiny">
+    Post-hoc fallback: per cell, take min(ours, kite_l, FBfly) on measured latency.
+    Guarantees <i>no measured regression</i> vs. deterministic baselines.
+  </p>
+</section>
+
+<!-- ============================================= 7: STAGE 1 DETAIL -->
+<section>
+  <h2>Stage 1: Joint RL learns the superset</h2>
+  <div class="two-col">
+    <div>
+      <p><b>Formulation</b></p>
+      <ul>
+        <li><b>State</b>: concat(traffic(w)) for w ∈ W, 995-dim with rate.</li>
+        <li><b>Action</b>: (remove_pair, add_pair) swap.
+            Wire budget conserved by construction.</li>
+        <li><b>Reward</b>: rate-aware MLP surrogate (v3) predicts mean lat over W at saturated rate.</li>
+        <li><b>Top-k validation</b>: BookSim measures candidate set; argmin lat ⇒ S.</li>
+      </ul>
+    </div>
+    <div>
+      <p><b>Multi-warm-start (8 sources)</b></p>
+      <ul>
+        <li>3× <code>greedy_union</code> (per-workload greedy union)</li>
+        <li>3× <code>mcts_greedy_s{101,102,103}</code> (strong MCTS on greedy)</li>
+        <li>2× <code>mcts_wl{0,1}_s{200,…}</code> (single-workload MCTS, diversity)</li>
+      </ul>
+      <div class="alertbox" style="margin-top: 0.6em;">
+        <b>Why 8 sources?</b> Cold-start RL regresses &gt; 10% on Tree;
+        multi-source covers structured-vs-skewed trade-off.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================= 8: STAGE 2 DETAIL -->
+<section>
+  <h2>Stage 2: Per-workload BookSim-greedy mask</h2>
+  <p><b>Algorithm</b> (per workload w, starting from M = S)</p>
+  <ol>
+    <li>Sample 6 candidate links from M at random.</li>
+    <li>For each, deactivate → BookSim → measure lat.</li>
+    <li>Pick the deactivation with lowest lat → commit to M.</li>
+    <li><b>Stop</b> if best lat &gt; 1.02 × raw(S, w) or max steps.</li>
+  </ol>
+  <p><b>Fail-safe property</b> (algorithmic, not statistical)</p>
+  <p style="text-align:center; font-size: 1.1em;">
+    lat(M(w), w) ≤ 1.02 × lat(S, w) &nbsp; for all w
+  </p>
+  <p>Empirically: <code>mask_reverted_to_raw = 0/342</code> cells across the sweep.
+     Mask is <i>always</i> as good or better than the superset.</p>
+  <div class="box">
+    <b>Per-workload specialization</b>: same S, different M(w) across w.
+    Activation cost: power-gate PHYs, no hardware modification.
+  </div>
+</section>
+
+<!-- ============================================= 9: EVAL METHODOLOGY -->
+<section>
+  <h2>Evaluation methodology: multi-seed BookSim is non-negotiable</h2>
+  <p><b>Discovery</b>: single-seed BookSim in saturated NoI is unreliable.</p>
+  <table style="margin: 0 auto;">
+    <tr><th>Cell</th><th>Alloc</th><th>sweep_v3 (1 seed)</th><th>multi-seed mean (n=5)</th><th>CV</th></tr>
+    <tr><td>K16_N4</td><td>ours_mask_moe</td><td>163.6</td><td class="alert">27.77 ± 0.08</td><td>0.3%</td></tr>
+    <tr><td>K16_N8</td><td>mesh</td><td>193.8</td><td class="alert">368.92 ± 72.28</td><td><b>19.6%</b></td></tr>
+    <tr><td>K32_N4</td><td>ours_mask_moe</td><td>450.6</td><td class="alert">40.20 ± 0.38</td><td>0.9%</td></tr>
+    <tr><td>K32_N4</td><td>mesh</td><td>235.9</td><td class="alert">345.64 ± 16.47</td><td>4.8%</td></tr>
+  </table>
+  <ul>
+    <li>K32_N4 single-seed reported ours <b>11× over-estimate</b> and ranking <b>inverted</b>
+        (mesh appeared to win) — measurement artifact.</li>
+    <li>Saturated regime: BookSim default seed lands in transient instability; 5-seed median resolves.</li>
+    <li>All paper lat numbers: <b>5-seed median</b> with CV reported.</li>
+  </ul>
+</section>
+
+<!-- ============================================= 10: M1 RESULTS -->
+<section>
+  <h2>Result M1: ours dominates mesh on every cell</h2>
+  <table style="margin: 0 auto;">
+    <tr><th>Cell</th><th>ours mean</th><th>mesh mean</th><th>gap</th><th>Cohen d</th><th>verdict</th></tr>
+    <tr><td>K16_N4</td><td>27.77</td><td>33.62</td><td>+17%</td><td>68</td><td class="win">ours win</td></tr>
+    <tr><td>K16_N8</td><td>28.60</td><td>368.92</td><td class="win">+13× faster</td><td>6.7</td><td class="win">ours win</td></tr>
+    <tr><td>K32_N4</td><td>40.20</td><td>345.64</td><td class="win">+8.6× faster</td><td>26</td><td class="win">ours win</td></tr>
+    <tr><td>K32_N8</td><td>191.68</td><td>296.37</td><td>+35%</td><td>21</td><td class="win">ours win</td></tr>
+  </table>
+  <ul style="margin-top: 0.8em;">
+    <li><b>All 4 cells</b>: ours faster than mesh, with Cohen d &gt; 5 (very robust).</li>
+    <li>Phantom load is structurally crushing for mesh at N=8
+        — where mesh saturates earliest, our gap is largest (<b>13×</b>).</li>
+  </ul>
+</section>
+
+<!-- ============================================= 11: M2 KITE_L -->
+<section>
+  <h2>Result M2: ours vs. kite_l is scale-dependent</h2>
+  <table style="margin: 0 auto;">
+    <tr><th>Cell</th><th>ours mean</th><th>kite_l mean</th><th>verdict</th></tr>
+    <tr><td>K16_N4 (small)</td><td>27.77</td><td>24.24</td><td class="loss">kite_l +14%</td></tr>
+    <tr><td>K16_N8</td><td>28.60</td><td>28.80</td><td>tie (0.7%)</td></tr>
+    <tr><td>K32_N4</td><td>40.20</td><td>32.46</td><td class="loss">kite_l +19%</td></tr>
+    <tr><td>K32_N8 (large, saturated)</td><td>191.68</td><td>305.76</td><td class="win">ours +38%</td></tr>
+  </table>
+  <p style="margin-top: 0.6em;"><b>Honest framing</b></p>
+  <ul>
+    <li>Kite-L's hand-crafted regularity is <i>near-optimal</i> on small/simple grids —
+        our RL is not the universal winner.</li>
+    <li><span class="alert">RL value emerges where phantom load × workload skew overwhelms hand-crafted regularity</span>:
+        K=32, N=8 cells, MoE/EP.</li>
+    <li>Kite-L variance explodes at large cells (CV 16% on K32_N8) — single-seed comparisons there are misleading regardless.</li>
+  </ul>
+</section>
+
+<!-- ============================================= 12: DIFFERENTIATION -->
+<section>
+  <h2>Differentiation against adjacent reconfig work</h2>
+  <table style="margin: 0 auto;">
+    <tr><th>Work</th><th>Scale</th><th>Substrate</th><th>Reconfig</th><th>Granularity</th></tr>
+    <tr><td>Kite, Florets, FBfly</td><td>chiplet pkg.</td><td>UCIe elec.</td><td>None</td><td>Static</td></tr>
+    <tr><td>PARL (arXiv'25)</td><td>chiplet pkg.</td><td>UCIe elec.</td><td>None (single out)</td><td>Static</td></tr>
+    <tr><td>ChipLight (arXiv'26)</td><td>cluster</td><td>Si photonic</td><td>None</td><td>Static</td></tr>
+    <tr><td>MixNet (arXiv'25)</td><td>GPU cluster</td><td>OCS + elec.</td><td>HW fiber switch</td><td>Per-token</td></tr>
+    <tr>
+      <td><b>Ours</b></td>
+      <td><b>chiplet pkg.</b></td>
+      <td><b>UCIe elec.</b></td>
+      <td><b>PHY activation mask</b></td>
+      <td><b>Per-workload</b></td>
+    </tr>
+  </table>
+  <ul style="margin-top: 0.7em;">
+    <li><b>vs. MixNet / ChipLight</b>: same motivation (dynamic LLM traffic),
+        <i>different scale + substrate</i>.
+        Their OCS/photonic switching is infeasible inside a reticle.</li>
+    <li><b>vs. PARL</b>: closest RL competitor. Cold-start, no warm sources,
+        no safety guarantee, no workload-level predictor.</li>
+    <li>Our cell in the table is the <i>only</i> one with
+        UCIe + workload-granularity + activation-mask + RL combination.</li>
+  </ul>
+</section>
+
+<!-- ============================================= 13: OPEN WORK + THESIS -->
+<section>
+  <h2>Open work before paper submission</h2>
+  <ul>
+    <li><b>Multi-seed re-measurement</b> of sweep_v3 K32_N4 (50 combos × 5 seeds) —
+        existing single-seed data unusable.</li>
+    <li><b>Fill K16_N8 / K32_N8</b> sweeps (currently 15/50, 6/50).</li>
+    <li><b>Saturation throughput</b> as primary metric supplementing latency
+        (rate sweep curve knee, not single-rate lat point).</li>
+    <li><b>Honest framing</b> of Kite-L wins on N=4 cells — positioning RL as
+        scale-conditional value rather than universal winner.</li>
+    <li><b>Per-workload mask wire savings stats</b> on full data
+        (current numbers from partial sweep).</li>
+  </ul>
+  <div class="thesis-line">
+    One fixed UCIe chiplet package can serve diverse LLM workloads near-optimally
+    by jointly RL-learning a link superset over the workload set and selecting
+    per-workload activation masks at runtime.
+  </div>
+</section>
+
+</div>
+</div>
+
+<script src="https://unpkg.com/reveal.js@5.0.4/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    slideNumber: 'c/t',
+    transition: 'slide',
+    width: 1280,
+    height: 760,
+    margin: 0.04,
+  });
+</script>
+</body>
+</html>

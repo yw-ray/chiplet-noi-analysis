@@ -1,0 +1,46 @@
+{
+  "cell": "K16_N8",
+  "workload": "ep_all_to_all",
+  "alloc": "mesh",
+  "seeds": [
+    1,
+    2,
+    3
+  ],
+  "results": [
+    {
+      "seed": 1,
+      "n_packets": 63748,
+      "gen_s": 4.847118139266968,
+      "lat": 131.0,
+      "n_finished": 1,
+      "wall_s": 3.5143046379089355,
+      "reason": "ok"
+    },
+    {
+      "seed": 2,
+      "n_packets": 63950,
+      "gen_s": 3.4580001831054688,
+      "lat": 210.0,
+      "n_finished": 1,
+      "wall_s": 2.638944387435913,
+      "reason": "ok"
+    },
+    {
+      "seed": 3,
+      "n_packets": 63959,
+      "gen_s": 3.565197229385376,
+      "lat": 383.0,
+      "n_finished": 1,
+      "wall_s": 2.852839469909668,
+      "reason": "ok"
+    }
+  ],
+  "config": {
+    "rate": 0.005,
+    "sim_T": 100000,
+    "vc": 8,
+    "buf": 16,
+    "flit": 8
+  }
+}

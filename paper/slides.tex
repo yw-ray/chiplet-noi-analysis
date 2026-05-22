@@ -1,0 +1,356 @@
+% Compile: pdflatex slides.tex
+\documentclass[aspectratio=169]{beamer}
+\usetheme{metropolis}
+\usepackage{booktabs}
+\usepackage{xcolor}
+
+\definecolor{ourblue}{HTML}{1F4E79}
+\definecolor{ourred}{HTML}{B23A48}
+\definecolor{ourgreen}{HTML}{2E7D32}
+\setbeamercolor{frametitle}{bg=ourblue, fg=white}
+
+\title{Workload-Aware Express Link Placement\\for Chiplet NoI under UCIe}
+\subtitle{Joint multi-workload RL + per-workload activation mask}
+\author{Youngwoo Jeong}
+\institute{MangoBoost}
+\date{2026-05-20}
+
+\begin{document}
+
+% ----------------------------------------------------------------- 1
+\maketitle
+
+% ----------------------------------------------------------------- 2
+\begin{frame}{Why this work — three pressures meeting at one point}
+\begin{itemize}
+  \item \textbf{LLM workloads diverged}: MoE skewed all-to-all,
+        TP+PP row/col, FSDP ring, Tree all-reduce butterfly.
+        \alert{One package must serve all.}
+  \item \textbf{Chiplet count scaling} $K{=}16\!\to\!32\!\to\!64$. Phantom load
+        on center adjacent links grows as $\Theta(K^{3/2})$
+        --- adding more adjacent links is sub-linear.
+  \item \textbf{UCIe spec}: strictly point-to-point;
+        \emph{no on-interposer switching fabric}.
+        Wires are fixed at integration time --- no OCS, no photonic switching.
+  \item \textbf{Reticle budget bounded}: $\le 2500\,\text{mm}^2$,
+        3--6 metal layers. Cannot lay every long link.
+\end{itemize}
+\vspace{0.3em}
+\begin{block}{The setting we are forced into}
+One fixed chiplet package $\rightarrow$ diverse workloads $\rightarrow$
+no physical reconfig $\rightarrow$ \alert{must reconfig at the
+\emph{activation} level, not the \emph{wire} level}.
+\end{block}
+\end{frame}
+
+% ----------------------------------------------------------------- 3
+\begin{frame}{The problem in one slide}
+\textbf{Given}: workload set $W = \{w_1, \ldots, w_n\}$, chiplet count $K$,
+internal mesh $N$, wire budget $B$.
+
+\medskip
+\textbf{Find}:
+\begin{itemize}
+  \item \textcolor{ourblue}{\textbf{Superset $S$}} (design-time, frozen at integration):
+        which non-adjacent chiplet pairs get express UCIe PHY wires.
+  \item \textcolor{ourgreen}{\textbf{Per-workload mask $M(w) \subseteq S$}}
+        (runtime, workload-start granularity):
+        which PHY slots are powered up for $w$.
+\end{itemize}
+
+\medskip
+\textbf{Objective}: minimize mean BookSim latency over $W$;
+worst-case latency as sensitivity floor.
+
+\medskip
+\textbf{Constraints}: $\text{wire}(S) \le B$, $M(w) \subseteq S$,
+strictly point-to-point UCIe links.
+
+\medskip
+\begin{alertblock}{Why two stages}
+Wire reconfig is impossible (UCIe). So the \emph{only} reconfigurability
+left is choosing \emph{which links to power on} at workload start
+--- this defines the architecture, not just the algorithm.
+\end{alertblock}
+\end{frame}
+
+% ----------------------------------------------------------------- 4
+\begin{frame}{Phantom load: why express links matter at all}
+\begin{columns}[T]
+\begin{column}{0.55\textwidth}
+\textbf{Theorem (square grid, XY routing, uniform a2a):}
+\[
+\alpha_{\max} \;=\; \sqrt{K}\cdot\lfloor K/4 \rfloor \;=\; \Theta(K^{3/2})
+\]
+Center adjacent link carries $\alpha_{\max}\times$ its direct demand.
+\medskip
+
+\textbf{Routing-algorithm independence}:
+ECMP, Valiant smooth imbalance but never remove it.
+Phantom load is \emph{structural} to multi-hop adjacency, not a routing artifact.
+\end{column}
+\begin{column}{0.45\textwidth}
+\centering
+\scriptsize
+\begin{tabular}{lcrr}
+\toprule
+Grid & $K$ & $\alpha_{\max}$ & Imbalance \\
+\midrule
+$2{\times}2$ & 4   & 2   & 1.0 \\
+$4{\times}4$ & 16  & 16  & 1.3 \\
+$4{\times}8$ & 32  & 64  & 2.7 \\
+$8{\times}8$ & 64  & 128 & 2.3 \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.6em}
+\footnotesize
+At $K{=}64$: center link must be provisioned at $128\times$
+direct demand. Mesh hits a hard wall.
+\end{column}
+\end{columns}
+\end{frame}
+
+% ----------------------------------------------------------------- 5
+\begin{frame}{Why RL — heuristics each strong on one pattern, none on the set}
+\centering
+\scriptsize
+\begin{tabular}{lcccc}
+\toprule
+Baseline & MoE-skew & Uniform & Tree & Multi-workload \\
+\midrule
+Mesh (adj only)         & \color{ourred}weak     & \color{ourred}weak     & ok   & \color{ourred}weak \\
+Kite-S/M/L (hand-crafted) & ok                   & strong (Kite-L)        & ok   & \color{ourred}brittle \\
+FBfly (regular express) & weak                   & strong                 & ok   & \color{ourred}workload-blind \\
+GIA (assembly config)   & ok                     & ok                     & ok   & \color{ourred}not runtime \\
+\midrule
+\textbf{Ours (RL + mask)} & \textbf{strong}      & \textbf{strong}        & \textbf{ok} & \textbf{set-aware} \\
+\bottomrule
+\end{tabular}
+
+\vspace{1em}
+\normalsize
+\begin{itemize}
+  \item Single-workload search is heuristic-tractable.
+  \item \alert{Workload \emph{set} search is the genuinely combinatorial part}
+        --- design-time joint optimization across workloads with conflicting
+        traffic structures is what RL is for.
+\end{itemize}
+\end{frame}
+
+% ----------------------------------------------------------------- 6
+\begin{frame}{Approach overview — two stages of different cost}
+\centering
+\begin{tabular}{p{0.45\textwidth} p{0.45\textwidth}}
+\toprule
+\textbf{Stage 1: Joint multi-workload RL} & \textbf{Stage 2: Per-workload mask} \\
+\midrule
+\emph{When?} Design-time, once per package family &
+\emph{When?} Each workload start (seconds) \\
+\midrule
+\emph{Cost?} Hours (RL + surrogate + BookSim top-$k$) &
+\emph{Cost?} Few minutes (BookSim-greedy) \\
+\midrule
+\emph{Input?} Workload \textbf{set} $W$ &
+\emph{Input?} Single workload $w$, fixed superset $S$ \\
+\midrule
+\emph{Output?} Superset $S$ \mbox{(committed wires)} &
+\emph{Output?} Mask $M(w) \subseteq S$ \mbox{(active PHY)} \\
+\midrule
+\emph{Search?} Swap-based REINFORCE \mbox{from 8 warm starts} &
+\emph{Search?} Greedy single-link deactivation \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.5em}
+\footnotesize
+Post-hoc fallback: per cell, take $\min(\text{ours}, \text{kite\_l}, \text{FBfly})$
+on measured latency. Guarantees \emph{no measured regression} vs.\
+deterministic baselines.
+\end{frame}
+
+% ----------------------------------------------------------------- 7
+\begin{frame}{Stage 1: Joint RL learns the superset}
+\begin{columns}[T]
+\begin{column}{0.5\textwidth}
+\textbf{Formulation}
+\begin{itemize}\small
+  \item \textbf{State}: concat$(\text{traffic}(w))$ for $w \in W$,
+        995-dim with rate.
+  \item \textbf{Action}: $(\text{remove\_pair}, \text{add\_pair})$ swap.
+        Wire budget conserved by construction.
+  \item \textbf{Reward}: rate-aware MLP surrogate (v3) predicts
+        mean lat over $W$ at saturated rate.
+  \item \textbf{Top-$k$ validation}: BookSim measures candidate set;
+        argmin lat $\Rightarrow S$.
+\end{itemize}
+\end{column}
+\begin{column}{0.5\textwidth}
+\textbf{Multi-warm-start (8 sources)}
+\begin{itemize}\small
+  \item 3$\times$ \texttt{greedy\_union} \mbox{(per-workload greedy union)}
+  \item 3$\times$ \texttt{mcts\_greedy\_s\{101,102,103\}}
+        \mbox{(strong MCTS on greedy)}
+  \item 2$\times$ \texttt{mcts\_wl\{0,1\}\_s\{200,\ldots\}}
+        \mbox{(single-workload MCTS, diversity)}
+\end{itemize}
+\vspace{0.5em}
+\alert{Why 8 sources?} Cold-start RL regresses $>10\%$ on Tree;
+multi-source covers structured-vs-skewed trade-off.
+\end{column}
+\end{columns}
+\end{frame}
+
+% ----------------------------------------------------------------- 8
+\begin{frame}{Stage 2: Per-workload BookSim-greedy mask}
+\textbf{Algorithm} (per workload $w$, starting from $M{=}S$)
+\begin{enumerate}\small
+  \item Sample 6 candidate links from $M$ at random.
+  \item For each, deactivate $\to$ BookSim $\to$ measure lat.
+  \item Pick the deactivation with lowest lat $\to$ commit to $M$.
+  \item \textbf{Stop} if best lat $> 1.02 \times \text{raw}(S, w)$ or max steps.
+\end{enumerate}
+
+\medskip
+\textbf{Fail-safe property} (algorithmic, not statistical)
+\[
+\text{lat}(M(w), w) \;\le\; 1.02 \times \text{lat}(S, w)
+\quad\forall w
+\]
+Empirically: \texttt{mask\_reverted\_to\_raw = 0/342} cells across the
+sweep. Mask is \emph{always} as good or better than the superset.
+
+\medskip
+\textbf{Per-workload specialization}: same $S$, different $M(w)$ across
+$w$. Activation cost: power-gate PHYs, no hardware modification.
+\end{frame}
+
+% ----------------------------------------------------------------- 9
+\begin{frame}{Evaluation methodology: multi-seed BookSim is non-negotiable}
+\textbf{Discovery}: single-seed BookSim in saturated NoI is unreliable.
+
+\medskip
+\centering\scriptsize
+\begin{tabular}{lrrrr}
+\toprule
+Cell & alloc & sweep\_v3 (1 seed) & multi-seed mean ($n{=}5$) & CV \\
+\midrule
+K16\_N4 & ours\_mask\_moe & 163.6 & \alert{27.77 $\pm$ 0.08} & 0.3\% \\
+K16\_N8 & mesh            & 193.8 & \alert{368.92 $\pm$ 72.28} & \textbf{19.6\%} \\
+K32\_N4 & ours\_mask\_moe & 450.6 & \alert{40.20 $\pm$ 0.38} & 0.9\% \\
+K32\_N4 & mesh            & 235.9 & \alert{345.64 $\pm$ 16.47} & 4.8\% \\
+\bottomrule
+\end{tabular}
+
+\medskip
+\normalsize
+\begin{itemize}
+  \item K32\_N4 single-seed reported ours $11\times$ over-estimate
+        and ranking inverted (mesh wins) --- \emph{measurement artifact}.
+  \item Saturated regime: BookSim default seed lands in transient
+        instability; 5-seed median resolves.
+  \item All paper lat numbers: \textbf{5-seed median} with CV reported.
+\end{itemize}
+\end{frame}
+
+% ----------------------------------------------------------------- 10
+\begin{frame}{Result M1: ours dominates mesh on every cell}
+\centering\small
+\begin{tabular}{lrrrcr}
+\toprule
+Cell & ours mean & mesh mean & gap & Cohen $d$ & verdict \\
+\midrule
+K16\_N4 & 27.77  & 33.62  & $+17\%$       & 68  & ours win \\
+K16\_N8 & 28.60  & 368.92 & $+\mathbf{13\times}$ & 6.7 & ours win \\
+K32\_N4 & 40.20  & 345.64 & $+\mathbf{8.6\times}$ & 26  & ours win \\
+K32\_N8 & 191.68 & 296.37 & $+35\%$       & 21  & ours win \\
+\bottomrule
+\end{tabular}
+
+\vspace{1em}
+\begin{itemize}
+  \item \textbf{All 4 cells}: ours faster than mesh, with Cohen $d>5$ (very robust).
+  \item Phantom load is structurally crushing for mesh at $N{=}8$
+        --- where mesh saturates earliest, our gap is largest ($13\times$).
+\end{itemize}
+\end{frame}
+
+% ----------------------------------------------------------------- 11
+\begin{frame}{Result M2: ours vs.\ kite\_l is scale-dependent}
+\centering\small
+\begin{tabular}{lrrr}
+\toprule
+Cell & ours mean & kite\_l mean & verdict \\
+\midrule
+K16\_N4 (small)              & 27.77  & 24.24  & \color{ourred}kite\_l +14\% \\
+K16\_N8                      & 28.60  & 28.80  & tie (0.7\%) \\
+K32\_N4                      & 40.20  & 32.46  & \color{ourred}kite\_l +19\% \\
+K32\_N8 (large, saturated)   & 191.68 & 305.76 & \color{ourgreen}\textbf{ours +38\%} \\
+\bottomrule
+\end{tabular}
+
+\vspace{1em}
+\textbf{Honest framing}
+\begin{itemize}
+  \item Kite-L's hand-crafted regularity is \emph{near-optimal} on
+        small/simple grids --- our RL is not the universal winner.
+  \item \alert{RL value emerges where phantom load $\times$ workload skew
+        overwhelms hand-crafted regularity}: $K{=}32, N{=}8$ cells, MoE/EP.
+  \item Kite-L variance explodes at large cells (CV 16\% on K32\_N8)
+        --- single-seed comparisons there are misleading regardless.
+\end{itemize}
+\end{frame}
+
+% ----------------------------------------------------------------- 12
+\begin{frame}{Differentiation against adjacent reconfig work}
+\centering\scriptsize
+\begin{tabular}{lllll}
+\toprule
+Work & Scale & Substrate & Reconfig & Granularity \\
+\midrule
+Kite, Florets, FBfly & chiplet pkg.\ & UCIe elec.\        & None               & Static \\
+PARL (arXiv'25)      & chiplet pkg.\ & UCIe elec.\        & None (single out)  & Static \\
+ChipLight (arXiv'26) & cluster       & Si photonic        & None               & Static \\
+MixNet (arXiv'25)    & GPU cluster   & OCS + elec.\       & HW fiber switch    & Per-token \\
+\textbf{Ours}        & \textbf{chiplet pkg.} & \textbf{UCIe elec.}
+                     & \textbf{PHY activation mask} & \textbf{Per-workload} \\
+\bottomrule
+\end{tabular}
+
+\medskip
+\normalsize
+\begin{itemize}\small
+  \item \textbf{vs.\ MixNet/ChipLight}: same motivation
+        (dynamic LLM traffic), \emph{different scale + substrate}.
+        Their OCS/photonic switching is infeasible inside a reticle.
+  \item \textbf{vs.\ PARL}: closest RL competitor. Cold-start, no warm sources,
+        no safety guarantee, no workload-level predictor.
+  \item Our cell in the table is the \emph{only} one with
+        UCIe + workload-granularity + activation-mask + RL combination.
+\end{itemize}
+\end{frame}
+
+% ----------------------------------------------------------------- 13
+\begin{frame}{Open work before paper submission}
+\begin{itemize}
+  \item \textbf{Multi-seed re-measurement} of sweep\_v3 K32\_N4
+        (50 combos $\times$ 5 seeds) --- existing single-seed data unusable.
+  \item \textbf{Fill K16\_N8 / K32\_N8} sweeps (currently 15/50, 6/50).
+  \item \textbf{Saturation throughput} as primary metric supplementing latency
+        (rate sweep curve knee, not single-rate lat point).
+  \item \textbf{Honest framing} of Kite-L wins on $N{=}4$ cells --- positioning
+        RL as scale-conditional value rather than universal winner.
+  \item \textbf{Per-workload mask wire savings stats} on full data
+        (current numbers from partial sweep).
+\end{itemize}
+
+\vspace{0.6em}
+\begin{block}{One-line thesis (current draft)}
+\centering
+\emph{One fixed UCIe chiplet package can serve diverse LLM workloads
+near-optimally by jointly RL-learning a link superset over the workload
+set and selecting per-workload activation masks at runtime.}
+\end{block}
+\end{frame}
+
+\end{document}

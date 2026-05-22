@@ -88,6 +88,58 @@ PARL~\cite{parl} & NoI synthesis & No & Cold PPO & N/A \\
 \end{tabular}
 \end{table}
 
+\textbf{Reconfigurable fabrics for MoE-style dynamic traffic.}
+Two recent works share part of our high-level motivation---that static
+topologies are inefficient for the dynamic, skewed traffic patterns that
+arise in MoE-style LLM workloads---but operate in scale and substrate
+regimes that are categorically different from ours.
+MixNet~\cite{mixnet} addresses MoE training communication at the
+\emph{GPU cluster scale} by deploying optical circuit switches (OCS) on
+top of a conventional electrical fat-tree fabric and physically
+reconnecting fiber paths on the order of microseconds to track
+per-token expert routing. ChipLight~\cite{chiplight} co-optimizes
+chiplet placement, parallel strategy, and silicon-photonic
+interconnect topology for distributed LLM training using a black-box
+plus white-box design-space exploration framework. Both target meter-scale
+optical fabrics with active switching hardware; our work targets the
+millimeter-scale, single-package, electrical-only regime defined by the
+UCIe~\cite{ucie} D2D PHY specification, in which strictly point-to-point
+inter-chiplet wires are committed at integration time and \emph{no
+on-interposer switching fabric exists in ratified standards}. ``Runtime
+reconfiguration'' therefore means something physically different in our
+setting: we do not switch wires; instead, the superset of express links
+is fixed by integration, and a per-workload activation mask selects which
+PHY slots are powered for a given workload at workload-start granularity.
+Table~\ref{tab:scope} pins down this scale/substrate/mechanism
+differentiation explicitly so the contribution of this paper is
+unambiguous against the adjacent reconfigurable-fabric literature.
+
+\begin{table*}[t]
+\centering
+\caption{Scope, Substrate, and Reconfiguration Mechanism vs.\ Adjacent
+  Work. ``Reconfig'' is the unit at which the active topology can change
+  after manufacturing; ``Granularity'' is the time scale at which the
+  reconfig action is invoked. Our setting is the only one targeting
+  electrical UCIe chiplet NoI with workload-granularity activation, which
+  rules out OCS-style hardware switching as a solution and motivates
+  superset+mask as the architectural primitive.}
+\label{tab:scope}
+\scriptsize
+\begin{tabular}{lllllll}
+\toprule
+Work & Scale & Substrate & Reconfig & Granularity & Workload input & Method \\
+\midrule
+Kite~\cite{kite}        & chiplet pkg.\ & UCIe elec.\        & None                 & Static       & Single             & Heuristic \\
+Florets~\cite{florets}  & chiplet pkg.\ & UCIe elec.\        & None                 & Static       & Single             & Heuristic \\
+FBfly (this work)       & chiplet pkg.\ & UCIe elec.\        & None                 & Static       & Workload-blind     & Topology-aware reg.\ \\
+PARL~\cite{parl}        & chiplet pkg.\ & UCIe elec.\        & None (single out)    & Static       & Mixed traffic      & Cold-start PPO \\
+ChipLight~\cite{chiplight} & cluster    & Si photonic        & None                 & Static       & LLM training       & BBO + WBO DSE \\
+MixNet~\cite{mixnet}    & GPU cluster   & OCS + electrical   & Hardware fiber switch & Per-token   & MoE training       & Trace-driven heuristic \\
+\textbf{Ours}           & \textbf{chiplet pkg.} & \textbf{UCIe elec.} & \textbf{PHY activation mask} & \textbf{Per-workload} & \textbf{Workload set} & \textbf{Warm-start RL + mask} \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
 % ============================================================
 \section{Phantom Load Analysis}
 % ============================================================
@@ -587,6 +639,12 @@ DeepSeek-AI, ``DeepSeek-V3 Technical Report,'' \textit{arXiv:2412.19437}, 2024.
 
 \bibitem{gshard}
 D.~Lepikhin et al., ``GShard: Scaling Giant Models with Conditional Computation and Automatic Sharding,'' in \textit{Proc. ICLR}, 2021.
+
+\bibitem{mixnet}
+X.~Liao et al., ``MixNet: A Runtime Reconfigurable Optical-Electrical Fabric for Distributed Mixture-of-Experts Training,'' \textit{arXiv:2501.03905}, 2025.
+
+\bibitem{chiplight}
+K.~Bai, Z.~Zhu, Y.~Ding, and T.~Jia, ``ChipLight: Cross-Layer Optimization of Chiplet Design with Optical Interconnects for LLM Training,'' \textit{arXiv:2604.18909}, 2026.
 
 \end{thebibliography}
 

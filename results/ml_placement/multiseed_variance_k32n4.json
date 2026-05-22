@@ -1,0 +1,161 @@
+{
+  "cell": "K32_N4",
+  "combo": "moe+uniform_random",
+  "workload": "moe",
+  "rate": 0.005,
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "raw": {
+    "ours_mask_moe": [
+      {
+        "seed": 2,
+        "latency": 40.1763,
+        "throughput": 0.00499818,
+        "wall_s": 42.04317307472229,
+        "reason": "ok"
+      },
+      {
+        "seed": 1,
+        "latency": 40.624,
+        "throughput": 0.00506328,
+        "wall_s": 42.20434379577637,
+        "reason": "ok"
+      },
+      {
+        "seed": 3,
+        "latency": 39.5976,
+        "throughput": 0.00503854,
+        "wall_s": 42.55042290687561,
+        "reason": "ok"
+      },
+      {
+        "seed": 5,
+        "latency": 40.356,
+        "throughput": 0.0050138,
+        "wall_s": 42.68342971801758,
+        "reason": "ok"
+      },
+      {
+        "seed": 4,
+        "latency": 40.2696,
+        "throughput": 0.00508698,
+        "wall_s": 42.910592794418335,
+        "reason": "ok"
+      }
+    ],
+    "mesh": [
+      {
+        "seed": 1,
+        "latency": 363.528,
+        "throughput": 0.00397109,
+        "wall_s": 14.071828365325928,
+        "reason": "ok"
+      },
+      {
+        "seed": 2,
+        "latency": 346.302,
+        "throughput": 0.00413203,
+        "wall_s": 11.875333309173584,
+        "reason": "ok"
+      },
+      {
+        "seed": 3,
+        "latency": 358.787,
+        "throughput": 0.00406562,
+        "wall_s": 10.865594863891602,
+        "reason": "ok"
+      },
+      {
+        "seed": 4,
+        "latency": 323.142,
+        "throughput": 0.00400781,
+        "wall_s": 10.254435539245605,
+        "reason": "ok"
+      },
+      {
+        "seed": 5,
+        "latency": 336.419,
+        "throughput": 0.004,
+        "wall_s": 9.661907434463501,
+        "reason": "ok"
+      }
+    ],
+    "kite_l": [
+      {
+        "seed": 3,
+        "latency": 32.2795,
+        "throughput": 0.00503932,
+        "wall_s": 29.916558504104614,
+        "reason": "ok"
+      },
+      {
+        "seed": 1,
+        "latency": 32.474,
+        "throughput": 0.00506484,
+        "wall_s": 30.540070295333862,
+        "reason": "ok"
+      },
+      {
+        "seed": 4,
+        "latency": 33.0082,
+        "throughput": 0.00508594,
+        "wall_s": 29.9787118434906,
+        "reason": "ok"
+      },
+      {
+        "seed": 2,
+        "latency": 32.506,
+        "throughput": 0.00497949,
+        "wall_s": 32.705177545547485,
+        "reason": "ok"
+      },
+      {
+        "seed": 5,
+        "latency": 32.0415,
+        "throughput": 0.00501354,
+        "wall_s": 28.824304819107056,
+        "reason": "ok"
+      }
+    ]
+  },
+  "summary": {
+    "ours_mask_moe": {
+      "n_ok": 5,
+      "n_total": 5,
+      "mean": 40.2047,
+      "median": 40.2696,
+      "stdev": 0.3782503007269136,
+      "min": 39.5976,
+      "max": 40.624,
+      "iqr": 0.6030500000000032,
+      "cv": 0.00940811150753304
+    },
+    "mesh": {
+      "n_ok": 5,
+      "n_total": 5,
+      "mean": 345.6356,
+      "median": 346.302,
+      "stdev": 16.46548773343809,
+      "min": 323.142,
+      "max": 363.528,
+      "iqr": 31.377000000000066,
+      "cv": 0.04763828648853905
+    },
+    "kite_l": {
+      "n_ok": 5,
+      "n_total": 5,
+      "mean": 32.46184,
+      "median": 32.474,
+      "stdev": 0.35726069333191535,
+      "min": 32.0415,
+      "max": 33.0082,
+      "iqr": 0.5966000000000022,
+      "cv": 0.011005558937260344
+    }
+  }
+}

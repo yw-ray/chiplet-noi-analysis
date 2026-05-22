@@ -3,11 +3,29 @@ __pycache__/
 *.pyc
 .venv/
 
-# BookSim generated configs (192MB, regenerable)
+# BookSim generated configs (regenerable)
 booksim_configs/
+booksim_configs_probe/
+booksim_configs_probe_full/
+booksim_configs_variance/
+booksim_configs_variance_K16_N4/
+booksim_configs_variance_K16_N8/
+booksim_configs_variance_K32_N4/
+booksim_configs_variance_K32_N8/
 
 # BookSim simulator (external tool, clone separately)
 booksim2/
+
+# LegoSim (~1 GB, external — clone separately per
+# plans/20260522-legosim-popnet-cross-validation-plan.md)
+legosim/
+
+# popnet trace + .gv generated runs (regenerable)
+popnet_runs/
+delayInfo.txt
+
+# build logs dir
+logs/
 
 # Paper old figures (keep only current 4)
 paper/figures/fig_amp_distribution.*
